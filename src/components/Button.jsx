@@ -38,7 +38,7 @@ export default function Button({
   }
   if (href) {
     return (
-      <Link className={cls} href={href} aria-disabled={disabled || undefined} {...rest}>
+      <Link className={cls} href={href} onClick={onClick} aria-disabled={disabled || undefined} {...rest}>
         {inner}
       </Link>
     );

@@ -6,8 +6,8 @@ import { fmt, addressLine } from '../lib/format.js';
 import { abs, pagePath } from '../lib/routes-util.js';
 import { orgSchema, websiteSchema, breadcrumbSchema, graph } from '../lib/schema.js';
 
-// Shared view for Aydinlatma Metni / Cerez Politikasi / Yasal Uyari (and EN mirrors).
-export default function LegalView({ locale, routeKey, common, seo, legal }) {
+// Shared view for Aydinlatma Metni / Cerez Politikasi / Yasal Uyari.
+export default function LegalView({ routeKey, common, seo, legal }) {
   const doc = legal[routeKey];
   const c = site.contact;
   const vars = {
@@ -27,25 +27,25 @@ export default function LegalView({ locale, routeKey, common, seo, legal }) {
     list: s.list?.map(r),
   }));
   const crumbs = [
-    { label: common.breadcrumbs.home, href: pagePath('home', locale) },
+    { label: common.breadcrumbs.home, href: pagePath('home') },
     { label: doc.h1 },
   ];
   const ld = graph(
-    orgSchema(locale),
-    websiteSchema(locale),
+    orgSchema(),
+    websiteSchema(),
     breadcrumbSchema([
-      { name: crumbs[0].label, url: abs(pagePath('home', locale)) },
-      { name: doc.h1, url: abs(pagePath(routeKey, locale)) },
+      { name: crumbs[0].label, url: abs(pagePath('home')) },
+      { name: doc.h1, url: abs(pagePath(routeKey)) },
     ]),
   );
 
   return (
-    <Layout locale={locale} routeKey={routeKey} common={common} seo={seo} headerTheme="light" jsonLd={[ld]}>
+    <Layout routeKey={routeKey} common={common} seo={seo} headerTheme="light" jsonLd={[ld]}>
       <PageHero title={doc.h1} lede={doc.lede} breadcrumbs={crumbs} />
       <div className="legal">
-        <div className="container">
+        <div className="container legal__grid">
           <nav className="legal__toc" aria-label={legal.tocLabel}>
-            <p className="eyebrow legal__toc-title">{legal.tocLabel}</p>
+            <p className="legal__toc-title">{legal.tocLabel}</p>
             <ol className="legal__toc-list">
               {sections.map((s) => (
                 <li key={s.id}>
@@ -56,8 +56,8 @@ export default function LegalView({ locale, routeKey, common, seo, legal }) {
               ))}
             </ol>
           </nav>
+          <Prose sections={sections} updated={doc.updated} label={legal.updatedLabel} />
         </div>
-        <Prose sections={sections} updated={doc.updated} label={legal.updatedLabel} />
       </div>
     </Layout>
   );

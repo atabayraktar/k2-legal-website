@@ -1,96 +1,83 @@
 import Reveal from './Reveal';
+import Docket from './Docket';
+import Ledger from './Ledger';
+import ImageFrame from './ImageFrame';
 import ContactForm from './ContactForm';
 import { addressLine } from '../lib/format.js';
 import { isPending } from '../lib/pending.js';
 import { renderPending } from '../lib/text.js';
 
-// t = contact page content (form strings). heading = { eyebrow?, title, intro?, as? }.
-// Placeholder values render as-is; the map is a static block (never an iframe).
-export default function ContactSection({ t, common, site, locale, variant = 'home', headingId = 'contact-title', heading }) {
+// İletişim: bone, one shared 2px ink rule across both columns. Both columns open with the same 32px typewriter label row,
+// so the heading block (left) and the form (right) start on the same line at >=1024px.
+// t = tr.contact (docket, title, intro, formLabel, form strings; whatsappLink optional). The map is a link only (never an iframe).
+export default function ContactSection({ t, common, site, headingId = 'iletisim-title', heading }) {
+  const h = { docket: t.docket, title: t.title, intro: t.intro, ...heading };
   const L = common.labels;
   const c = site.contact;
-  const h = heading ?? { title: t.infoTitle, as: 'h2' };
-  const Heading = h.as ?? 'h2';
   const address = addressLine(c.address);
-  // The map block exists only once there is a real address (or a supplied map): no empty placeholder rectangle, no dead link.
   const realAddress = !isPending(c.address.street) && !isPending(c.address.city);
   const mapHref =
     c.map?.href ?? (realAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : null);
-  const showMap = Boolean(mapHref || c.map?.image);
 
   const rows = [
-    { k: L.address, v: <address className="contact__addr">{renderPending(address)}</address> },
-    { k: L.phone, v: c.phone.tel ? <a href={`tel:${c.phone.tel}`}>{c.phone.display}</a> : renderPending(c.phone.display) },
-    { k: L.email, v: isPending(c.email, { required: true }) ? renderPending(c.email) : <a href={`mailto:${c.email}`}>{c.email}</a> },
+    { k: L.address, v: renderPending(address) },
+    { k: L.phone, v: c.phone.tel ? <a className="contact__a" href={`tel:${c.phone.tel}`}>{c.phone.display}</a> : renderPending(c.phone.display) },
+    {
+      k: L.email,
+      v: isPending(c.email, { required: true }) ? renderPending(c.email) : <a className="contact__a" href={`mailto:${c.email}`}>{c.email}</a>,
+    },
     { k: L.kep, v: renderPending(c.kep) },
     { k: L.hours, v: renderPending(c.hours.display) },
     {
       k: L.whatsapp,
       v: c.whatsapp.url ? (
-        <a href={c.whatsapp.url} target="_blank" rel="noopener noreferrer">
-          {c.whatsapp.display}
+        <a className="contact__a" href={c.whatsapp.url} target="_blank" rel="noopener noreferrer">
+          {t.whatsappLink ?? c.whatsapp.display}
         </a>
       ) : (
         renderPending(c.whatsapp.display)
       ),
     },
-  ];
-
-  const mapInner = c.map?.image ? (
-    <img className="contact__map-img" src={c.map.image.src} width={c.map.image.width} height={c.map.image.height} alt="" loading="lazy" />
-  ) : (
-    <span className="contact__map-grid" aria-hidden="true" />
-  );
+    mapHref
+      ? {
+          k: L.openMap,
+          v: (
+            <a className="contact__a" href={mapHref} target="_blank" rel="noopener noreferrer">
+              {L.openMap}
+            </a>
+          ),
+        }
+      : null,
+  ].filter(Boolean);
 
   return (
-    <section id="contact" className={`contact contact--${variant}`} data-theme="dark" aria-labelledby={headingId}>
+    <section id="iletisim" className="contact" data-theme="light" aria-labelledby={headingId}>
       <div className="container">
-        <div className="contact__head">
-          {h.eyebrow ? (
-            <Reveal as="p" now={variant === 'page'} className="eyebrow">
-              {h.eyebrow}
-            </Reveal>
-          ) : null}
-          <Reveal as={Heading} now={variant === 'page'} delay={1} id={headingId} className="contact__title">
-            {h.title}
-          </Reveal>
-          {h.intro ? (
-            <Reveal as="p" now={variant === 'page'} delay={2} className="contact__intro lede">
-              {h.intro}
-            </Reveal>
-          ) : null}
-        </div>
-        <div className="contact__cols">
-          <Reveal className="contact__info">
-            <dl className="contact__list">
-              {rows.map((r) => (
-                <div className="contact__item" key={r.k}>
-                  <dt>{r.k}</dt>
-                  <dd>{r.v}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-          <Reveal delay={2} className="contact__form">
-            <ContactForm t={t} site={site} locale={locale} />
-          </Reveal>
-          {showMap ? (
-            <Reveal className="contact__map-wrap">
-              <figure className="contact__map">
-                {mapHref ? (
-                  <a className="contact__map-link" href={mapHref} target="_blank" rel="noopener noreferrer">
-                    {mapInner}
-                    <span className="contact__map-caption">{L.openMap}</span>
-                  </a>
-                ) : (
-                  <div className="contact__map-link">
-                    {mapInner}
-                    <span className="contact__map-caption">{L.mapPending}</span>
-                  </div>
-                )}
-              </figure>
-            </Reveal>
-          ) : null}
+        <Reveal variant="hair" className="contact__rule" aria-hidden="true" />
+        <div className="contact__grid">
+          <div className="contact__info">
+            <div className="contact__label-row">
+              <Docket prefix="" label={h.docket} />
+            </div>
+            <h2 id={headingId} className="contact__title">
+              {h.title}
+            </h2>
+            <p className="contact__intro">{h.intro}</p>
+            <Ledger className="contact__ledger" items={rows} />
+            <ImageFrame
+              name="contact-stacks"
+              alt=""
+              aspect="4-3"
+              sizes="(min-width: 1280px) 480px, (min-width: 768px) 60vw, 100vw"
+              className="contact__photo"
+            />
+          </div>
+          <div className="contact__form">
+            <div className="contact__label-row">
+              <Docket prefix="" label={t.formLabel} id="iletisim-form-label" />
+            </div>
+            <ContactForm t={t} site={site} labelledBy="iletisim-form-label" />
+          </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,27 @@
+@use 'tokens/mixins' as *;
+
+// Docket label: DOSYA 03 / ÇALIŞMA ALANLARI. Typewriter caps, stone on bone, ash on ink (via --fg-2).
+.docket {
+  @include mono-label;
+  margin: 0;
+  color: var(--fg-2);
+
+  &__n--accent {
+    color: var(--accent);
+  }
+
+  // vertical: runs bottom to top along a gutter
+  &--v {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+  }
+
+  // boxed: inverted mark
+  &--boxed {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--fg);
+    color: var(--bg);
+  }
+}

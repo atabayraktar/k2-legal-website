@@ -1,14 +1,15 @@
-import PracticeDetailView, { practiceDetailPaths, practiceDetailStaticProps } from '../../views/PracticeDetailView';
+import PracticeView, { practiceDetailPaths, practiceStaticProps } from '../../views/PracticeView';
 import { getContent } from '../../content/index.js';
 
 export default function Page(props) {
-  return <PracticeDetailView {...props} />;
+  return <PracticeView {...props} />;
 }
 
+// Flagship areas only (page: true); a static export cannot serve any other slug.
 export function getStaticPaths() {
-  return practiceDetailPaths('tr');
+  return practiceDetailPaths();
 }
 
 export function getStaticProps({ params }) {
-  return practiceDetailStaticProps('tr', params.slug, getContent);
+  return practiceStaticProps(params.slug, getContent);
 }

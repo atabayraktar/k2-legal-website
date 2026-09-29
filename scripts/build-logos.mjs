@@ -74,7 +74,7 @@ for (const [name, t] of Object.entries(themes)) {
     const y1 = 47, y2 = 72;
     const p1 = text('KARAMAN BERAT', 600, 23, tx, y1, 0.2).d;
     const p2 = text('AVUKATLIK ORTAKLIĞI', 500, 13.2, tx, y2, 0.34).d;
-    const body = mark({ k: t.fg }) +
+    const body = mark({ k: t.fg, two: t.accent }) +
       `<path d="M${MARK_W + 17} 6V94" stroke="${t.muted}" stroke-width="1.2" fill="none"/>` +
       `<path fill="${t.fg}" d="${p1}"/><path fill="${t.muted}" d="${p2}"/>`;
     out[`k2-horizontal-${name}`] = svg(Math.ceil(w), 100, body, T);
@@ -87,9 +87,17 @@ for (const [name, t] of Object.entries(themes)) {
     const mx = (W - MARK_W) / 2;
     const p1 = text('KARAMAN BERAT', 600, 23, (W - l1.width) / 2, 152, 0.2).d;
     const p2 = text('AVUKATLIK ORTAKLIĞI', 500, 13.2, (W - l2.width) / 2, 178, 0.34).d;
-    const body = `<g transform="translate(${mx} 0)">${mark({ k: t.fg })}</g><path fill="${t.fg}" d="${p1}"/><path fill="${t.muted}" d="${p2}"/>`;
+    const body = `<g transform="translate(${mx} 0)">${mark({ k: t.fg, two: t.accent })}</g><path fill="${t.fg}" d="${p1}"/><path fill="${t.muted}" d="${p2}"/>`;
     out[`k2-stacked-${name}`] = svg(Math.ceil(W), 190, body, T);
   }
+}
+
+// favicon: transparent background, ink K + wax 2. The 2 is bolder/taller than in the
+// logo so it survives 16px; padded to a square so browsers don't crop it.
+{
+  const T2 = { x0: 97, x1: 126, h: 46, w: 12 };
+  const body = `<g transform="translate(0 13)"><path fill="${INK}" d="${K_STEM}"/><path fill="${INK}" d="${K_BLADE}"/><path fill="none" stroke="${WAX}" stroke-width="${T2.w}" stroke-miterlimit="4" d="${two(T2.x0, T2.x1, T2.h, T2.w)}"/></g>`;
+  out['k2-favicon'] = svg(126, 126, body, 'K2 Legal');
 }
 
 const dir = '.claude/logos';

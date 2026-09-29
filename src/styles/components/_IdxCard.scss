@@ -1,0 +1,41 @@
+@use 'tokens/mixins' as *;
+
+// Index card: paper face + hairline offset "card behind". Always light, also on ink sections.
+.idx-card {
+  @include light-vars;
+  --tab-bg: var(--paper);
+  --tab-line: var(--line);
+  position: relative;
+  color: var(--ink);
+
+  &__stack {
+    position: relative;
+  }
+
+  &__behind {
+    position: absolute;
+    inset: 6px -6px -6px 6px;
+    border: 1px solid var(--hair);
+    background: var(--paper);
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease);
+  }
+
+  &.is-stacked &__behind,
+  &.is-lifted &__behind {
+    opacity: 1;
+  }
+
+  &__face {
+    position: relative;
+    z-index: 1;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  // an open tab on an ink section needs a visible edge
+  .tab.is-open {
+    border-color: var(--line-dk);
+  }
+}

@@ -1,0 +1,75 @@
+@use 'tokens/mixins' as *;
+
+// Photograph in a deliberate crop with four crop-mark ticks 8px outside the corners. Marks follow --fg-2 (stone on bone, ash on ink).
+.frame {
+  position: relative;
+  margin: 0;
+  color: var(--fg-2);
+
+  &__wrap {
+    position: relative;
+  }
+
+  &__box {
+    display: block;
+    overflow: hidden;
+    background: var(--rule-2);
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @each $w, $h in (11, 10), (3, 4), (3, 2), (4, 5), (4, 3), (16, 9), (21, 9) {
+    &--a-#{$w}-#{$h} &__img {
+      aspect-ratio: #{$w} / #{$h};
+      object-fit: cover;
+    }
+  }
+
+  &__crop {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+
+    &--tl {
+      top: -8px;
+      left: -8px;
+      border-top: 1px solid currentColor;
+      border-left: 1px solid currentColor;
+    }
+
+    &--tr {
+      top: -8px;
+      right: -8px;
+      border-top: 1px solid currentColor;
+      border-right: 1px solid currentColor;
+    }
+
+    &--bl {
+      bottom: -8px;
+      left: -8px;
+      border-bottom: 1px solid currentColor;
+      border-left: 1px solid currentColor;
+    }
+
+    &--br {
+      right: -8px;
+      bottom: -8px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+    }
+  }
+
+  &__cap {
+    @include mono-label;
+    margin: var(--sp-16) 0 0 auto;
+    font-weight: 400;
+    font-size: 12px;
+    text-align: right;
+    color: var(--fg-2);
+  }
+}

@@ -1,21 +1,24 @@
 @use 'tokens/mixins' as *;
 
 .notfound {
-  position: relative;
-  overflow: hidden;
-  padding-top: calc(var(--header-h) + 96px);
+  padding-top: calc(var(--header-h) + var(--sp-96));
   padding-bottom: var(--section-y);
   min-height: 70vh;
 
-  // Whole monogram, fully inside the frame (bone section, hairline-tone mark).
-  &__mark {
-    position: absolute;
-    right: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
-    bottom: var(--sp-48);
-    height: min(38vh, 300px);
-    width: auto;
-    color: var(--rule-2);
-    pointer-events: none;
+  // 404 as the whole composition: one heavy number, one typed line, one way out.
+  &__code {
+    @include display(clamp(120px, 30vw, 440px), 800, -0.04em, 0.8);
+    text-transform: uppercase;
+    margin: 0 0 var(--sp-32);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__line {
+    margin: 0 0 var(--sp-48);
+    max-width: 60ch;
+    font-size: var(--t-mono);
+    line-height: 1.6;
+    color: var(--fg-2);
   }
 
   &__actions {
@@ -23,21 +26,5 @@
     flex-wrap: wrap;
     align-items: center;
     gap: var(--sp-16) var(--sp-32);
-  }
-
-  &__inner {
-    position: relative;
-  }
-
-  &__title {
-    font-size: var(--fs-display-1);
-    margin: var(--sp-24) 0 var(--sp-24);
-    max-width: 12ch;
-  }
-
-  &__text {
-    max-width: 44ch;
-    margin-bottom: var(--sp-48);
-    color: var(--fg-2);
   }
 }

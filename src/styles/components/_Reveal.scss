@@ -1,43 +1,95 @@
 @use 'tokens/mixins' as *;
 
-// Hidden state exists only when JS ran (the .js class is set in _document), so no-JS users see everything.
+// Hidden states exist only when JS ran (the .js class is set in _document), so no-JS readers see everything.
 .reveal {
-  transition:
-    opacity var(--dur-reveal) var(--ease),
-    transform var(--dur-reveal) var(--ease);
+  transition-property: opacity, transform, clip-path;
+  transition-duration: var(--dur-reveal);
+  transition-timing-function: var(--ease);
   transition-delay: calc(var(--n, 0) * var(--stagger));
 
-  @for $i from 1 through 5 {
+  @for $i from 1 through 4 {
     &[data-delay='#{$i}'] {
       --n: #{$i};
     }
   }
 
+  // up: rise + fade
+  .js &--up:not(.is-in):not(.reveal--now) {
+    opacity: 0;
+    transform: translateY(var(--reveal-y));
+  }
+
+  // fade: opacity only
+  .js &--fade:not(.is-in):not(.reveal--now) {
+    opacity: 0;
+  }
+
+  // hair: scaleX draw
   &--hair {
     transform-origin: left;
     transition-duration: var(--dur-hair);
   }
 
-  .js &:not(.is-in):not(.reveal--now) {
-    opacity: 0;
-    transform: translateY(var(--reveal-y));
+  .js &--hair:not(.is-in):not(.reveal--now) {
+    transform: scaleX(0);
   }
 
-  // First-viewport content: painted immediately, only rises (transform-only, compositor). Never hides text.
+  // line: the wrapper is the mask (cedillas and dots of Turkish capitals need the extra room), the inner text slides up
+  &--line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+    transition: none;
+  }
+
+  &--line > .reveal__inner {
+    display: block;
+    transition: transform 700ms var(--ease);
+    transition-delay: calc(var(--n, 0) * 120ms);
+  }
+
+  .js &--line:not(.is-in):not(.reveal--now) > .reveal__inner {
+    transform: translateY(110%);
+  }
+
+  // curtain: image wipe. The observed wrapper stays unclipped (a fully clipped target never reports as intersecting),
+  // the child is what wipes in.
+  &--curtain {
+    transition: none;
+  }
+
+  &--curtain > * {
+    clip-path: inset(0);
+    transition: clip-path var(--dur-hero) var(--ease);
+  }
+
+  .js &--curtain:not(.is-in):not(.reveal--now) > * {
+    clip-path: inset(0 0 100% 0);
+  }
+
+  // First-viewport content: painted immediately, entrance is a CSS animation (compositor only). Never hides text.
   &--now {
     transition: none;
+  }
+
+  &--up.reveal--now,
+  &--fade.reveal--now {
     animation: reveal-rise var(--dur-reveal) var(--ease) both;
     animation-delay: calc(var(--n, 0) * var(--stagger));
   }
 
-  .js &--hair:not(.is-in):not(.reveal--now) {
-    opacity: 1;
-    transform: scaleX(0);
+  &--hair.reveal--now {
+    animation: reveal-draw var(--dur-hair) var(--ease) both;
   }
 
-  .js &--word:not(.is-in):not(.reveal--now) {
-    opacity: 0;
-    transform: none;
+  &--line.reveal--now > .reveal__inner {
+    animation: reveal-line 700ms var(--ease) both;
+    animation-delay: calc(var(--n, 0) * 120ms);
+  }
+
+  &--curtain.reveal--now > * {
+    animation: reveal-curtain var(--dur-hero) var(--ease) both;
   }
 }
 
@@ -50,17 +102,45 @@
   }
 }
 
-@include reduced-motion {
-  .reveal--now {
-    animation: none;
+@keyframes reveal-draw {
+  from {
+    transform: scaleX(0);
   }
+  to {
+    transform: none;
+  }
+}
 
+@keyframes reveal-line {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes reveal-curtain {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@include reduced-motion {
   .reveal,
+  .reveal--now,
+  .reveal--now > .reveal__inner,
+  .reveal--curtain > *,
   .js .reveal:not(.is-in),
-  .js .reveal--hair:not(.is-in),
-  .js .reveal--word:not(.is-in) {
+  .js .reveal--curtain:not(.is-in) > *,
+  .js .reveal--line:not(.is-in) > .reveal__inner {
+    animation: none;
     opacity: 1;
     transform: none;
+    clip-path: none;
     transition: none;
   }
 }

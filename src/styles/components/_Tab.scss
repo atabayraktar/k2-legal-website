@@ -1,0 +1,48 @@
+@use 'tokens/mixins' as *;
+
+// File tab attached above a block. Merges with the block's top border (margin-bottom: -1px).
+.tab {
+  @include mono-label;
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: fit-content;
+  margin-bottom: -1px;
+  padding: 6px 14px;
+  border: 1px solid var(--tab-line, var(--rule));
+  border-bottom: 0;
+  background: var(--tab-bg, var(--bg));
+  color: var(--fg);
+  transition:
+    background-color var(--dur-color) var(--ease),
+    color var(--dur-color) var(--ease),
+    border-color var(--dur-color) var(--ease);
+
+  &--o1 {
+    margin-left: 0;
+  }
+
+  &--o2 {
+    margin-left: 22%;
+  }
+
+  &--o3 {
+    margin-left: 44%;
+  }
+
+  &.is-open {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+}
+
+@include down(tab-mini) {
+  .tab--o2 {
+    margin-left: 16%;
+  }
+
+  .tab--o3 {
+    margin-left: 32%;
+  }
+}

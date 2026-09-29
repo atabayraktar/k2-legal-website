@@ -1,256 +1,352 @@
 @use 'tokens/mixins' as *;
 
-// Ink hero: type first, cropped monogram in graphite, three factual hairline cells at the foot.
-.hero {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  min-height: max(720px, 100svh);
-  padding-top: calc(var(--header-h) + 40px);
+// "Dosya Kapagi". Bone cover sheet: typed meta band, headline in two rows with the tower photo between them,
+// entity statement in the gap, square stamp on the photo corner, one typed kunye line.
+// The two hero rows must never wrap: --hero-fs is the measured fit (DANISMANLIK across the container at 320-1920).
 
-  @include up(tab-max) {
-    padding-top: calc(var(--header-h) + 64px);
+@mixin hero-wide {
+  .hero__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto 1fr auto;
+    row-gap: var(--sp-16);
+    padding-top: var(--sp-24);
   }
 
-  @include short-landscape {
-    min-height: auto;
-    padding-top: calc(var(--header-h) + 32px);
+  .hero__row--1 {
+    grid-column: 1 / span 7;
   }
 
-  // The monogram is stamped whole (K and the angular ²) on the right edge of the content grid, in graphite on ink.
-  // Never cropped: it stays inside the hero frame at every size. It only drifts up slightly on scroll.
-  &__mark {
-    position: absolute;
-    z-index: 0;
-    right: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
-    top: calc(var(--header-h) + 24px);
-    height: 132px;
+  .hero__photo {
+    grid-area: 1 / 8 / 3 / -1;
+  }
+
+  .hero__copy {
+    grid-area: 2 / 1 / 3 / 7;
+    align-self: end;
+    padding-block: var(--sp-24);
+  }
+
+  .hero__reg {
+    display: block;
+  }
+
+  .hero__meta {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+
+  .hero__meta-l {
+    grid-column: 1 / span 7;
+  }
+
+  .hero__meta-r {
+    grid-column: 8 / -1;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .hero__kunye {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--sp-16);
+    row-gap: var(--sp-4);
+  }
+
+  .hero__kunye-i {
+    white-space: nowrap;
+  }
+
+  .hero__kunye-i:not(:last-child)::after {
+    display: inline;
+  }
+
+  .hero__actions {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--sp-32);
+  }
+
+  .hero__actions .btn {
     width: auto;
-    color: var(--graphite);
+  }
+}
+
+.hero {
+  // fit: DANIŞMANLIK measures ~6.75em in Bricolage 800 (-0.03em); 7.0 keeps a safety margin incl. scrollbar width
+  --hero-fs: min(190px, calc((100vw - 2 * var(--gutter)) / 7));
+  padding-top: var(--header-h);
+  padding-bottom: var(--sp-48);
+
+  &__frame {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - var(--header-h));
+  }
+
+  // typed meta band, one hairline under it (a document rule)
+  &__meta {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--sp-4);
+    padding-block: var(--sp-12);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: var(--t-label);
+    line-height: 1.4;
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
+    color: var(--fg-2);
+  }
+
+  &__meta .typed {
+    font-weight: 700;
+    font-size: inherit;
+    letter-spacing: inherit;
+  }
+
+  // registration crosses on the meta hairline: left edge, photo edge, right edge
+  &__reg {
+    display: none;
+    position: absolute;
+    top: 100%;
+    width: 13px;
+    height: 13px;
+    color: var(--fg-2);
     pointer-events: none;
 
-    @include up(tab-mini) {
-      top: calc(var(--header-h) + 56px);
-      height: 300px;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
     }
 
-    @include up(tab-max) {
-      top: calc(var(--header-h) + 64px);
-      height: min(520px, 52svh);
+    &::before {
+      left: 0;
+      right: 0;
+      top: 6px;
+      height: 1px;
     }
 
-    @include short-landscape {
-      top: calc(var(--header-h) + 16px);
-      height: 200px;
+    &::after {
+      top: 0;
+      bottom: 0;
+      left: 6px;
+      width: 1px;
     }
 
-    // Slow scroll drift, CSS only. Uses the standalone `translate` so it composes with the placement transform.
-    @supports (animation-timeline: scroll()) {
-      animation: hero-drift linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 100vh;
+    &--1 {
+      left: -6px;
+      transform: translateY(-6px);
+    }
+
+    &--2 {
+      left: calc(7 * (100% + var(--grid-gap)) / 12 - 6px);
+      transform: translateY(-6px);
+    }
+
+    &--3 {
+      right: -6px;
+      transform: translateY(-6px);
     }
   }
 
-  &__inner {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    padding-bottom: 48px;
-
-    @include up(tab-max) {
-      padding-bottom: 64px;
-    }
-  }
-
-  &__eyebrow {
-    margin-bottom: var(--sp-24);
-
-    @include up(tab-max) {
-      margin-bottom: var(--sp-32);
-    }
+  // The grid is 1 column on phones and tablets: row1 / photo / row2 / copy.
+  // The h1 is a subgrid spanning rows 1-3 so its two spans land in rows 1 and 3, with the photo between them.
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    row-gap: var(--sp-24);
+    padding-top: var(--sp-24);
   }
 
   &__title {
-    max-width: 12ch;
-    font-size: var(--fs-display-1);
-    line-height: 0.98;
-    letter-spacing: -0.025em;
-    color: var(--fg);
-    text-wrap: initial;
+    grid-area: 1 / 1 / 4 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
+    margin: 0;
+    font-size: var(--hero-fs);
+    line-height: 0.86;
+    letter-spacing: var(--ls-hero);
+    white-space: nowrap;
+    text-wrap: nowrap;
   }
 
-  // Each line is a mask; the inner span slides up into it.
-  &__line {
+  &__row {
     display: block;
-    overflow: hidden;
-    padding-bottom: 0.12em;
-    margin-bottom: -0.12em;
+    min-width: 0;
   }
 
-  &__line-inner {
-    display: block;
-
-    .js & {
-      animation: hero-line var(--dur-hero) var(--ease) both;
-      animation-delay: calc(var(--i, 0) * 100ms);
-    }
+  &__row--1 {
+    grid-row: 1;
+    grid-column: 1 / -1;
   }
 
-  @for $i from 0 through 5 {
-    &__line[data-i='#{$i}'] {
-      --i: #{$i};
-    }
+  &__row--2 {
+    grid-row: 3;
+    grid-column: 1 / -1;
+  }
+
+  &__photo {
+    position: relative;
+    z-index: 1;
+    grid-area: 2 / 1 / 3 / -1;
+    // corner ticks sit 8px outside the photo; keep them off the viewport edge
+    margin-inline: 0;
+  }
+
+  // multiply: the photo's blown-out white sky takes the bone of the page instead of reading as a white box
+  &__photo .frame__img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: 50% 30%;
+    mix-blend-mode: multiply;
+  }
+
+  &__actions .lnk {
+    white-space: nowrap;
+  }
+
+  &__cap {
+    margin-top: var(--sp-12);
+  }
+
+  &__stamp {
+    position: absolute;
+    left: -8px;
+    bottom: 44px;
+    z-index: 2;
+    width: 84px;
+    padding: 8px;
+    font-size: 9.5px;
+    background: var(--bone);
+    color: var(--ink);
+  }
+
+  &__copy {
+    grid-area: 4 / 1 / 5 / -1;
+    position: relative;
+    z-index: 1;
   }
 
   &__entity {
-    max-width: 52ch;
-    margin-top: var(--sp-32);
-    font-size: var(--fs-lede);
-    line-height: 1.6;
-    color: var(--fg-2);
-
-    @include up(tab-max) {
-      margin-top: var(--sp-48);
-    }
-
-    .js & {
-      animation: hero-rise var(--dur-hero) var(--ease) both;
-      animation-delay: 320ms;
-    }
+    max-width: 46ch;
+    margin: 0 0 var(--sp-24);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--t-lede);
+    line-height: 1.5;
+    color: var(--fg);
+    text-wrap: pretty;
   }
 
   &__actions {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--sp-16);
-    margin-top: var(--sp-32);
-
-    .btn {
-      width: 100%;
-    }
-
-    @include up(tab-mini) {
-      flex-direction: row;
-      align-items: center;
-      gap: var(--sp-16) var(--sp-32);
-      margin-top: var(--sp-48);
-
-      .btn {
-        width: auto;
-      }
-    }
-
-    .js & {
-      animation: hero-rise var(--dur-hero) var(--ease) both;
-      animation-delay: 420ms;
-    }
+    gap: var(--sp-8);
   }
 
-  &__cells {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+  &__actions .btn {
     width: 100%;
-    max-width: var(--container);
-    margin-inline: auto;
-    padding-inline: var(--gutter);
-
-    // Full-bleed top hairline while the cells stay on the container grid.
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 100vw;
-      height: 1px;
-      background: var(--rule);
-      transform: translateX(-50%);
-    }
-
-    @include up(tab-mini) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
   }
 
-  &__cell {
+  &__kunye {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-12);
-    padding: 20px 0;
-
-    + .hero__cell {
-      border-top: 1px solid var(--rule);
-    }
-
-    @include up(tab-mini) {
-      padding: 28px 0 32px;
-
-      + .hero__cell {
-        border-top: 0;
-        border-left: 1px solid var(--rule);
-        padding-left: var(--sp-24);
-      }
-    }
-
-    @include up(tab-max) {
-      padding-block: 32px 36px;
-
-      + .hero__cell {
-        padding-left: var(--sp-32);
-      }
-    }
+    gap: var(--sp-4);
+    margin: auto 0 0;
+    padding: var(--sp-32) 0 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--fg);
   }
 
-  &__cell-label {
-    @include label;
+  &__kunye-k {
+    font-weight: 700;
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
     color: var(--fg-2);
   }
 
-  &__cell-value {
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--fg);
-    overflow-wrap: anywhere;
+  // separator trails its item, so a wrapped line can never start with a lone slash
+  &__kunye-i:not(:last-child)::after {
+    content: '/';
+    display: none;
+    margin-left: var(--sp-16);
+    color: var(--fg-2);
   }
-}
 
-// Text is already painted when the animation starts (transform only, no opacity): protects LCP.
-@keyframes hero-line {
-  from {
-    transform: translateY(32%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
+  @include up(tab-mini) {
+    &__photo .frame__img {
+      aspect-ratio: 16 / 10;
+    }
 
-@keyframes hero-rise {
-  from {
-    transform: translateY(16px);
+    &__stamp {
+      left: -16px;
+      width: 96px;
+      font-size: 10.5px;
+    }
   }
-  to {
-    transform: none;
-  }
-}
 
-@keyframes hero-drift {
-  to {
-    translate: 0 -72px;
+  // wide two-zone composition
+  @media (min-width: 900px) {
+    @include hero-wide;
+
+    &__photo .frame__img {
+      aspect-ratio: 6 / 5;
+      object-position: 50% 35%;
+    }
+
+    &__stamp {
+      left: -56px;
+      bottom: 64px;
+      width: 112px;
+      padding: 10px;
+      font-size: 11px;
+    }
+  }
+
+  // landscape phones: keep the two-zone composition, drop the forced viewport height
+  @media (max-height: 520px) and (orientation: landscape) and (min-width: 560px) and (max-width: 899px) {
+    @include hero-wide;
+
+    &__frame {
+      min-height: 0;
+    }
+
+    &__photo {
+      grid-column: 9 / -1;
+    }
+
+    &__row--1 {
+      grid-column: 1 / span 8;
+    }
+
+    &__photo .frame__img {
+      aspect-ratio: 4 / 5;
+    }
+
+    &__stamp {
+      left: -28px;
+      width: 72px;
+      bottom: 36px;
+      padding: 6px;
+      font-size: 8.5px;
+    }
   }
 }
 
 @include reduced-motion {
-  .hero__mark {
-    animation: none;
-  }
-
-  .js .hero__line-inner,
-  .js .hero__entity,
-  .js .hero__actions {
-    animation: none;
+  .hero__reg {
+    transition: none;
   }
 }

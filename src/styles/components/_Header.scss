@@ -101,7 +101,7 @@
   &__nav {
     display: none;
 
-    @include up(tab-max) {
+    @include up(nav) {
       display: block;
       margin-right: var(--sp-16);
     }
@@ -110,14 +110,8 @@
       display: flex;
       gap: var(--sp-24);
 
-      @include up(desktop) {
+      @include up(wide) {
         gap: var(--sp-32);
-      }
-    }
-
-    @include up(desktop) {
-      ul {
-        gap: var(--sp-48);
       }
     }
   }
@@ -171,11 +165,10 @@
     gap: var(--sp-24);
   }
 
-  &__lang,
   &__cta {
     display: none;
 
-    @include up(tab-max) {
+    @include up(nav) {
       display: inline-flex;
     }
   }
@@ -192,7 +185,7 @@
     color: var(--fg);
     transition: color var(--dur-color) var(--ease);
 
-    @include up(tab-max) {
+    @include up(nav) {
       display: none;
     }
 

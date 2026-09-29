@@ -1,0 +1,38 @@
+@use 'tokens/mixins' as *;
+
+// Typewriter caption. Full text is always in the DOM. The wipe is a clip-path in 28 steps, started by .is-in.
+.typed {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--t-mono);
+  line-height: 1.6;
+
+  &__t {
+    display: block;
+  }
+
+  .js &__t {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .js &.is-in &__t {
+    animation: typed-wipe var(--dur-type) steps(28) forwards;
+  }
+}
+
+@keyframes typed-wipe {
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@include reduced-motion {
+  .js .typed__t,
+  .js .typed.is-in .typed__t {
+    clip-path: none;
+    animation: none;
+  }
+}

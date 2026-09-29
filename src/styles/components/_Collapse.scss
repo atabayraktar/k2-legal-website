@@ -1,0 +1,48 @@
+@use 'tokens/mixins' as *;
+
+// Animated height: grid-template-rows 0fr -> 1fr. Closed content stays in the DOM (inert + visibility:hidden, never display:none).
+.collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-base) var(--ease);
+
+  &.is-open {
+    grid-template-rows: 1fr;
+  }
+
+  &__inner {
+    min-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 240ms var(--ease),
+      visibility 0s linear var(--dur-base);
+  }
+
+  &.is-open > &__inner {
+    visibility: visible;
+    opacity: 1;
+    transition:
+      opacity 240ms var(--ease) 160ms,
+      visibility 0s;
+  }
+}
+
+// No JS: everything is open and readable.
+html:not(.js) .collapse {
+  grid-template-rows: 1fr;
+}
+
+html:not(.js) .collapse__inner {
+  visibility: visible;
+  opacity: 1;
+}
+
+@include reduced-motion {
+  .collapse,
+  .collapse__inner,
+  .collapse.is-open > .collapse__inner {
+    transition: none;
+  }
+}

@@ -1,18 +1,20 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import LangSwitch from './LangSwitch';
 import Monogram from './Monogram';
 import { site } from '../content/site.js';
 import { addressLine } from '../lib/format.js';
+import { anchorNav, anchorHref } from '../content/nav.js';
 import { pagePath } from '../lib/routes-util.js';
+import { useSectionNav } from '../hooks/useSectionNav';
 import { lockScroll, unlockScroll } from '../lib/scroll.js';
-import { useT } from '../hooks/useLocale';
+import { useT } from '../hooks/useCommon';
 import { renderPending } from '../lib/text.js';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export default function MenuOverlay({ open, onClose, returnFocusRef, current, alternates, locale }) {
+export default function MenuOverlay({ open, onClose, returnFocusRef }) {
   const t = useT();
+  const { go } = useSectionNav(onClose);
   const ref = useRef(null);
   const closeRef = useRef(null);
   const c = site.contact;
@@ -30,9 +32,9 @@ export default function MenuOverlay({ open, onClose, returnFocusRef, current, al
     };
   }, [open, returnFocusRef]);
 
-  // Desktop nav takes over at >=1024px.
+  // Desktop nav takes over at >=1100px.
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 1024px)');
+    const mq = window.matchMedia('(min-width: 1100px)');
     const onChange = (e) => {
       if (e.matches && open) onClose();
     };
@@ -74,7 +76,7 @@ export default function MenuOverlay({ open, onClose, returnFocusRef, current, al
     >
       <div className="menu__inner" data-lenis-prevent>
         <div className="menu__top container">
-          <Link className="menu__brand" href={pagePath('home', locale)} aria-label={site.legalName} onClick={onClose}>
+          <Link className="menu__brand" href={pagePath('home')} aria-label={site.legalName} onClick={onClose}>
             <img className="menu__logo" src="/logos/k2-horizontal-light.svg" width="414" height="100" alt="" />
             <Monogram className="menu__mark" />
           </Link>
@@ -85,16 +87,11 @@ export default function MenuOverlay({ open, onClose, returnFocusRef, current, al
 
         <nav className="menu__nav container" aria-label={t.menu.linksLabel}>
           <ol className="menu__list">
-            {t.nav.map((item, i) => (
-              <li className="menu__item" key={item.key}>
-                <Link
-                  className={`menu__link${current === item.key ? ' is-current' : ''}`}
-                  href={pagePath(item.key, locale)}
-                  aria-current={current === item.key ? 'page' : undefined}
-                  onClick={onClose}
-                >
+            {anchorNav.map((item, i) => (
+              <li className="menu__item" key={item.id}>
+                <Link className="menu__link" href={anchorHref(item.id)} onClick={go(item.id)}>
                   <span className="menu__num" aria-hidden="true">
-                    {String(i + 1).padStart(2, '0')}
+                    {String.fromCharCode(65 + i)}
                   </span>
                   <span>{item.label}</span>
                 </Link>
@@ -111,11 +108,10 @@ export default function MenuOverlay({ open, onClose, returnFocusRef, current, al
             <span>{renderPending(addressLine(c.address))}</span>
           </address>
           <div className="menu__side">
-            <LangSwitch locale={locale} alternates={alternates} />
             <ul className="menu__legal">
               {t.footer.legalLinks.map((l) => (
                 <li key={l.key}>
-                  <Link href={pagePath(l.key, locale)} onClick={onClose}>
+                  <Link href={pagePath(l.key)} onClick={onClose}>
                     {l.label}
                   </Link>
                 </li>

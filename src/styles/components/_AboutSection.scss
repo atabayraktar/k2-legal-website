@@ -1,0 +1,174 @@
+@use 'tokens/mixins' as *;
+
+// Hakkimizda (ink). The photo column reaches 96px below the section onto the bone section that follows,
+// so this section must stack above its successor and never clip.
+.about-section {
+  position: relative;
+  z-index: 2;
+  padding-block: var(--sp-96);
+
+  --about-pb: var(--sp-96);
+
+  @include up(tab-max) {
+    --about-pb: var(--sp-144);
+    padding-block: var(--sp-144) var(--about-pb);
+  }
+
+  &__grid {
+    row-gap: var(--sp-32);
+    align-items: start;
+
+    @include up(tab-max) {
+      row-gap: var(--sp-64);
+    }
+  }
+
+  // docket: horizontal on phones, vertical in the left gutter (sticky) on desktop
+  &__docket {
+    @include up(tab-max) {
+      grid-column: 1 / span 1;
+      grid-row: 1 / span 2;
+      position: sticky;
+      top: calc(var(--header-h) + var(--sp-32));
+      align-self: start;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      white-space: nowrap;
+    }
+  }
+
+  &__docket.docket--v {
+    @include down(tab-max) {
+      writing-mode: horizontal-tb;
+      transform: none;
+    }
+  }
+
+  // headline runs the full width; the narrow column and the photo sit beside each other under it
+  &__title {
+    margin: 0;
+
+    @include up(tab-max) {
+      grid-column: 2 / -1;
+      grid-row: 1;
+    }
+  }
+
+  &__text {
+    @include up(tab-max) {
+      grid-column: 2 / span 5;
+      grid-row: 2;
+      align-self: start;
+    }
+  }
+
+  &__lede {
+    max-width: 40ch;
+    margin: 0 0 var(--sp-24);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--t-lede);
+    line-height: 1.5;
+    color: var(--fg);
+    text-wrap: pretty;
+  }
+
+  &__foot {
+    margin-top: var(--sp-32);
+  }
+
+  &__kunye {
+    max-width: 520px;
+  }
+
+  &__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-12);
+    min-height: var(--touch);
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: var(--t-label);
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  &__glyph {
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border: 1px solid currentColor;
+    font-size: 16px;
+    line-height: 1;
+    transition:
+      background-color var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease);
+  }
+
+  &__toggle-l {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+    transition: text-underline-offset var(--dur-fast) var(--ease);
+  }
+
+  &__toggle[aria-expanded='true'] &__glyph {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  &__ledger {
+    padding-top: var(--sp-8);
+    padding-bottom: var(--sp-8);
+  }
+
+  &__photo {
+    margin-inline: 6px;
+
+    @include up(tab-max) {
+      grid-column: 9 / -1;
+      grid-row: 2;
+      margin: 0;
+      position: relative;
+      z-index: 3;
+      // bottom-anchored, then pulled 96px past the section edge onto the bone İlkeler section
+      align-self: end;
+      margin-bottom: calc((var(--about-pb) + var(--sp-96)) * -1);
+    }
+  }
+
+  &__photo .frame__img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: 50% 45%;
+
+    @include up(tab-max) {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  // caption sits in the overlap zone, on bone
+  &__cap {
+    color: var(--ash);
+
+    // desktop: the caption lands on the bone section below
+    @include up(tab-max) {
+      color: var(--stone);
+    }
+  }
+}
+
+.about-section__toggle:hover .about-section__toggle-l {
+  text-underline-offset: 8px;
+}
+
+.about-section__toggle:active {
+  transform: translateY(1px);
+}

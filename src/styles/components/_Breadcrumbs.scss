@@ -1,26 +1,44 @@
 @use 'tokens/mixins' as *;
 
 .breadcrumbs {
-  margin-bottom: var(--sp-32);
+  margin-bottom: var(--sp-24);
 
   &__list {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 0 var(--sp-8);
+    min-height: var(--touch);
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   &__item {
     display: inline-flex;
+    flex: 0 0 auto;
     align-items: center;
     gap: var(--sp-8);
-    @include label;
-    font-size: 11px;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: var(--t-label);
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
     color: var(--fg-2);
 
     + .breadcrumbs__item::before {
       content: '/';
-      color: var(--fg-2);
+    }
+
+    &:last-child {
+      flex: 0 1 auto;
+      min-width: 0;
+
+      > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 
@@ -28,11 +46,27 @@
     display: inline-flex;
     align-items: center;
     min-height: var(--touch);
-    min-width: var(--touch);
-    transition: color var(--dur-color) var(--ease);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    transition:
+      color var(--dur-color) var(--ease),
+      text-decoration-color var(--dur-color) var(--ease);
 
     @include hover {
       color: var(--accent);
+      text-decoration-color: currentColor;
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+  }
+}
+
+@include reduced-motion {
+  .breadcrumbs__link {
+    transition: none;
   }
 }

@@ -6,7 +6,7 @@ export default function Page(props) {
 }
 
 export function getStaticProps() {
-  const { locale, common, seo } = getContent('tr', 'cookies');
-  const { page: legal } = getContent('tr', 'legal');
-  return { props: { locale, common, seo, legal } };
+  const { common, seo } = getContent('cookies');
+  const { page: legal } = getContent('legal');
+  return { props: { common, seo, legal } };
 }

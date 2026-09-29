@@ -1,33 +1,49 @@
 @use 'tokens/mixins' as *;
 
+// Type v2: Bricolage Grotesque display (800/700), Courier Prime accent, Instrument Sans body.
+// Emphasis comes from weight, size, case, mono or layout. Never from style or a coloured word.
 h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-serif);
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-family: var(--font-display);
   text-wrap: balance;
+  font-synthesis: none;
 }
 
-h1 {
-  font-size: var(--fs-display-2);
-}
-
+h1,
 h2 {
-  font-size: var(--fs-display-2);
+  @include display(var(--t-h2), 800, var(--ls-h2), 1.02);
+  text-transform: uppercase;
 }
 
 h3 {
-  font-size: var(--fs-h3);
+  @include display(var(--t-h3), 800, var(--ls-h3), 1.02);
 }
 
 h4 {
-  font-size: var(--fs-h4);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  @include display(var(--t-h4), 700, var(--ls-h4), 1.1);
+}
+
+// Hero headline only (fit rule is tuned by the Hero component).
+.t-hero {
+  @include display(var(--t-hero), 800, var(--ls-hero), 0.86);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+// Section titles at the two heading scales, for use on non-heading tags or to override a level.
+.t-h2 {
+  @include display(var(--t-h2), 800, var(--ls-h2), 1.02);
+  text-transform: uppercase;
+}
+
+.t-h3 {
+  @include display(var(--t-h3), 800, var(--ls-h3), 1.02);
+}
+
+.t-h4 {
+  @include display(var(--t-h4), 700, var(--ls-h4), 1.1);
 }
 
 // text-wrap: pretty only where long-form reading benefits; on every paragraph it adds layout cost to first paint.
@@ -36,18 +52,40 @@ h4 {
   text-wrap: pretty;
 }
 
-.em {
-  font-family: var(--font-serif-italic, var(--font-serif)), var(--font-serif);
-  font-style: italic;
-  font-weight: 300;
-  color: var(--accent);
+.lede {
+  max-width: 46ch;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--t-lede);
+  line-height: 1.5;
+  color: var(--fg-2);
+}
+
+.body {
+  max-width: 62ch;
+  font-size: var(--t-body);
+  line-height: 1.65;
+}
+
+.small {
+  font-size: var(--t-small);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+// Typewriter annotation: captions, kunye lines, identifiers.
+.mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--t-mono);
+  line-height: 1.6;
+  font-synthesis: none;
 }
 
 // Unresolved client data: a neutral inline blank, clearly pending, never display-scale.
 .pending {
   font-family: var(--font-sans);
   font-size: 0.82em;
-  font-style: normal;
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--fg-2);
@@ -55,18 +93,13 @@ h4 {
   white-space: nowrap;
 }
 
-.label,
-.eyebrow {
-  @include label;
+.label {
+  @include mono-label;
   color: var(--fg-2);
 }
 
+// Legacy v1 class: still referenced by v1 components until WP-B/C replace them. Mapped onto the typewriter label.
 .eyebrow {
-  letter-spacing: var(--ls-eyebrow);
-}
-
-.lede {
-  font-size: var(--fs-lede);
-  line-height: 1.6;
+  @include mono-label;
   color: var(--fg-2);
 }

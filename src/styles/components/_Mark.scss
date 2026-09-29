@@ -1,0 +1,10 @@
+@use 'tokens/mixins' as *;
+
+// Inverted label: takes the section foreground as its fill, so it flips on ink sections by itself.
+.mark {
+  @include mono-label;
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--fg);
+  color: var(--bg);
+}

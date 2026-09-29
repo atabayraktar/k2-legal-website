@@ -1,6 +1,7 @@
-import { site } from '../content/site.js';
+import { site, FEATURES } from '../content/site.js';
 import { isPending } from './pending.js';
 import { abs, origin, pagePath } from './routes-util.js';
+import { fmt, addressLine } from './format.js';
 
 // Removes null / pending / empty values recursively so placeholders never reach JSON-LD.
 export function pruneSchema(v) {
@@ -24,14 +25,14 @@ const orgId = () => `${origin()}/#organization`;
 
 export const orgRef = () => ({ '@id': orgId() });
 
-export function orgSchema(locale = 'tr') {
+export function orgSchema() {
   const c = site.contact;
   const a = c.address;
   return pruneSchema({
     '@type': ['LegalService', 'Organization'],
     '@id': orgId(),
     name: site.legalName,
-    url: abs(pagePath('home', locale)),
+    url: abs(pagePath('home')),
     logo: abs('/og/og-default.png'),
     image: abs(site.seo.ogImage),
     telephone: c.phone.tel,
@@ -48,13 +49,13 @@ export function orgSchema(locale = 'tr') {
   });
 }
 
-export function websiteSchema(locale = 'tr') {
+export function websiteSchema() {
   return {
     '@type': 'WebSite',
     '@id': `${origin()}/#website`,
-    url: abs(pagePath('home', locale)),
+    url: abs(pagePath('home')),
     name: site.legalName,
-    inLanguage: locale,
+    inLanguage: 'tr',
     publisher: orgRef(),
   };
 }
@@ -91,10 +92,39 @@ export function personSchema(p) {
   });
 }
 
+// Values for {tokens} in content strings (fmt(str, siteVars())). Pending data stays as its "[...]" placeholder.
+export function siteVars() {
+  const c = site.contact;
+  return {
+    legalName: site.legalName,
+    city: site.city,
+    baro: site.baro,
+    baroRegistry: site.baroRegistry,
+    foundedYear: site.foundedYear,
+    phone: c.phone.display,
+    email: c.email,
+    kep: c.kep,
+    address: addressLine(c.address),
+    hours: c.hours.display,
+    year: new Date().getFullYear(),
+  };
+}
+
+// FAQPage built from the SAME items the page renders (tr.faq.items) so text cannot drift. Items are left out when
+// they still contain placeholder data, or are gated on FEATURES.practiceConfirmed (gate: 'practice').
+const hasPending = (str) => /\[[^\]]*\]|___/.test(str);
+export function faqItems(items) {
+  const vars = siteVars();
+  return items
+    .filter((it) => it.gate !== 'practice' || FEATURES.practiceConfirmed)
+    .map((it) => ({ id: it.id, q: fmt(it.q, vars), a: fmt(it.a, vars) }))
+    .filter((it) => !hasPending(it.q) && !hasPending(it.a) && !/\{\w+\}/.test(it.q + it.a));
+}
+
 export function faqSchema(items) {
   return {
     '@type': 'FAQPage',
-    mainEntity: items.map((it) => ({
+    mainEntity: faqItems(items).map((it) => ({
       '@type': 'Question',
       name: it.q,
       acceptedAnswer: { '@type': 'Answer', text: it.a },

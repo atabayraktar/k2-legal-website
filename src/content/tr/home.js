@@ -1,48 +1,120 @@
+// Home page copy (redesign v2). No emphasis markers, no eyebrow strings. Display case is applied by CSS.
+// {tokens} resolve via fmt(str, siteVars()); unresolved data renders as bracket placeholders.
 export default {
   hero: {
-    eyebrow: 'Avukatlık Ortaklığı',
-    // Neutral, descriptive statement (no self-praise, no comparison). One italic word, factual.
-    lines: ['Dava ve', '*danışmanlık*'],
+    metaLeft: 'Karaman Berat Avukatlık Ortaklığı',
+    metaRight: '{city} / {baro}',
+    // Neutral, descriptive statement. Rendered inside one h1 as two spans (CSS uppercase).
+    lines: ['Dava ve', 'Danışmanlık'],
     entity:
-      'Karaman Berat Avukatlık Ortaklığı, tescilli bir avukatlık ortaklığıdır. Ortaklık dava ve danışmanlık faaliyeti yürütür; faaliyet alanları Çalışma Alanları sayfasında yer alır.',
+      'Karaman Berat Avukatlık Ortaklığı, tescilli bir avukatlık ortaklığıdır. Ortaklık dava ve danışmanlık faaliyeti yürütür; faaliyet alanları bu sayfada yer alır.',
     ctaPrimary: 'Randevu Talep Et',
     ctaSecondary: 'Çalışma Alanları',
-    cells: [
+    photoCaption: 'Beton, alt açı',
+    stamp: 'Karaman Berat Avukatlık Ortaklığı',
+    kunye: [
       { label: 'Tescilli unvan', value: '{legalName}' },
       { label: 'Şehir / Baro', value: '{city} · {baro}' },
-      { label: 'İletişim', value: '{phone} · {email}' },
+      { label: 'Telefon', value: '{phone}' },
+      { label: 'E-posta', value: '{email}' },
     ],
   },
-  manifesto: {
-    eyebrow: '01 — Hakkımızda',
-    text: 'Karaman Berat Avukatlık Ortaklığı, tescilli bir avukatlık ortaklığıdır. Dava ve danışmanlık dosyaları ilgili mevzuata uygun olarak yürütülür; müvekkil, dosyanın durumu hakkında bilgilendirilir. Müvekkil bilgi ve belgelerinin gizliliği esastır.',
-    cta: 'Hakkımızda',
+  about: {
+    docket: 'Hakkımızda',
+    h2: 'Tescilli bir avukatlık ortaklığı',
+    lede: 'Ortaklığın faaliyeti 1136 sayılı Avukatlık Kanunu ve Türkiye Barolar Birliği meslek kurallarına tabidir. Müvekkile ait bilgi ve belgeler, avukatın kanundan doğan sır saklama yükümlülüğü kapsamındadır.',
+    photoCaption: 'Sarmal merdiven',
+    kunye: {
+      trigger: 'Ortaklık künyesi',
+      close: 'Künyeyi daralt',
+      rows: [
+        { key: 'legalName', label: 'Tescilli unvan', value: '{legalName}' },
+        { key: 'cityBaro', label: 'Şehir / Baro', value: '{city} · {baro}' },
+        { key: 'baroRegistry', label: 'Baro sicil', value: '{baroRegistry}' },
+        { key: 'foundedYear', label: 'Kuruluş', value: '{foundedYear}' },
+        { key: 'activity', label: 'Faaliyet', value: 'Dava ve danışmanlık' },
+      ],
+    },
+  },
+  principles: {
+    mark: 'İlkeler',
+    h2: 'Çalışma ilkeleri',
+    lede: 'Aşağıdaki başlıklar, avukatlık mevzuatından doğan genel yükümlülükleri özetler. Bir başlık seçin; açıklaması kâğıda işlenir.',
+    rackLabel: 'Çalışma ilkeleri',
+    sheetLabel: 'Dosya kâğıdı',
+    photoCaption: 'Kâğıt ve damga',
+    items: [
+      {
+        id: 'gizlilik',
+        index: 'M.1',
+        name: 'Gizlilik',
+        statement: 'Sır saklama yükümlülüğü Avukatlık Kanunu’ndan doğar.',
+        detail:
+          'Avukat, mesleği sırasında öğrendiği bilgileri saklamakla yükümlüdür. Bu nedenle iletişim formu veya e-posta yoluyla gizli bilgi ve belge göndermemeniz rica olunur; bunlar yazılı vekâlet veya hizmet sözleşmesinden sonra paylaşılır.',
+      },
+      {
+        id: 'mevzuat',
+        index: 'M.2',
+        name: 'Mevzuat çerçevesi',
+        statement: 'Faaliyetin çerçevesini kanun ve meslek kuralları çizer.',
+        detail:
+          '1136 sayılı Avukatlık Kanunu, Türkiye Barolar Birliği Avukatlık Meslek Kuralları ve ilgili diğer mevzuat, dava ve danışmanlık faaliyetinin çerçevesini belirler.',
+      },
+      {
+        id: 'bilgilendirme',
+        index: 'M.3',
+        name: 'Bilgilendirme',
+        statement: 'Müvekkil ile dosyanın durumu hakkında bilgi paylaşılır.',
+        detail:
+          'Avukat ile müvekkil arasındaki bilgi akışı, dosyanın gelişimini aktarmaya yöneliktir; sonuç konusunda bir taahhüt içermez.',
+      },
+      {
+        id: 'kayit',
+        index: 'M.4',
+        name: 'Yazılı kayıt',
+        statement: 'Talepler ve işlemler yazılı olarak kayda geçer.',
+        detail:
+          'Karar müvekkile aittir. Seçenekler ve süreler yazılı olarak ortaya konur; yazışmalar ve belgeler dosyada yer alır.',
+      },
+    ],
   },
   practice: {
-    eyebrow: '02 — Çalışma Alanları',
-    title: 'Çalışma alanları',
-    intro: 'Aşağıdaki alanlarda faaliyet gösteriyoruz. Her başlık, ilgili sayfada ayrıntılı olarak açıklanır.',
-    viewAll: 'Tümünü Gör',
+    tab: 'Çalışma alanları',
+    h2: 'Faaliyet alanları',
+    intro:
+      'Ortaklık aşağıdaki alanlarda dava ve danışmanlık faaliyeti yürütür. Liste, bilgilendirme amaçlı bir dökümdür; ihtisas veya üstünlük beyanı içermez.',
+    photoCaption: 'Mimari detay',
+    indexPrefix: 'A.',
+    topicsLabel: 'Konu başlıkları',
+    approachLabel: 'Süreç',
+    cta: 'İletişim',
+    readSeparate: 'Ayrı sayfada oku',
   },
   process: {
-    eyebrow: '03 — Çalışma Biçimi',
-    title: 'Bir dosya nasıl yürür',
+    stamp: 'Evreler',
+    h2: 'Bir dosya nasıl yürür',
+    stageLabel: 'Evre',
     steps: [
-      { n: '01', title: 'Dinleme & İnceleme', text: 'Talep, ilgili belge ve bilgilerle birlikte dinlenir; dosyanın hukuki ve usuli durumu incelenir.' },
-      { n: '02', title: 'Değerlendirme', text: 'Uygulanacak mevzuat, süreler ve başvurulabilecek yollar yazılı olarak ortaya konur. Karar müvekkile aittir.' },
-      { n: '03', title: 'Yürütme', text: 'Seçilen yol doğrultusunda dilekçe, sözleşme, başvuru ve duruşma işleri ilgili mevzuata uygun biçimde yürütülür.' },
-      { n: '04', title: 'Bilgilendirme', text: 'Her önemli aşamadan sonra müvekkil yazılı veya sözlü olarak bilgilendirilir; belgeler dosyada saklanır.' },
+      { n: '1', title: 'Dinleme ve İnceleme', text: 'Talep, ilgili belge ve bilgilerle birlikte dinlenir; dosyanın hukuki ve usuli durumu incelenir.' },
+      { n: '2', title: 'Değerlendirme', text: 'Uygulanacak mevzuat, süreler ve başvurulabilecek yollar yazılı olarak ortaya konur. Karar müvekkile aittir.' },
+      { n: '3', title: 'Yürütme', text: 'Seçilen yol doğrultusunda dilekçe, sözleşme, başvuru ve duruşma işleri ilgili mevzuata uygun biçimde yürütülür.' },
+      { n: '4', title: 'Bilgilendirme', text: 'Her önemli aşamadan sonra müvekkil yazılı veya sözlü olarak bilgilendirilir; belgeler dosyada saklanır.' },
     ],
   },
   team: {
-    eyebrow: '04 — Ekibimiz',
-    title: 'Ortaklar',
-    intro: 'Ortaklarımızın baro ve sicil bilgileri.',
-    cta: 'Ekibimiz',
+    docket: 'Ekibimiz',
+    label: 'Sicil',
+    h2: 'Ortaklar',
+    intro: 'Ortakların baro ve sicil bilgileri.',
+  },
+  band: {
+    caption: 'Koridor',
   },
   contact: {
-    eyebrow: '05 — İletişim',
+    docket: 'İletişim',
     title: 'İletişim',
     intro: 'Randevu talebi ve genel sorular için aşağıdaki kanallar kullanılabilir.',
+    formLabel: 'Talep formu',
+    whatsappLink: 'WhatsApp',
   },
 };

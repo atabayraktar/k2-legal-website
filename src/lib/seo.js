@@ -1,5 +1,5 @@
 import { site } from '../content/site.js';
-import { abs, alternates } from './routes-util.js';
+import { abs, routePath } from './routes-util.js';
 
 const MAX = 60;
 
@@ -17,11 +17,7 @@ export function trimDescription(text, max = 155) {
   return `${cut.slice(0, cut.lastIndexOf(' '))}…`;
 }
 
-export function buildMeta({ locale, routeKey, params }) {
-  const alt = alternates(routeKey, params);
-  return {
-    path: alt[locale],
-    canonical: abs(alt[locale]),
-    alternates: { tr: abs(alt.tr), en: abs(alt.en), 'x-default': abs(alt.tr) },
-  };
+export function buildMeta({ routeKey, params }) {
+  const path = routePath(routeKey, params);
+  return { path, canonical: abs(path) };
 }

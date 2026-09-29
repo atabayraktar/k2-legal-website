@@ -47,7 +47,7 @@ export default {
         h2: 'Hukuki sebep',
         paragraphs: [
           'Verileriniz, KVKK m.5/2-f uyarınca ilgili kişinin temel hak ve özgürlüklerine zarar vermemek kaydıyla veri sorumlusunun meşru menfaati için veri işlenmesinin zorunlu olması ve KVKK m.5/2-c uyarınca talebinizle bağlantılı bir sözleşmenin kurulmasına yönelik ön işlemlerin yapılması hukuki sebeplerine dayanılarak işlenir.',
-          'İletişim formunda açık rıza aranmaz; formu göndermeden önce bu metni okuduğunuzu onaylamanız istenir. […]',
+          'İletişim formunda açık rıza aranmaz; formu göndermeden önce bu metni okuduğunuzu onaylamanız istenir.',
         ],
       },
       {
@@ -146,7 +146,7 @@ export default {
         id: 'yazi-harita',
         h2: 'Yazı tipleri ve harita',
         paragraphs: [
-          'Yazı tipleri sitenin kendi sunucusundan yüklenir; üçüncü taraf yazı tipi hizmetlerine istek gönderilmez. Adres bilgisi için gömülü harita kullanılmaz; harita, yalnızca bir görsel ve dış bağlantı olarak sunulur. İletişim formu bir hizmet sağlayıcı üzerinden gönderilirse, yalnızca gönderim anında o sağlayıcıya istek yapılır; çerez bırakılmaz.',
+          'Yazı tipleri sitenin kendi sunucusundan yüklenir; üçüncü taraf yazı tipi hizmetlerine istek gönderilmez. Adres bilgisi için gömülü harita kullanılmaz; harita, yalnızca bir görsel ve dış bağlantı olarak sunulur. İletişim formu bir hizmet sağlayıcı üzerinden gönderilirse, yalnızca gönderim anında o sağlayıcıya istek yapılır; bu site tarafından çerez bırakılmaz.',
         ],
       },
       {
@@ -196,7 +196,7 @@ export default {
         id: 'gizli',
         h2: 'Gizli bilgi göndermeyin',
         paragraphs: [
-          'İletişim formuna veya diğer ilk iletişim kanallarına gizli bilgi, belge ya da özel nitelikli kişisel veri yazmayınız. Bu kanallardan iletilen bilgiler, avukat–müvekkil ilişkisi kurulmadan önce gizlilik korumasına sahip olmayabilir.',
+          'İletişim formuna veya diğer ilk iletişim kanallarına gizli bilgi, belge ya da özel nitelikli kişisel veri yazmayınız. Avukat–müvekkil ilişkisi kurulmadan önce iletilen bilgilerin gizlilik kapsamı belirsiz olabilir; bu nedenle göndermeyiniz.',
         ],
       },
       {

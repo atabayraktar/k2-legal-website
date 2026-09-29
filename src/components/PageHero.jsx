@@ -1,28 +1,23 @@
 import Breadcrumbs from './Breadcrumbs';
 import Reveal from './Reveal';
-import { renderEm } from '../lib/text.js';
+import { plain } from '../lib/text.js';
 
-export default function PageHero({ eyebrow, title, as: Tag = 'h1', lede, breadcrumbs, id = 'page-title', children }) {
+// Compact title block for standalone prose pages (legal). No home layouts, no eyebrow.
+export default function PageHero({ title, as: Tag = 'h1', lede, breadcrumbs, id = 'page-title' }) {
   return (
-    <section className="page-hero" data-theme="light" aria-labelledby={id}>
+    <section className="page-hero" aria-labelledby={id}>
       <div className="container">
         {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
-        {eyebrow && (
-          <Reveal now className="page-hero__eyebrow">
-            <p className="eyebrow">{eyebrow}</p>
-          </Reveal>
-        )}
-        <Reveal now delay={1}>
+        <Reveal now>
           <Tag id={id} className="page-hero__title">
-            {renderEm(title)}
+            {plain(title)}
           </Tag>
         </Reveal>
         {lede && (
-          <Reveal now delay={2}>
+          <Reveal now delay={1}>
             <p className="page-hero__lede">{lede}</p>
           </Reveal>
         )}
-        {children}
       </div>
     </section>
   );

@@ -1,0 +1,19 @@
+@use 'tokens/mixins' as *;
+
+// Decorative redaction bar (aria-hidden in markup). Width in ch of the parent font.
+.redact {
+  display: block;
+  max-width: 100%;
+  height: 0.9em;
+  background: var(--fg);
+
+  & + & {
+    margin-top: 0.5em;
+  }
+
+  @each $w in (6, 8, 10, 12, 16, 20, 24, 32, 40) {
+    &--w#{$w} {
+      width: #{$w}ch;
+    }
+  }
+}

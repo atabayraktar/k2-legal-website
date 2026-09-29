@@ -1,186 +1,248 @@
 @use 'tokens/mixins' as *;
 
-// Paper fields on a graphite panel. Errors sit under the field; status is an aria-live region.
+// Form: no background, no box. Underline fields, typewriter labels, wax only on error/focus and the submit.
 .cf {
   display: grid;
   gap: var(--sp-24);
-  padding: var(--sp-24);
-  background: var(--graphite);
-  border: 1px solid var(--line-dk);
-  color: var(--bone);
-
-  @include up(tab-mini) {
-    padding: var(--sp-48);
-  }
-
-  &__warning {
-    padding: var(--sp-16) 20px;
-    border: 1px solid var(--line-dk);
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--ash);
-  }
+  margin-top: var(--sp-16);
 
   &__row {
+    position: relative;
     display: grid;
-    gap: var(--sp-8);
+    gap: var(--sp-4);
   }
 
   &__label {
-    @include label;
-    color: var(--ash);
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-12);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: var(--t-label);
+    line-height: 1.4;
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
+    color: var(--stone);
+
+    @include up(tab-max) {
+      font-size: 13px;
+    }
+  }
+
+  &__n {
+    color: var(--ink);
   }
 
   &__req {
-    color: var(--ash);
+    color: var(--ink);
   }
 
   &__input {
+    display: block;
     width: 100%;
-    height: var(--control-h);
-    padding: 0 var(--sp-16);
-    border: 1px solid transparent;
-    background: var(--paper);
+    margin: 0;
+    padding: 6px 0 10px;
+    border: 0;
+    border-bottom: 1px solid var(--ink);
+    border-radius: 0;
+    background: transparent;
     color: var(--ink);
-    font: 400 16px/1.4 var(--font-sans);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 20px; // 16px+ also prevents iOS zoom on focus
+    line-height: 1.4;
     appearance: none;
     transition: border-color var(--dur-color) var(--ease);
 
+    &::placeholder {
+      color: var(--stone);
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    // focus: the underline thickens (2px drawn as an inset ring on the bottom) and an outline sits on the field
     &:focus-visible {
-      outline: 2px solid var(--wax-lit);
+      outline: 2px solid var(--wax);
       outline-offset: 2px;
+      border-bottom-color: var(--wax);
     }
 
     &[aria-invalid='true'] {
-      border-color: var(--wax);
-      border-width: 1px 1px 1px 4px;
+      border-bottom: 2px solid var(--wax);
     }
   }
 
   &__textarea {
-    height: auto;
-    min-height: 160px;
-    padding-block: 14px;
+    min-height: 132px;
     resize: vertical;
+    // ruled-line feel without gradients: nothing extra, the underline is the field
   }
 
   &__error {
-    font-size: 14px;
-    line-height: 1.45;
-    color: var(--wax-lit);
+    margin: var(--sp-8) 0 0;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--wax);
+
+    &::before {
+      content: 'Hata — ';
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+
+  // confidentiality note
+  &__warning {
+    display: grid;
+    gap: var(--sp-12);
+    padding-top: var(--sp-16);
+    border-top: 1px dotted var(--line);
+  }
+
+  &__warning-top {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-16);
+  }
+
+  &__redact {
+    flex: 0 1 12ch;
+    height: 0.9em;
+    font-size: 13px;
+  }
+
+  &__warning-t {
+    max-width: 52ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  // consent checkbox: square, 2px ink border, ink fill with a drawn check. 44px row = hit area.
+  &__consent {
+    gap: 0;
   }
 
   &__consent-line {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--sp-16);
+    min-height: var(--touch);
   }
 
-  // Native checkbox, restyled square. The hit area is the 44px label row.
   &__check {
     flex: none;
     position: relative;
     width: 24px;
     height: 24px;
-    margin: 10px 0;
-    border: 1px solid var(--bone);
+    margin: 0;
+    border: 2px solid var(--ink);
+    border-radius: 0;
     background: transparent;
     appearance: none;
     cursor: pointer;
+    transition: background-color var(--dur-fast) var(--ease);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 1px;
+      width: 6px;
+      height: 11px;
+      border: solid var(--bone);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) scale(0);
+      transition: transform var(--dur-fast) var(--ease);
+    }
 
     &:checked {
-      background: var(--bone);
+      background: var(--ink);
 
       &::after {
-        content: '';
-        position: absolute;
-        left: 7px;
-        top: 2px;
-        width: 7px;
-        height: 13px;
-        border: solid var(--ink);
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
+        transform: rotate(45deg) scale(1);
       }
     }
 
     &:focus-visible {
-      outline: 2px solid var(--wax-lit);
+      outline: 2px solid var(--wax);
       outline-offset: 4px;
     }
 
     &[aria-invalid='true'] {
-      border-color: var(--wax-lit);
+      border-color: var(--wax);
     }
   }
 
   &__consent-label {
-    box-sizing: border-box;
-    min-height: var(--touch);
-    padding-block: 10px;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--bone);
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--ink);
+    cursor: pointer;
   }
 
   &__link {
-    color: var(--bone);
-    // Inline link: padding extends the hit area to ~44px without touching the line box.
-    padding-block: 12px;
+    color: inherit;
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
     transition: color var(--dur-color) var(--ease);
 
     @include hover {
-      color: var(--wax-lit);
+      color: var(--wax);
     }
 
     &:focus-visible {
-      outline: 2px solid var(--wax-lit);
+      outline: 2px solid var(--wax);
       outline-offset: 4px;
     }
   }
 
   &__actions {
-    .btn {
-      width: 100%;
+    display: flex;
 
-      @include up(tab-mini) {
-        width: auto;
-        min-width: 220px;
+    @include down(tab-mini) {
+      .btn {
+        width: 100%;
       }
     }
   }
 
+  // status line reserves its height so success/error never shifts the layout
   &__status {
-    min-height: 1.5em;
-    font-size: 15px;
+    min-height: 48px;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 14px;
     line-height: 1.5;
-    color: var(--bone);
+    color: var(--ink);
 
     &--error {
-      color: var(--wax-lit);
-    }
-
-    &:empty {
-      display: none;
+      color: var(--wax);
     }
   }
 
-  // Honeypot: out of the visual and tab flow, hidden from assistive tech.
+  // honeypot: off-screen, not display:none (some bots skip hidden fields)
   &__hp {
     position: absolute;
-    left: -9999px;
+    left: -10000px;
     width: 1px;
     height: 1px;
     overflow: hidden;
   }
-}
 
-@include reduced-motion {
-  .cf__input,
-  .cf__link {
-    transition: none;
+  @include reduced-motion {
+    &__input,
+    &__check,
+    &__check::after,
+    &__link {
+      transition: none;
+    }
   }
 }

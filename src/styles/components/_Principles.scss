@@ -1,0 +1,377 @@
+@use 'tokens/mixins' as *;
+
+// Ilkeler: "Muhur Masasi". A rack of four stamps on the left, a sheet of paper on the right that receives the chosen impression.
+.principles {
+  --rack-row: 60px;
+  --rack-lift: 12px;
+  padding-block: clamp(72px, 12vw, 176px) clamp(72px, 10vw, 144px);
+
+  @include up(tab-mini) {
+    --rack-row: 72px;
+    --rack-lift: 24px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-48);
+    align-items: start;
+
+    @include up(tab-max) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+      row-gap: 0;
+    }
+  }
+
+  &__desk {
+    display: grid;
+    justify-items: start;
+    gap: var(--sp-24);
+
+    @include up(tab-max) {
+      grid-column: 1 / span 5;
+    }
+  }
+
+  &__mark {
+    display: block;
+  }
+
+  &__title {
+    margin: 0;
+    max-width: 8ch;
+  }
+
+  &__lede {
+    max-width: 38ch;
+    margin: 0;
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.55;
+    color: var(--stone);
+  }
+
+  // ---- rack: vertical tablist of stamps ------------------------------------------------------------------------
+  &__rack {
+    display: grid;
+    width: 100%;
+    margin-top: var(--sp-16);
+    border-bottom: 1px solid var(--line);
+  }
+
+  &__slot {
+    padding-right: var(--rack-lift);
+    border-top: 1px solid var(--line);
+  }
+
+  &__tab {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--sp-12);
+    width: 100%;
+    min-height: var(--rack-row);
+    padding: 0 var(--sp-16) 0 var(--sp-12);
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      transform var(--dur-base) var(--ease),
+      background-color var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease);
+
+    @include up(tab-mini) {
+      grid-template-columns: 56px minmax(0, 1fr);
+      padding: 0 var(--sp-24) 0 var(--sp-16);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: -4px;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &.is-active {
+      transform: translateX(var(--rack-lift));
+      background: var(--ink);
+      color: var(--bone);
+    }
+
+    &.is-active:active {
+      transform: translateX(var(--rack-lift)) translateY(1px);
+    }
+  }
+
+  &__idx {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: var(--ls-mono);
+    color: var(--stone);
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  &__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(20px, 2.2vw, 30px);
+    line-height: 1;
+    letter-spacing: var(--ls-h3);
+    text-transform: uppercase;
+    transition: transform var(--dur-fast) var(--ease);
+  }
+
+  &__tab.is-active &__idx {
+    color: var(--ash);
+  }
+
+  @media (hover: hover) {
+    &__tab:not(.is-active):hover &__name {
+      transform: translateX(8px);
+    }
+
+    &__tab:not(.is-active):hover &__idx {
+      color: var(--wax);
+    }
+  }
+
+  // ---- the table: sheet + photograph ---------------------------------------------------------------------------
+  &__table {
+    position: relative;
+
+    @include up(tab-max) {
+      grid-column: 7 / -1;
+      margin-top: var(--sp-96);
+      margin-bottom: 176px;
+    }
+  }
+
+  &__sheet .idx-card__face {
+    padding: var(--sp-24);
+
+    @include up(tab-mini) {
+      padding: var(--sp-32) 40px 40px;
+    }
+  }
+
+  // panels share one grid cell, so the sheet never changes height while stamps are switched
+  &__panels {
+    display: grid;
+    min-height: 380px;
+
+    @include up(tab-max) {
+      min-height: 400px;
+    }
+  }
+
+  &__panel {
+    grid-area: 1 / 1;
+    display: grid;
+    align-content: start;
+    gap: var(--sp-24);
+    min-width: 0;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 8px;
+    }
+  }
+
+  // before the hidden attribute is applied (first paint after hydration), inactive sheets stay out of sight
+  .js &__panel[data-state='inactive']:not([hidden]) {
+    visibility: hidden;
+  }
+
+  &__sheet-label {
+    margin: 0;
+    padding-bottom: var(--sp-8);
+    border-bottom: 1px dotted var(--line);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  &__typed {
+    display: block;
+  }
+
+  &__lead {
+    display: grid;
+    gap: var(--sp-24);
+    align-items: start;
+
+    @include up(tab-mini) {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--sp-32);
+    }
+  }
+
+  &__statement {
+    max-width: 22ch;
+    margin: 0;
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: var(--ls-h4);
+    text-transform: none;
+
+    @include up(tab-mini) {
+      max-width: none;
+    }
+  }
+
+  // the impression: sized by its content (min 128px square), never wraps mid-word
+  &__seal {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+    align-items: center;
+    row-gap: var(--sp-12);
+    min-width: 128px;
+    min-height: 128px;
+    width: max-content;
+    max-width: 100%;
+    padding: 16px 20px 20px;
+    border: 4px solid var(--ink);
+    color: var(--ink);
+    text-align: center;
+    justify-self: start;
+
+    @include up(tab-mini) {
+      min-width: 168px;
+      min-height: 168px;
+      max-width: min(100%, 240px);
+      padding: 20px 24px 28px;
+      justify-self: end;
+      order: 2;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px solid var(--ink);
+      pointer-events: none;
+    }
+  }
+
+  &__seal-idx {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  &__seal-name {
+    max-width: 100%;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    text-wrap: balance;
+
+    @include up(tab-mini) {
+      font-size: 20px;
+    }
+  }
+
+  &__detail {
+    max-width: 52ch;
+    margin: 0;
+    font-size: var(--t-body);
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  // ---- photograph on the desk ----------------------------------------------------------------------------------
+  &__photo {
+    margin-top: var(--sp-48);
+
+    // hangs under the sheet's lower-left corner, overlapping it by exactly 40px
+    @include up(tab-max) {
+      position: absolute;
+      left: 40px;
+      top: calc(100% - 40px);
+      z-index: 3;
+      width: 300px;
+      margin-top: 0;
+    }
+
+    @include up(desktop) {
+      width: 330px;
+    }
+  }
+
+  // ---- motion: pressing a stamp -------------------------------------------------------------------------------
+  &__panel[data-state='active'] &__seal {
+    animation: principles-press 280ms var(--ease) both;
+  }
+
+  &__panel[data-state='active'] &__statement,
+  &__panel[data-state='active'] &__detail {
+    animation: principles-fade 260ms var(--ease) 80ms both;
+  }
+
+  .js &__panel[data-state='active'] &__typed {
+    animation: typed-wipe 520ms steps(24) both;
+  }
+}
+
+@keyframes principles-press {
+  from {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes principles-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// no JS: every principle is printed on its own sheet
+html:not(.js) .principles__panels {
+  display: block;
+  min-height: 0;
+}
+
+html:not(.js) .principles__panel + .principles__panel {
+  margin-top: var(--sp-48);
+}
+
+@include reduced-motion {
+  .principles__tab,
+  .principles__name,
+  .principles__panel[data-state] .principles__seal,
+  .principles__panel[data-state] .principles__statement,
+  .principles__panel[data-state] .principles__detail,
+  .js .principles__panel[data-state] .principles__typed {
+    animation: none;
+    transition: none;
+  }
+}

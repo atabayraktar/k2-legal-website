@@ -1,0 +1,52 @@
+@use 'tokens/mixins' as *;
+
+// Structural hooks only. Each consumer (practice panels, FAQ cards) owns its own look.
+.acc {
+  &__item {
+    position: relative;
+  }
+
+  &__heading {
+    margin: 0;
+    scroll-margin-top: calc(var(--header-h) + 16px);
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-16);
+    width: 100%;
+    min-height: var(--touch);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: left;
+    text-transform: inherit;
+    cursor: pointer;
+  }
+
+  &__title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__index,
+  &__glyph {
+    flex: none;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  &__index {
+    font-size: var(--t-label);
+    letter-spacing: var(--ls-mono);
+  }
+
+  &__glyph {
+    font-size: 22px;
+  }
+}

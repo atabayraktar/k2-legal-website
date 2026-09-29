@@ -1,29 +1,31 @@
-import { Instrument_Sans, Newsreader } from 'next/font/google';
+import { Bricolage_Grotesque, Courier_Prime, Instrument_Sans } from 'next/font/google';
 import { useLenis } from '../hooks/useLenis';
 import '../styles/index.scss';
 
-// Payload budget: roman display only on the critical path (variable wght, no opsz axis).
-// Italic (one emphasised word per page) is a separate, non-preloaded 300 instance and loads lazily.
-const serif = Newsreader({
+// Three families, hard budget (redesign-v2 section 3.2). Only Bricolage 800 + Instrument Sans are on the critical path.
+// Display: 800 = section/hero titles, 700 = h3/h4.
+const display = Bricolage_Grotesque({
   subsets: ['latin', 'latin-ext'],
-  style: ['normal'],
-  weight: 'variable',
+  weight: ['800'],
   display: 'swap',
-  variable: '--font-serif',
+  variable: '--font-display',
 });
 
-const serifItalic = Newsreader({
+// Typewriter accent: labels, dockets, captions. Not LCP, so not preloaded.
+const mono = Courier_Prime({
   subsets: ['latin', 'latin-ext'],
-  style: ['italic'],
-  weight: ['300'],
+  weight: ['400', '700'],
   display: 'swap',
   preload: false,
-  variable: '--font-serif-italic',
+  // real monospace fallback (Courier New is 0.6em per glyph, like Courier Prime), so the late swap cannot reflow anything
+  adjustFontFallback: false,
+  fallback: ['Courier New', 'Courier', 'monospace'],
+  variable: '--font-mono',
 });
 
 const sans = Instrument_Sans({
   subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '600'],
   display: 'swap',
   variable: '--font-sans',
 });
@@ -31,7 +33,7 @@ const sans = Instrument_Sans({
 export default function App({ Component, pageProps }) {
   useLenis();
   return (
-    <div className={`${serif.variable} ${serifItalic.variable} ${sans.variable} app`}>
+    <div className={`${display.variable} ${mono.variable} ${sans.variable} app`}>
       <Component {...pageProps} />
     </div>
   );

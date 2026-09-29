@@ -1,29 +1,28 @@
 // A title of <= 24 chars gets " | {legalName}" appended by buildTitle (total stays <= 60); longer titles stand alone.
+// Standalone pages: home, 3 flagship practice areas (seo.areas.<id>), 3 legal pages, 404.
 export default {
   home: {
     title: 'Karaman Berat Avukatlık Ortaklığı',
     raw: true,
     description:
-      'Karaman Berat Avukatlık Ortaklığı’nın çalışma alanları, ortakları ve iletişim bilgileri. Bu internet sitesi yalnızca bilgilendirme amaçlıdır.',
+      'Karaman Berat Avukatlık Ortaklığı, dava ve danışmanlık faaliyeti yürüten tescilli bir avukatlık ortaklığıdır. Bilgilendirme amaçlı internet sitesi.',
   },
-  about: {
-    title: 'Hakkımızda',
-    description: 'Karaman Berat Avukatlık Ortaklığı’nın yapısı, çalışma biçimi ve ilkeleri hakkında genel bilgi.',
-  },
-  practice: {
-    title: 'Çalışma Alanları',
-    description:
-      'Karaman Berat Avukatlık Ortaklığı’nın çalışma alanları hakkında bilgilendirme amaçlı genel döküm.',
-  },
-  team: {
-    title: 'Ekibimiz',
-    description:
-      'Karaman Berat Avukatlık Ortaklığı’nın ortakları: baro ve sicil bilgileri, mesleğe başlama yılı, mezun olunan üniversite ve yabancı diller.',
-  },
-  contact: {
-    title: 'İletişim',
-    description:
-      'Karaman Berat Avukatlık Ortaklığı adres, telefon, e-posta, KEP ve çalışma saatleri; iletişim formu ve randevu talebi.',
+  areas: {
+    criminal: {
+      title: 'Ceza Hukuku',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın ceza hukuku alanındaki faaliyetleri: soruşturma ve kovuşturma süreçlerine ilişkin konu başlıkları ve süreç.',
+    },
+    commercial: {
+      title: 'Ticaret ve Şirketler Hukuku',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın ticaret ve şirketler hukuku alanındaki faaliyetleri: şirket ve sözleşme ilişkileri, konu başlıkları ve süreç.',
+    },
+    employment: {
+      title: 'İş ve Sosyal Güvenlik Hukuku',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın iş ve sosyal güvenlik hukuku alanındaki faaliyetleri: iş sözleşmeleri, fesih, sosyal sigorta ve süreç.',
+    },
   },
   privacy: {
     title: 'Aydınlatma Metni',

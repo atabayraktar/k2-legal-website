@@ -1,30 +1,27 @@
 @use 'tokens/mixins' as *;
 
+// Title block for standalone prose pages.
 .page-hero {
-  padding-top: calc(var(--header-h) + 56px);
-  padding-bottom: 48px;
+  padding-top: calc(var(--header-h) + var(--sp-32));
+  padding-bottom: var(--sp-48);
 
   @include up(tab-max) {
-    padding-top: calc(var(--header-h) + 96px);
-    padding-bottom: 72px;
-  }
-
-  &__eyebrow {
-    margin-bottom: var(--sp-24);
+    padding-top: calc(var(--header-h) + var(--sp-64));
+    padding-bottom: var(--sp-96);
   }
 
   &__title {
-    font-size: var(--fs-display-2);
-    max-width: 18ch;
+    @include display(clamp(36px, 6.4vw, 96px), 800, var(--ls-h2), 0.92);
+    text-transform: uppercase;
+    max-width: 14ch;
+    overflow-wrap: anywhere;
   }
 
   &__lede {
-    margin-top: var(--sp-32);
-    max-width: 60ch;
-    font-family: var(--font-serif);
-    font-weight: 300;
-    font-size: var(--fs-h4);
-    line-height: 1.35;
-    color: var(--fg);
+    margin: var(--sp-32) 0 0;
+    max-width: 46ch;
+    font-size: var(--t-lede);
+    line-height: 1.5;
+    text-wrap: pretty;
   }
 }

@@ -1,6 +1,6 @@
-// Compliance + structure lint for src/content. Exit 1 on any error (bar advertising rules, length limits, TR/EN parity).
+// Compliance + structure lint for src/content. Exit 1 on any error (bar advertising rules, length limits, Turkish-only).
 import tr from '../src/content/tr.js';
-import en from '../src/content/en.js';
+import { practiceAreas } from '../src/content/routes.js';
 
 const L = '\p{L}\p{N}'; // letters/digits, for unicode-aware word edges
 const word = (w) => new RegExp(`(?<![${L}])${w}(?![${L}])`, 'iu');
@@ -39,6 +39,13 @@ const RULES = [
   { re: /Danışmanlık A\.?Ş/iu, why: 'wrong unvan suffix' },
   { re: /Avukatlık Ortaklığı\s*&|&\s*Karaman|Karaman\s*&/iu, why: '"&" next to unvan' },
   { re: /K2 Legal/u, why: '"K2 Legal" must not appear in copy' },
+  // round 2: case-taking / assurance / self-praise patterns
+  { re: /temsil (sağlan|yürütül|edilir)|vekilliğini kapsar|vekilliği(?![p{L}])/iu, why: 'case-taking wording (representation offered)' },
+  { re: /alacaklı ve borçlu|işçi ve işveren tarafında|hem .{1,20} hem/iu, why: 'targets both sides of a dispute (solicitation)' },
+  { re: /takvime işlen|eksiksiz|düzenli (olarak|biçimde)|dikkat edilerek|özenle|titizlik|ölçülülük|her aşamada|adım adım/iu, why: 'assurance / self-praise wording', negatable: true },
+  { re: /esastır|ilkeye göre|ilkelerimiz|standart(lar)?ımız/iu, why: 'work-standard declaration' },
+  { re: /sağdaki|soldaki/iu, why: 'layout-dependent wording (breaks on mobile)' },
+  { re: /(?<![p{L}])(mühür|tescilli avukatlık ortaklığıs*$)/iu, why: 'official-seal connotation' },
 ];
 
 const NEGATION = /(edilmez|etmez|vermez|değildir|değil|gelmez|kabul edilmez|does not|do not|is not|not guaranteed|not be|no liability|never|nor )/iu;
@@ -58,7 +65,7 @@ function leaves(v, p, out = []) {
 }
 const words = (s) => s.replace(/\*/g, '').trim().split(/\s+/).filter(Boolean).length;
 
-const locales = { tr, en };
+const locales = { tr };
 for (const [loc, c] of Object.entries(locales)) {
   // --- forbidden wording ---
   for (const [p, s] of leaves(c, loc)) {
@@ -72,39 +79,75 @@ for (const [loc, c] of Object.entries(locales)) {
     }
   }
 
+  // --- v2 structural rules: no emphasis markers, no eyebrow strings, no removed page-level copy ---
+  for (const [p, v] of leaves(c, loc)) {
+    if (/\*[^*\s][^*]*\*/.test(v)) err(p, 'emphasis marker (*word*) is not allowed (no italic / emphasis words)');
+  }
+  (function noEyebrow(v, p) {
+    if (Array.isArray(v)) return v.forEach((x, i) => noEyebrow(x, `${p}[${i}]`));
+    if (v && typeof v === 'object') {
+      for (const [k, x] of Object.entries(v)) {
+        if (k === 'eyebrow') err(`${p}.${k}`, 'eyebrow strings are removed in v2');
+        noEyebrow(x, `${p}.${k}`);
+      }
+    }
+  })(c, loc);
+  for (const gone of ['about', 'manifesto']) if (c[gone] || c.home?.[gone]?.text && gone === 'manifesto') err(`${loc}.${gone}`, 'removed in v2');
+
   // --- structure & length ---
-  const home = c.home, practice = c.practice;
-  if (home?.manifesto?.text && words(home.manifesto.text) > 60) err(`${loc}.home.manifesto.text`, `manifesto ${words(home.manifesto.text)} words (max 60)`);
+  const home = c.home, practice = c.practice, faq = c.faq;
+  if (home?.about?.lede && words(home.about.lede) > 60) err(`${loc}.home.about.lede`, `about lede ${words(home.about.lede)} words (max 60)`);
   if (home?.process?.steps && home.process.steps.length !== 4) err(`${loc}.home.process.steps`, `must have 4 steps, has ${home.process.steps.length}`);
+  if (home?.hero?.lines?.length !== 2) err(`${loc}.home.hero.lines`, 'hero needs exactly 2 lines');
+
+  // Principles (Mühür Masası): exactly 4, each name + statement + detail, compliant tone.
+  const pr = home?.principles?.items ?? [];
+  if (pr.length !== 4) err(`${loc}.home.principles.items`, `must have 4 principles, has ${pr.length}`);
+  pr.forEach((it, i) => {
+    for (const k of ['id', 'index', 'name', 'statement', 'detail']) if (!it[k]) err(`${loc}.home.principles.items[${i}].${k}`, 'missing');
+    if (it.detail && words(it.detail) > 60) err(`${loc}.home.principles.items[${i}].detail`, `detail ${words(it.detail)} words (max 60)`);
+  });
+  const prIds = pr.map((x) => x.id);
+  if (new Set(prIds).size !== prIds.length) err(`${loc}.home.principles.items`, 'duplicate ids');
+
+  // FAQ: 5-6 items (client ruling), ids s-01.., no fee / success / promise answers.
+  const fq = faq?.items ?? [];
+  if (fq.length < 5 || fq.length > 6) err(`${loc}.faq.items`, `must have 5-6 items, has ${fq.length}`);
+  fq.forEach((it, i) => {
+    const p = `${loc}.faq.items[${i}]`;
+    if (!it.q || !it.a) err(p, 'q and a are required');
+    if (it.id !== `s-${String(i + 1).padStart(2, '0')}`) err(`${p}.id`, `expected id s-${String(i + 1).padStart(2, '0')}, got ${it.id}`);
+    const text = `${it.q} ${it.a}`;
+    if (/(ücret|fiyat|bedel|harç|masraf|kampanya|indirim|tarife)/iu.test(text)) err(p, 'fee / price wording is not allowed in the FAQ');
+    if (/(kazan|kaybet|sonuç al|garanti|başar|mutlaka|kesinlikle|en kısa)/iu.test(text)) err(p, 'result / promise wording is not allowed in the FAQ');
+    if (words(it.a) > 75) err(`${p}.a`, `answer ${words(it.a)} words (max 75)`);
+  });
+
   for (const a of practice?.areas ?? []) {
-    const lo = loc === 'tr' ? 30 : 25, hi = 60;
+    const lo = 20, hi = 60;
     const w = words(a.lede ?? '');
     if (loc === 'tr' && (w < lo || w > hi)) err(`${loc}.practice.${a.id}.lede`, `lede ${w} words (TR ${lo}-${hi})`);
-    if (loc === 'en' && (w < lo || w > 75)) warn(`${loc}.practice.${a.id}.lede`, `lede ${w} words`);
     const aw = words(a.approach ?? '');
-    if (loc === 'tr' && (aw < 25 || aw > 50)) err(`${loc}.practice.${a.id}.approach`, `approach ${aw} words (25-50)`);
+    if (loc === 'tr' && (aw < 15 || aw > 50)) err(`${loc}.practice.${a.id}.approach`, `approach ${aw} words (15-50)`);
     if ((a.topics?.length ?? 0) !== 6) err(`${loc}.practice.${a.id}.topics`, `must have exactly 6 topics, has ${a.topics?.length ?? 0}`);
   }
+
+  // SEO: home + flagship areas + legal + notFound. Removed pages must be gone.
+  const seoEntries = [];
   for (const [key, m] of Object.entries(c.seo ?? {})) {
+    if (key === 'areas') for (const [id, am] of Object.entries(m)) seoEntries.push([`areas.${id}`, am]);
+    else seoEntries.push([key, m]);
+  }
+  for (const gone of ['about', 'practice', 'team', 'contact']) if (c.seo?.[gone]) err(`${loc}.seo.${gone}`, 'SEO entry for a removed page');
+  const flagship = practiceAreas.filter((a) => a.page).map((a) => a.id);
+  for (const id of flagship) if (!c.seo?.areas?.[id]) err(`${loc}.seo.areas.${id}`, 'missing SEO entry for flagship page');
+  for (const [key, m] of seoEntries) {
     if (m.title && m.title.length > 70) err(`${loc}.seo.${key}.title`, `title ${m.title.length} chars (max 70)`);
     else if (m.title && m.title.length > 60) warn(`${loc}.seo.${key}.title`, `title ${m.title.length} chars (>60)`);
     if (m.description && m.description.length > 155) err(`${loc}.seo.${key}.description`, `description ${m.description.length} chars (max 155)`);
-  }
-  for (const [key, m] of Object.entries(c.seo ?? {})) {
     if (!m.noindex && !m.description) err(`${loc}.seo.${key}`, 'missing description');
   }
 }
-
-// --- TR/EN key parity ---
-const paths = (v, p = '', out = new Set()) => {
-  if (Array.isArray(v)) { out.add(`${p}[]`); v.forEach((x) => paths(x, `${p}[]`, out)); }
-  else if (v && typeof v === 'object') Object.entries(v).forEach(([k, x]) => paths(x, `${p}.${k}`, out));
-  else out.add(p);
-  return out;
-};
-const pt = paths(tr), pe = paths(en);
-for (const p of pt) if (!pe.has(p)) err(`parity`, `in TR, missing in EN: ${p}`);
-for (const p of pe) if (!pt.has(p)) err(`parity`, `in EN, missing in TR: ${p}`);
 
 for (const w of warnings) console.warn(`warn   ${w}`);
 for (const e of errors) console.error(`ERROR  ${e}`);

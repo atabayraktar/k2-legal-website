@@ -40,3 +40,9 @@
     outline-offset: 2px;
   }
 }
+
+// Tab panels: before hydration (and without JS) every panel is visible. After hydration the tabs hook sets
+// hidden="until-found" on inactive ones; this rule keeps them hidden during the gap between class "js" and hydration.
+.js [role='tabpanel'][data-state='inactive']:not([hidden]) {
+  content-visibility: hidden;
+}

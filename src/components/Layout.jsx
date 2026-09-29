@@ -4,17 +4,13 @@ import Seo from './Seo';
 import Header from './Header';
 import MenuOverlay from './MenuOverlay';
 import Footer from './Footer';
-import { LocaleContext } from '../hooks/useLocale';
-import { alternates as buildAlternates } from '../lib/routes-util.js';
+import { CommonContext } from '../hooks/useCommon';
 
-const CURRENT = { about: 'about', practice: 'practice', practiceDetail: 'practice', team: 'team', contact: 'contact' };
-
-export default function Layout({ locale, routeKey, params, common, seo, headerTheme = 'light', jsonLd = [], children }) {
+export default function Layout({ routeKey, params, common, seo, headerTheme = 'light', jsonLd = [], children }) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuBtnRef = useRef(null);
-  const alternates = useMemo(() => buildAlternates(routeKey, params), [routeKey, params]);
-  const ctx = useMemo(() => ({ locale, common }), [locale, common]);
+  const ctx = useMemo(() => ({ common }), [common]);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((v) => !v), []);
 
@@ -23,9 +19,8 @@ export default function Layout({ locale, routeKey, params, common, seo, headerTh
   }, [router.asPath]);
 
   return (
-    <LocaleContext.Provider value={ctx}>
+    <CommonContext.Provider value={ctx}>
       <Seo
-        locale={locale}
         routeKey={routeKey}
         params={params}
         title={seo?.title ?? common.notFound.title}
@@ -40,10 +35,7 @@ export default function Layout({ locale, routeKey, params, common, seo, headerTh
         </a>
         <div className="layout__page" inert={menuOpen}>
           <Header
-            locale={locale}
             theme={headerTheme}
-            current={CURRENT[routeKey]}
-            alternates={alternates}
             menuOpen={menuOpen}
             onMenuToggle={toggleMenu}
             menuBtnRef={menuBtnRef}
@@ -51,17 +43,14 @@ export default function Layout({ locale, routeKey, params, common, seo, headerTh
           <main id="main" className="layout__main" tabIndex={-1}>
             {children}
           </main>
-          <Footer locale={locale} alternates={alternates} />
+          <Footer />
         </div>
         <MenuOverlay
           open={menuOpen}
           onClose={closeMenu}
           returnFocusRef={menuBtnRef}
-          current={CURRENT[routeKey]}
-          alternates={alternates}
-          locale={locale}
         />
       </div>
-    </LocaleContext.Provider>
+    </CommonContext.Provider>
   );
 }

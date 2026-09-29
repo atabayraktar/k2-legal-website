@@ -1,167 +1,136 @@
 @use 'tokens/mixins' as *;
 
+// İletişim: bone. One shared 2px ink rule; both columns start with an identical 32px label row.
 .contact {
-  padding-block: var(--section-y);
+  padding-block: clamp(56px, 8vw, 144px);
 
-  &__head {
-    display: grid;
-    gap: var(--sp-32);
-    margin-bottom: var(--sp-48);
-
-    @include up(tab-max) {
-      margin-bottom: var(--sp-96);
-    }
+  &__rule {
+    height: 2px;
+    background: var(--ink);
+    transform-origin: left;
   }
 
-  &__title {
-    font-size: var(--fs-display-2);
-    color: var(--fg);
-  }
-
-  &--home &__title {
-    font-size: var(--fs-display-1);
-    line-height: 0.98;
-    letter-spacing: -0.025em;
-  }
-
-  &__intro {
-    max-width: 46ch;
-  }
-
-  &__cols {
+  &__grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-64);
+    gap: var(--sp-48);
 
     @include up(tab-max) {
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      grid-template-rows: auto 1fr;
       column-gap: var(--grid-gap);
+      align-items: start;
     }
   }
 
-  // DOM order = info, form, map (mobile reading order). Desktop: info + map stack in the left column, form spans both rows.
+  // mobile/tablet order: label, heading, intro, form, ledger, photo (info wrapper dissolves)
+  @include down(tab-max) {
+    &__grid {
+      gap: 0;
+    }
+
+    &__info {
+      display: contents;
+    }
+
+    &__form {
+      order: 4;
+      margin-top: var(--sp-48);
+    }
+
+    &__ledger {
+      order: 5;
+      width: 100%;
+      margin-top: var(--sp-48);
+    }
+
+    &__photo {
+      order: 6;
+    }
+  }
+
   &__info {
     @include up(tab-max) {
       grid-column: 1 / span 5;
-      grid-row: 1;
     }
   }
 
   &__form {
+    // mobile: form comes right after the heading block (info is first in DOM, so it is fine); desktop: side by side
     @include up(tab-max) {
-      grid-column: 7 / span 6;
-      grid-row: 1 / span 2;
+      grid-column: 7 / -1;
     }
   }
 
-  &__map-wrap {
-    @include up(tab-max) {
-      grid-column: 1 / span 5;
-      grid-row: 2;
-    }
-  }
-
-  &__list {
-    border-bottom: 1px solid var(--rule);
-  }
-
-  &__item {
-    padding-block: 20px;
-    border-top: 1px solid var(--rule);
-
-    dt {
-      @include label;
-      color: var(--fg-2);
-    }
-
-    dd {
-      margin: var(--sp-8) 0 0;
-      font-size: 17px;
-      line-height: 1.5;
-      color: var(--fg);
-      overflow-wrap: anywhere;
-    }
-
-    a {
-      color: var(--fg);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 4px;
-      transition: color var(--dur-color) var(--ease);
-
-      @include hover {
-        color: var(--accent);
-      }
-    }
-  }
-
-  &__addr {
-    font-style: normal;
-  }
-
-  &__map {
+  // identical row on both sides: this is what aligns the two column tops
+  &__label-row {
+    display: flex;
+    align-items: center;
+    height: 32px;
     margin: 0;
-  }
+    padding-top: var(--sp-8);
+    box-sizing: content-box;
 
-  &__map-wrap {
-    align-self: start;
-  }
-
-  @include up(tab-max) {
-    &__map-wrap {
-      margin-top: calc(var(--sp-48) - var(--sp-64));
+    .docket {
+      margin: 0;
     }
   }
 
-  // Static block, never an iframe: no third-party request, no tracking.
-  &__map-link {
-    position: relative;
-    display: block;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    border: 1px solid var(--rule);
-    color: var(--fg-2);
-    text-decoration: none;
-    transition: border-color var(--dur-color) var(--ease), color var(--dur-color) var(--ease);
+  &__title {
+    margin: var(--sp-16) 0 var(--sp-24);
+    @include display(var(--t-h2));
+    text-transform: uppercase;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+
+  &__intro {
+    max-width: 38ch;
+    margin: 0 0 var(--sp-32);
+    font-size: var(--t-lede);
+    line-height: 1.5;
+    color: var(--stone);
+    text-wrap: pretty;
+  }
+
+  &__ledger {
+    max-width: 520px;
+    border-top: 1px solid var(--ink);
+
+    .ledger__row {
+      grid-template-columns: minmax(0, 34%) minmax(0, 1fr);
+    }
+
+    .ledger__v {
+      font-size: 16px;
+    }
+  }
+
+  &__a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: color var(--dur-color) var(--ease);
 
     @include hover {
-      border-color: var(--bone);
-      color: var(--accent);
+      color: var(--wax);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax);
+      outline-offset: 4px;
     }
   }
 
-  a.contact__map-link:focus-visible {
-    outline-offset: 4px;
-  }
+  &__photo {
+    width: min(100%, 480px);
+    margin-top: var(--sp-48);
+    padding-left: 8px; // crop marks stick out 8px
 
-  &__map-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(1);
-  }
-
-  // Hairline grid drawn as an inline SVG pattern.
-  &__map-grid {
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cpath d='M48 0H0V48' fill='none' stroke='%23F2EFE9' stroke-opacity='.09'/%3E%3C/svg%3E");
-    background-size: 48px 48px;
-  }
-
-  &__map-caption {
-    @include label;
-    position: absolute;
-    left: var(--sp-16);
-    bottom: var(--sp-16);
-    color: inherit;
   }
 }
 
-@include reduced-motion {
-  .contact__map-link,
-  .contact__item a {
-    transition: none;
-  }
+// no reveal-hidden rule survives without JS
+html:not(.js) .contact__rule {
+  transform: none;
 }

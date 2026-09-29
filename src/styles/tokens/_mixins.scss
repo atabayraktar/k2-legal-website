@@ -8,6 +8,7 @@ $bp: (
   tab-max: 1024px,
   desktop: 1280px,
   wide: 1440px,
+  nav: 1100px,
 );
 
 $space: (
@@ -77,4 +78,38 @@ $container-max: 1440px;
   line-height: 1;
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
+}
+
+// Typewriter label (Courier Prime 700, 12px uppercase). Dockets, tab labels, form labels, stamps.
+@mixin mono-label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--t-label);
+  line-height: 1.4;
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  @include up(tab-max) {
+    font-size: 13px;
+  }
+}
+
+// Display heading base: Bricolage Grotesque, upright only.
+@mixin display($size: var(--t-h2), $weight: 800, $ls: var(--ls-h2), $lh: 0.92) {
+  font-family: var(--font-display);
+  font-weight: $weight;
+  font-size: $size;
+  letter-spacing: $ls;
+  line-height: $lh;
+}
+
+// Semantic variables for light surfaces (paper cards sitting on ink sections must read as light).
+@mixin light-vars {
+  --bg: var(--bone);
+  --fg: var(--ink);
+  --fg-2: var(--stone);
+  --rule: var(--line);
+  --rule-2: var(--hair);
+  --accent: var(--wax);
+  --focus: var(--wax);
+  --surface: var(--paper);
 }

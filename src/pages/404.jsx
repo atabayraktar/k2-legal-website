@@ -6,6 +6,6 @@ export default function NotFoundPage(props) {
 }
 
 export function getStaticProps() {
-  const { locale, common } = getContent('tr', 'notFound');
-  return { props: { locale, common } };
+  const { common } = getContent('notFound');
+  return { props: { common } };
 }

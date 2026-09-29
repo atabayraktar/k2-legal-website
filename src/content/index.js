@@ -1,11 +1,9 @@
 import tr from './tr.js';
-import en from './en.js';
 
-const all = { tr, en };
-
-export const getContent = (locale, pageKey) => ({
-  locale,
-  common: all[locale].common,
-  seo: all[locale].seo[pageKey] ?? null,
-  page: all[locale][pageKey] ?? null,
+// page = tr[pageKey]; `all` exposes the whole content tree (e.g. all.faq / all.team / all.contact for the home page).
+export const getContent = (pageKey) => ({
+  common: tr.common,
+  seo: tr.seo[pageKey] ?? null,
+  page: tr[pageKey] ?? null,
+  all: tr,
 });

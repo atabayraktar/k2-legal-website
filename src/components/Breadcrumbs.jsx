@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useT } from '../hooks/useLocale';
+import { useT } from '../hooks/useCommon';
 
 export default function Breadcrumbs({ items }) {
   const t = useT();

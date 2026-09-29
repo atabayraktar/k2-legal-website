@@ -15,7 +15,7 @@ export const site = {
   baro: '[Baro adı] Barosu', // TODO(client) baro the ortaklık is registered with
   baroRegistry: '[Ortaklık baro sicil no]', // TODO(client) partnership registry number at the baro
   partners: [
-    // Exactly 2. ONLY fields allowed by Reklam Yasağı Yönetmeliği m.7/1-d. No bio, cases, clients or awards fields exist by design.
+    // Two placeholder partners (count unconfirmed; UI derives every count from this array). ONLY fields allowed by Reklam Yasağı Yönetmeliği m.7/1-d. No bio, cases, clients or awards fields exist by design.
     {
       id: 'partner-1',
       name: '[Ortak 1 Ad Soyad]', // TODO(client)
@@ -58,7 +58,7 @@ export const site = {
 };
 
 // INDEXABILITY GATE. While site.domain is still the placeholder (*.example), the site is NOT indexable:
-//  - every page emits <meta name="robots" content="noindex,nofollow"> and no canonical / hreflang / og:url;
+//  - every page emits <meta name="robots" content="noindex,nofollow"> and no canonical / og:url;
 //  - JSON-LD ids and og:image use root-relative paths (never the fake origin);
 //  - robots.txt is "Disallow: /", and sitemap.xml + llms.txt are not generated (scripts/generate-seo.mjs);
 //  - verify-routes checks the noindex tags instead of canonicals.

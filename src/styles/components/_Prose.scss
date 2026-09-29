@@ -1,14 +1,21 @@
 @use 'tokens/mixins' as *;
 
+// Long-form legal text: Instrument 17px/1.65, measure <= 70ch.
 .prose {
-  max-width: 68ch;
-  padding-bottom: var(--section-y);
+  max-width: 70ch;
+
+  @include up(tab-max) {
+    grid-column: 6 / span 7;
+  }
 
   &__updated {
-    @include label;
-    font-size: 11px;
+    @include mono-label;
+    margin: 0 0 var(--sp-48);
     color: var(--fg-2);
-    margin-bottom: var(--sp-48);
+  }
+
+  &__section {
+    scroll-margin-top: calc(var(--header-h) + var(--sp-24));
   }
 
   &__section + &__section {
@@ -16,12 +23,14 @@
   }
 
   &__h2 {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    font-size: var(--fs-h4);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    margin-bottom: var(--sp-16);
+    @include display(var(--t-h4), 700, var(--ls-h4), 1.15);
+    text-transform: none;
+    margin: 0 0 var(--sp-16);
+  }
+
+  p {
+    font-size: var(--t-body);
+    line-height: 1.65;
   }
 
   p + p {
@@ -29,12 +38,39 @@
   }
 
   &__list {
-    margin-top: var(--sp-16);
-    border-top: 1px solid var(--rule);
+    margin: var(--sp-16) 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--t-body);
+    line-height: 1.65;
 
     li {
-      padding: var(--sp-12) 0;
-      border-bottom: 1px solid var(--rule);
+      position: relative;
+      padding: var(--sp-8) 0 var(--sp-8) 3.2ch;
+      border-bottom: 1px dotted var(--rule);
+    }
+
+    li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      font-family: var(--font-mono);
+      color: var(--fg-2);
+    }
+  }
+
+  ol.prose__list {
+    counter-reset: pl;
+
+    li {
+      counter-increment: pl;
+    }
+
+    li::before {
+      content: counter(pl, decimal-leading-zero);
+      font-size: var(--t-label);
+      font-weight: 700;
+      top: calc(var(--sp-8) + 0.3em);
     }
   }
 }

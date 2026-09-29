@@ -9,6 +9,7 @@ const nextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
   reactStrictMode: true,
+  agentRules: false, // don't let next dev write AGENTS.md/CLAUDE.md into the repo root
   poweredByHeader: false,
   compress: false, // static export; the host compresses
   sassOptions: { loadPaths: [path.join(root, 'src', 'styles')] },

@@ -1,0 +1,248 @@
+@use 'tokens/mixins' as *;
+
+// Calisma Alanlari: ink desk, eight case files. Open file = a paper sheet pulled out of the row.
+.practice-panels {
+  padding-block: clamp(80px, 12vw, 144px);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-48);
+    align-items: start;
+
+    @include up(tab-max) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+      row-gap: 0;
+    }
+  }
+
+  // left column: file tab + title + intro + photo. Sticky beside the long list.
+  &__aside {
+    display: grid;
+    gap: var(--sp-32);
+
+    @include up(tab-max) {
+      grid-column: 1 / span 4;
+      position: sticky;
+      top: calc(var(--header-h) + var(--sp-32));
+      gap: var(--sp-24);
+    }
+
+    @include short-landscape {
+      position: static;
+    }
+  }
+
+  // the tab sits on the hairline like an index divider
+  &__lead {
+    padding-top: var(--sp-24);
+    border-top: 1px solid var(--rule);
+  }
+
+  &__title {
+    margin: 0 0 var(--sp-16);
+    font-size: clamp(34px, 4.4vw, 60px);
+    line-height: 0.95;
+  }
+
+  &__intro {
+    max-width: 38ch;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--fg-2);
+  }
+
+  &__photo {
+    width: 100%;
+    max-width: 340px;
+
+    @include down(tab-max) {
+      max-width: none;
+
+      .frame__img {
+        aspect-ratio: 16 / 9;
+      }
+    }
+
+    @include short-landscape {
+      display: none;
+    }
+  }
+
+  // right column: the file list
+  &__list {
+    border-bottom: 1px solid var(--rule);
+
+    @include up(tab-max) {
+      grid-column: 6 / -1;
+    }
+  }
+
+  &__item {
+    border-top: 1px solid var(--rule);
+  }
+
+  &__btn {
+    position: relative;
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) 32px;
+    align-items: center;
+    gap: var(--sp-16);
+    min-height: 72px;
+    padding-block: var(--sp-16);
+    color: var(--fg);
+
+    @include up(tab-mini) {
+      grid-template-columns: 72px minmax(0, 1fr) 40px;
+      min-height: 88px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: -4px;
+    }
+
+    .acc__index {
+      justify-self: start;
+      padding: 2px 6px;
+      margin-left: -6px;
+      color: var(--fg-2);
+      transition:
+        color var(--dur-fast) var(--ease),
+        background-color var(--dur-fast) var(--ease);
+    }
+
+    .acc__title {
+      @include display(clamp(24px, 2.7vw, 38px), 800, var(--ls-h3), 1.05);
+      text-transform: none;
+      text-wrap: balance;
+      transition: transform var(--dur-fast) var(--ease);
+    }
+
+    .acc__glyph {
+      justify-self: end;
+      font-size: 30px;
+      color: var(--fg-2);
+      transition: color var(--dur-fast) var(--ease);
+    }
+
+    @include hover {
+      .acc__title {
+        transform: translateX(8px);
+      }
+
+      .acc__index {
+        color: var(--accent);
+      }
+    }
+  }
+
+  // open: the index turns into an inverted label, the glyph into a wax minus
+  &__item.is-open &__btn .acc__index {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  &__item.is-open &__btn .acc__glyph {
+    color: var(--accent);
+  }
+
+  &__panel {
+    // no padding here: the collapse inner clips, the sheet owns spacing
+    margin-bottom: 0;
+  }
+
+  // the paper sheet
+  &__sheet {
+    @include light-vars;
+    display: grid;
+    gap: var(--sp-32);
+    margin: 0 0 var(--sp-24);
+    padding: var(--sp-24);
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+
+    @include up(tab-mini) {
+      margin-left: 88px;
+      padding: var(--sp-32) var(--sp-48) var(--sp-48) var(--sp-32);
+      gap: var(--sp-32);
+    }
+  }
+
+  &__lede {
+    max-width: 46ch;
+    margin: 0;
+    font-size: clamp(18px, 1.45vw, 21px);
+    line-height: 1.5;
+    text-wrap: pretty;
+    color: var(--ink);
+  }
+
+  &__block {
+    display: grid;
+    gap: var(--sp-16);
+  }
+
+  &__label {
+    @include mono-label;
+    margin: 0;
+    padding-bottom: var(--sp-8);
+    border-bottom: 1px dotted var(--line);
+    color: var(--stone);
+  }
+
+  &__topics {
+    display: grid;
+    gap: var(--sp-8) var(--sp-32);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include up(tab-max) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    li {
+      position: relative;
+      padding-left: 2.2ch;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--ink);
+
+      &::before {
+        content: '\2014';
+        position: absolute;
+        left: 0;
+        font-family: var(--font-mono);
+        color: var(--stone);
+      }
+    }
+  }
+
+  &__approach {
+    max-width: 62ch;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-16) var(--sp-32);
+
+    @include down(tab-mini) {
+      flex-direction: column;
+      align-items: stretch;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}

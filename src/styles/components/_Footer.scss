@@ -1,83 +1,139 @@
 @use 'tokens/mixins' as *;
 
+// Footer (ink): the back sheet of the file. No watermark; the unvan itself is the large type.
 .footer {
   border-top: 1px solid var(--line-dk);
-  padding-block: var(--sp-96) var(--sp-48);
+  padding-block: var(--sp-64) var(--sp-32);
 
-  @include down(tab-mini) {
-    padding-top: var(--sp-64);
+  @include up(tab-max) {
+    padding-block: var(--sp-96) var(--sp-48);
   }
 
   &__top {
     row-gap: var(--sp-48);
+
+    // two link columns side by side on wider phones and tablets
+    @media (min-width: 480px) and (max-width: 1023.98px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__col {
+    @media (min-width: 480px) and (max-width: 1023.98px) {
+      grid-column: auto;
+    }
   }
 
   &__brand {
     @include up(tab-max) {
-      grid-column: 1 / span 3;
+      grid-column: 1 / span 6;
     }
   }
 
   &__logo {
-    width: 200px;
+    display: block;
+    width: 148px;
     height: auto;
     aspect-ratio: 414 / 100;
-    margin-bottom: var(--sp-24);
+    margin-bottom: var(--sp-32);
   }
 
-  &__name {
-    @include label;
+  &__unvan {
+    max-width: 12em;
+    margin: 0 0 var(--sp-32);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(28px, 4.2vw, 56px);
+    line-height: 0.96;
+    letter-spacing: var(--ls-h2);
+    text-transform: uppercase;
+    text-wrap: balance;
     color: var(--bone);
-    margin-bottom: var(--sp-8);
   }
 
-  &__address {
-    font-size: var(--fs-small);
-    line-height: 1.6;
-    color: var(--ash);
+  &__ledger {
+    max-width: 520px;
+  }
+
+  &__ledger a {
+    color: var(--bone);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
   }
 
   &__col {
-    &--nav {
-      @include up(tab-max) {
-        grid-column: 4 / span 3;
-      }
-    }
-
-    &--legal {
-      @include up(tab-max) {
-        grid-column: 7 / span 3;
-      }
-    }
-
-    &--contact {
-      @include up(tab-max) {
-        grid-column: 10 / span 3;
-      }
+    @include up(tab-max) {
+      padding-top: var(--sp-8);
     }
   }
 
-  &__title {
-    @include label;
+  &__col--nav {
+    @include up(tab-max) {
+      grid-column: 8 / span 2;
+    }
+  }
+
+  &__col--legal {
+    @include up(tab-max) {
+      grid-column: 10 / span 3;
+    }
+  }
+
+  // docket label over each link column: a typed heading with a hairline under it
+  &__docket {
+    margin: 0 0 var(--sp-16);
+    padding-bottom: var(--sp-12);
+    border-bottom: 1px solid var(--line-dk);
     color: var(--ash);
-    margin-bottom: var(--sp-16);
   }
 
   &__list {
     display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   &__link {
+    position: relative;
     display: inline-flex;
     align-items: center;
     min-height: var(--touch);
     min-width: var(--touch);
-    font-size: 15px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
     color: var(--bone);
+    text-decoration: none;
     transition: color var(--dur-color) var(--ease);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 10px;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--dur-fill) var(--ease);
+    }
 
     @include hover {
       color: var(--wax-lit);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax-lit);
+      outline-offset: 4px;
     }
 
     &:active {
@@ -85,65 +141,61 @@
     }
   }
 
-  &__facts {
+  // typewritten note under one hairline, with registration crosses at both ends
+  &__bottom {
+    position: relative;
     display: grid;
     gap: var(--sp-16);
-
-    dt {
-      @include label;
-      font-size: 11px;
-      color: var(--ash);
-      margin-bottom: var(--sp-4);
-    }
-
-    dd {
-      font-size: 15px;
-      line-height: 1.5;
-      color: var(--bone);
-      overflow-wrap: anywhere;
-    }
-  }
-
-  &__bottom {
     margin-top: var(--sp-64);
     padding-top: var(--sp-24);
     border-top: 1px solid var(--line-dk);
-    row-gap: var(--sp-24);
-    align-items: start;
 
     @include up(tab-max) {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: var(--grid-gap);
       margin-top: var(--sp-96);
+    }
+
+    &::before,
+    &::after {
+      content: '+';
+      position: absolute;
+      top: -0.62em;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1;
+      color: var(--ash);
+    }
+
+    &::before {
+      left: -4px;
+    }
+
+    &::after {
+      right: -4px;
     }
   }
 
   &__disclaimer {
-    font-size: 13px;
-    line-height: 1.6;
-    color: var(--ash);
     max-width: 80ch;
-
-    @include up(tab-max) {
-      grid-column: 1 / span 8;
-    }
-  }
-
-  // Language switch and rights line share one baseline on desktop.
-  &__side {
-    display: grid;
-    gap: var(--sp-8);
-    justify-items: start;
-
-    @include up(tab-max) {
-      grid-column: 9 / span 4;
-      grid-auto-flow: column;
-      justify-content: end;
-      align-items: center;
-      gap: var(--sp-24);
-    }
+    margin: 0;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ash);
   }
 
   &__rights {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-weight: 400;
     font-size: 13px;
+    line-height: 1.65;
     color: var(--ash);
+
+    @include up(tab-max) {
+      text-align: right;
+    }
   }
 }

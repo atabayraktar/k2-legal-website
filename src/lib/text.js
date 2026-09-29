@@ -1,20 +1,11 @@
 import { createElement, Fragment } from 'react';
 
-// "Hukuk, *ölçüyle* yapılır." -> array of nodes with <em class="em"> for *word*.
-export function renderEm(str) {
-  return str
-    .split(/(\*[^*]+\*)/g)
-    .filter(Boolean)
-    .map((part, i) =>
-      part.startsWith('*')
-        ? createElement('em', { className: 'em', key: i }, part.slice(1, -1))
-        : createElement(Fragment, { key: i }, part),
-    );
-}
+// Transitional: v1 content still carries *word* markers. Strips them so no emphasis styling ever renders (D1 removes the markers).
+export const plain = (str) => (typeof str === 'string' ? str.replaceAll('*', '') : str);
 
-// Splits into groups of n words, keeping *emphasis* spans intact. Deterministic (SSR-safe).
+// Splits into groups of n words. Deterministic (SSR-safe).
 export function groupWords(str, n = 3) {
-  const words = str.match(/\*[^*]+\*[^\s*]*|\S+/g) ?? [];
+  const words = plain(str).match(/\S+/g) ?? [];
   const groups = [];
   for (let i = 0; i < words.length; i += n) groups.push(words.slice(i, i + n).join(' '));
   return groups;

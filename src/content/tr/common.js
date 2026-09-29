@@ -1,4 +1,5 @@
 export const notFound = {
+  code: '404',
   title: 'Sayfa bulunamadı',
   text: 'Aradığınız sayfa yayında değil veya taşınmış olabilir.',
   cta: 'Ana Sayfa',
@@ -8,10 +9,11 @@ export default {
   htmlLang: 'tr',
   skip: 'İçeriğe geç',
   nav: [
-    { key: 'about', label: 'Hakkımızda' },
-    { key: 'practice', label: 'Çalışma Alanları' },
-    { key: 'team', label: 'Ekibimiz' },
-    { key: 'contact', label: 'İletişim' },
+    { key: 'about', id: 'hakkimizda', label: 'Hakkımızda', href: '/#hakkimizda' },
+    { key: 'practice', id: 'calisma-alanlari', label: 'Çalışma Alanları', href: '/#calisma-alanlari' },
+    { key: 'team', id: 'ekibimiz', label: 'Ekibimiz', href: '/#ekibimiz' },
+    { key: 'faq', id: 'sss', label: 'SSS', href: '/#sss' },
+    { key: 'contact', id: 'iletisim', label: 'İletişim', href: '/#iletisim' },
   ],
   cta: {
     appointment: 'Randevu Talep Et',
@@ -21,9 +23,11 @@ export default {
     about: 'Hakkımızda',
     write: 'Bize Yazın',
     back: 'Geri',
+    readSeparate: 'Ayrı sayfada oku',
+    backHome: 'Ana sayfaya dön',
+    allAreas: 'Tüm faaliyet alanları',
   },
   menu: { open: 'Menü', close: 'Kapat', label: 'Ana menü', linksLabel: 'Menü bağlantıları', contactTitle: 'İletişim' },
-  lang: { label: 'Dil', tr: 'TR', en: 'EN', trName: 'Türkçe', enName: 'English' },
   labels: {
     address: 'Adres',
     phone: 'Telefon',
@@ -40,7 +44,7 @@ export default {
     openMap: 'Haritada aç',
     pendingNote: '',
   },
-  breadcrumbs: { label: 'İçerik yolu', home: 'Ana Sayfa' },
+  breadcrumbs: { label: 'İçerik yolu', home: 'Ana Sayfa', area: 'Çalışma Alanları' },
   footer: {
     legalTitle: 'Yasal',
     navTitle: 'Sayfalar',

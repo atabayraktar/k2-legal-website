@@ -10,6 +10,7 @@ const LOGOS = [
   'k2-horizontal-dark.svg',
   'k2-horizontal-light.svg',
   'k2-seal-dark.svg',
+  'k2-favicon.svg',
   'k2-mark-dark.svg',
   'k2-mark-light.svg',
   'k2-mark-accent-dark.svg',
@@ -22,11 +23,17 @@ fs.mkdirSync(path.join(PUB, 'images'), { recursive: true });
 
 for (const f of LOGOS) fs.copyFileSync(path.join(SRC, f), path.join(PUB, 'logos', f));
 
-// favicon = seal
-fs.copyFileSync(path.join(SRC, 'k2-seal-dark.svg'), path.join(PUB, 'favicon.svg'));
-const seal = fs.readFileSync(path.join(SRC, 'k2-seal-dark.svg'));
-await sharp(seal, { density: 600 }).resize(32, 32).png().toFile(path.join(PUB, 'favicon-32.png'));
-await sharp(seal, { density: 600 }).resize(180, 180).png().toFile(path.join(PUB, 'apple-touch-icon.png'));
+// favicon = transparent ink K + wax 2 (k2-favicon.svg). iOS cannot show transparency,
+// so the apple-touch icon is the same mark flattened onto bone.
+fs.copyFileSync(path.join(SRC, 'k2-favicon.svg'), path.join(PUB, 'favicon.svg'));
+const fav = fs.readFileSync(path.join(SRC, 'k2-favicon.svg'));
+await sharp(fav, { density: 600 }).resize(32, 32).png().toFile(path.join(PUB, 'favicon-32.png'));
+await sharp(fav, { density: 600 })
+  .resize(132, 132)
+  .extend({ top: 24, bottom: 24, left: 24, right: 24, background: '#F2EFE9' })
+  .flatten({ background: '#F2EFE9' })
+  .png()
+  .toFile(path.join(PUB, 'apple-touch-icon.png'));
 
 // og card: ink background, light lockup centred, 1px hairline frame inset 48px, no other text
 const W = 1200;

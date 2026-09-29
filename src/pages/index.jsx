@@ -6,5 +6,5 @@ export default function Home(props) {
 }
 
 export function getStaticProps() {
-  return homeStaticProps('tr', getContent);
+  return homeStaticProps(getContent);
 }

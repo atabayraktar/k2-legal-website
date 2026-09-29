@@ -1,6 +1,8 @@
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import Button from './Button';
+import Mark from './Mark';
+import Redact from './Redact';
 import { buildMailto } from '../lib/contact-mailto.js';
 import { fmt } from '../lib/format.js';
 import { isPending } from '../lib/pending.js';
@@ -20,7 +22,7 @@ function validate(v) {
 }
 
 // t = contact page content. States: idle | invalid | submitting | success | mailto | error | pending.
-export default function ContactForm({ t, site, locale }) {
+export default function ContactForm({ t, site, labelledBy }) {
   const uid = useId();
   const id = (k) => `${uid}-${k}`;
   const [values, setValues] = useState(EMPTY);
@@ -72,7 +74,6 @@ export default function ContactForm({ t, site, locale }) {
             phone: values.phone.trim(),
             subject: values.subject.trim(),
             message: values.message.trim(),
-            locale,
           }),
         });
         setState(res.ok ? 'success' : 'error');
@@ -102,7 +103,7 @@ export default function ContactForm({ t, site, locale }) {
     ) : (
       <>
         {c.label.slice(0, at)}
-        <Link className="cf__link" href={pagePath('privacy', locale)}>
+        <Link className="cf__link" href={pagePath('privacy')}>
           {c.linkText}
         </Link>
         {c.label.slice(at + c.linkText.length)}
@@ -113,10 +114,14 @@ export default function ContactForm({ t, site, locale }) {
     const Tag = area ? 'textarea' : 'input';
     const err = errors[k];
     return (
-      <div className="cf__row">
+      <div className={`cf__row${err ? ' has-error' : ''}`}>
         <label className="cf__label" htmlFor={id(k)}>
-          {t.fields[k].label}
-          {required ? <span className="cf__req" aria-hidden="true"> *</span> : null}
+          <span className="cf__label-t">{t.fields[k].label}</span>
+          {required ? (
+            <span className="cf__req" aria-hidden="true">
+              *
+            </span>
+          ) : null}
         </label>
         <Tag
           ref={refs[k]}
@@ -124,7 +129,7 @@ export default function ContactForm({ t, site, locale }) {
           name={k}
           className={area ? 'cf__input cf__textarea' : 'cf__input'}
           type={area ? undefined : type}
-          rows={area ? 6 : undefined}
+          rows={area ? 5 : undefined}
           autoComplete={autoComplete}
           value={values[k]}
           required={required}
@@ -144,13 +149,20 @@ export default function ContactForm({ t, site, locale }) {
   };
 
   return (
-    <form className="cf" onSubmit={onSubmit} noValidate>
-      <p className="cf__warning">{t.warning}</p>
+    <form className="cf" onSubmit={onSubmit} noValidate aria-labelledby={labelledBy}>
       {field('name', { autoComplete: 'name', required: true })}
       {field('email', { type: 'email', autoComplete: 'email', required: true })}
       {field('phone', { type: 'tel', autoComplete: 'tel' })}
       {field('subject', {})}
       {field('message', { area: true, required: true })}
+
+      <div className="cf__warning" role="note">
+        <div className="cf__warning-top">
+          <Mark className="cf__tag">{t.warningTag}</Mark>
+          <Redact w={12} className="cf__redact" />
+        </div>
+        <p className="cf__warning-t">{t.warning}</p>
+      </div>
 
       <div className="cf__hp" aria-hidden="true">
         <label htmlFor={id('hp')}>{t.honeypotLabel}</label>
