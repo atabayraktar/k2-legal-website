@@ -1,0 +1,149 @@
+@use 'tokens/mixins' as *;
+
+.footer {
+  border-top: 1px solid var(--line-dk);
+  padding-block: var(--sp-96) var(--sp-48);
+
+  @include down(tab-mini) {
+    padding-top: var(--sp-64);
+  }
+
+  &__top {
+    row-gap: var(--sp-48);
+  }
+
+  &__brand {
+    @include up(tab-max) {
+      grid-column: 1 / span 3;
+    }
+  }
+
+  &__logo {
+    width: 200px;
+    height: auto;
+    aspect-ratio: 414 / 100;
+    margin-bottom: var(--sp-24);
+  }
+
+  &__name {
+    @include label;
+    color: var(--bone);
+    margin-bottom: var(--sp-8);
+  }
+
+  &__address {
+    font-size: var(--fs-small);
+    line-height: 1.6;
+    color: var(--ash);
+  }
+
+  &__col {
+    &--nav {
+      @include up(tab-max) {
+        grid-column: 4 / span 3;
+      }
+    }
+
+    &--legal {
+      @include up(tab-max) {
+        grid-column: 7 / span 3;
+      }
+    }
+
+    &--contact {
+      @include up(tab-max) {
+        grid-column: 10 / span 3;
+      }
+    }
+  }
+
+  &__title {
+    @include label;
+    color: var(--ash);
+    margin-bottom: var(--sp-16);
+  }
+
+  &__list {
+    display: grid;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    min-width: var(--touch);
+    font-size: 15px;
+    color: var(--bone);
+    transition: color var(--dur-color) var(--ease);
+
+    @include hover {
+      color: var(--wax-lit);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  &__facts {
+    display: grid;
+    gap: var(--sp-16);
+
+    dt {
+      @include label;
+      font-size: 11px;
+      color: var(--ash);
+      margin-bottom: var(--sp-4);
+    }
+
+    dd {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--bone);
+      overflow-wrap: anywhere;
+    }
+  }
+
+  &__bottom {
+    margin-top: var(--sp-64);
+    padding-top: var(--sp-24);
+    border-top: 1px solid var(--line-dk);
+    row-gap: var(--sp-24);
+    align-items: start;
+
+    @include up(tab-max) {
+      margin-top: var(--sp-96);
+    }
+  }
+
+  &__disclaimer {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ash);
+    max-width: 80ch;
+
+    @include up(tab-max) {
+      grid-column: 1 / span 8;
+    }
+  }
+
+  // Language switch and rights line share one baseline on desktop.
+  &__side {
+    display: grid;
+    gap: var(--sp-8);
+    justify-items: start;
+
+    @include up(tab-max) {
+      grid-column: 9 / span 4;
+      grid-auto-flow: column;
+      justify-content: end;
+      align-items: center;
+      gap: var(--sp-24);
+    }
+  }
+
+  &__rights {
+    font-size: 13px;
+    color: var(--ash);
+  }
+}

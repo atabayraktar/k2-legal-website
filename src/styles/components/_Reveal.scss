@@ -1,0 +1,66 @@
+@use 'tokens/mixins' as *;
+
+// Hidden state exists only when JS ran (the .js class is set in _document), so no-JS users see everything.
+.reveal {
+  transition:
+    opacity var(--dur-reveal) var(--ease),
+    transform var(--dur-reveal) var(--ease);
+  transition-delay: calc(var(--n, 0) * var(--stagger));
+
+  @for $i from 1 through 5 {
+    &[data-delay='#{$i}'] {
+      --n: #{$i};
+    }
+  }
+
+  &--hair {
+    transform-origin: left;
+    transition-duration: var(--dur-hair);
+  }
+
+  .js &:not(.is-in):not(.reveal--now) {
+    opacity: 0;
+    transform: translateY(var(--reveal-y));
+  }
+
+  // First-viewport content: painted immediately, only rises (transform-only, compositor). Never hides text.
+  &--now {
+    transition: none;
+    animation: reveal-rise var(--dur-reveal) var(--ease) both;
+    animation-delay: calc(var(--n, 0) * var(--stagger));
+  }
+
+  .js &--hair:not(.is-in):not(.reveal--now) {
+    opacity: 1;
+    transform: scaleX(0);
+  }
+
+  .js &--word:not(.is-in):not(.reveal--now) {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes reveal-rise {
+  from {
+    transform: translateY(var(--reveal-y));
+  }
+  to {
+    transform: none;
+  }
+}
+
+@include reduced-motion {
+  .reveal--now {
+    animation: none;
+  }
+
+  .reveal,
+  .js .reveal:not(.is-in),
+  .js .reveal--hair:not(.is-in),
+  .js .reveal--word:not(.is-in) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

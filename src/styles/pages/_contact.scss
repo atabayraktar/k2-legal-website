@@ -1,0 +1,65 @@
+@use 'tokens/mixins' as *;
+
+// Contact page: the ink contact section doubles as the page hero, so it clears the fixed header itself.
+.contact--page {
+  padding-top: calc(var(--header-h) + var(--sp-64));
+
+  @include up(tab-max) {
+    padding-top: calc(var(--header-h) + var(--sp-96));
+  }
+}
+
+.faq {
+  padding-block: var(--section-y);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-32);
+
+    @include up(tab-max) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+    }
+  }
+
+  &__title {
+    font-size: var(--fs-h4);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+
+    @include up(tab-max) {
+      grid-column: 1 / span 4;
+    }
+  }
+
+  &__list {
+    margin: 0;
+    border-bottom: 1px solid var(--rule);
+
+    @include up(tab-max) {
+      grid-column: 5 / span 7;
+    }
+  }
+
+  &__item {
+    padding-block: var(--sp-32);
+    border-top: 1px solid var(--rule);
+  }
+
+  &__q {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: var(--fs-h4);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  &__a {
+    margin: var(--sp-16) 0 0;
+    max-width: 60ch;
+    color: var(--fg-2);
+    line-height: 1.7;
+  }
+}

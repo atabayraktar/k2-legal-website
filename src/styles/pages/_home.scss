@@ -1,0 +1,52 @@
+@use 'tokens/mixins' as *;
+
+// Home-only layout for the team section head (cards themselves live in components/_TeamCards).
+.team {
+  padding-block: var(--section-y);
+  border-top: 1px solid var(--line);
+
+  &__head {
+    display: grid;
+    gap: var(--sp-24);
+    margin-bottom: var(--sp-48);
+
+    @include up(tab-max) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+      margin-bottom: var(--sp-96);
+    }
+  }
+
+  &__title {
+    @include up(tab-max) {
+      grid-column: 4 / span 6;
+      grid-row: 1;
+    }
+  }
+
+  &__head > .eyebrow {
+    @include up(tab-max) {
+      grid-column: 1 / span 3;
+      grid-row: 1;
+      padding-top: 1.2em;
+    }
+  }
+
+  &__intro {
+    max-width: 46ch;
+
+    @include up(tab-max) {
+      grid-column: 4 / span 5;
+      grid-row: 2;
+    }
+  }
+
+  &__more {
+    @include up(tab-max) {
+      grid-column: 10 / span 3;
+      grid-row: 1;
+      justify-self: end;
+      align-self: end;
+    }
+  }
+}

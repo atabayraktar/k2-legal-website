@@ -1,0 +1,30 @@
+@use 'tokens/mixins' as *;
+
+.page-hero {
+  padding-top: calc(var(--header-h) + 56px);
+  padding-bottom: 48px;
+
+  @include up(tab-max) {
+    padding-top: calc(var(--header-h) + 96px);
+    padding-bottom: 72px;
+  }
+
+  &__eyebrow {
+    margin-bottom: var(--sp-24);
+  }
+
+  &__title {
+    font-size: var(--fs-display-2);
+    max-width: 18ch;
+  }
+
+  &__lede {
+    margin-top: var(--sp-32);
+    max-width: 60ch;
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: var(--fs-h4);
+    line-height: 1.35;
+    color: var(--fg);
+  }
+}

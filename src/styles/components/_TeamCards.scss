@@ -1,0 +1,117 @@
+@use 'tokens/mixins' as *;
+
+// Cards are shared by the home section and the /ekibimiz page.
+.team__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sp-24);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include up(tab-max) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.team-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sp-24);
+  align-content: start;
+  padding: var(--sp-24);
+  background: var(--paper);
+  border: 1px solid var(--line);
+
+  @include up(tab-mini) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--sp-32);
+    padding: var(--sp-32);
+  }
+
+  // 1024 to 1279: two narrow cards side by side, so each stacks its photo above the facts.
+  @media (min-width: 1024px) and (max-width: 1279.98px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  &__photo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-24);
+    aspect-ratio: 4 / 3;
+    background: var(--graphite);
+    border: 1px solid var(--line-dk);
+    color: var(--stone);
+    overflow: hidden;
+
+    @include up(tab-mini) {
+      aspect-ratio: 4 / 5;
+    }
+
+    @media (min-width: 1024px) and (max-width: 1279.98px) {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+  }
+
+  &__mark {
+    height: 56px;
+    width: auto;
+  }
+
+  &__caption {
+    @include label;
+    color: var(--ash);
+  }
+
+  &__name {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+
+    @include up(tab-max) {
+      font-size: 32px;
+    }
+  }
+
+  &__facts {
+    margin-top: var(--sp-24);
+  }
+
+  &__row {
+    padding-block: 12px;
+    border-top: 1px solid var(--hair);
+
+    dt {
+      @include label;
+      color: var(--stone);
+    }
+
+    dd {
+      margin: 8px 0 0;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+  }
+
+  &__sentence {
+    margin-top: var(--sp-24);
+    padding-top: var(--sp-16);
+    border-top: 1px solid var(--line);
+    color: var(--stone);
+    line-height: 1.6;
+  }
+}

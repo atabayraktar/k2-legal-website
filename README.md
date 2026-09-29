@@ -1,2 +1,3 @@
-# k2-legal-website
-Website for Kalvia K2 Legal.
+# K2 Legal Website
+
+Karaman Berat Avukatlık Ortaklığı — kurumsal web sitesi (Next.js static export, Firebase Hosting).

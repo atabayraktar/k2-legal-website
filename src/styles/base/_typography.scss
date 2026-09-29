@@ -1,0 +1,72 @@
+@use 'tokens/mixins' as *;
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--fs-display-2);
+}
+
+h2 {
+  font-size: var(--fs-display-2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+}
+
+h4 {
+  font-size: var(--fs-h4);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+// text-wrap: pretty only where long-form reading benefits; on every paragraph it adds layout cost to first paint.
+.prose p,
+.lede {
+  text-wrap: pretty;
+}
+
+.em {
+  font-family: var(--font-serif-italic, var(--font-serif)), var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--accent);
+}
+
+// Unresolved client data: a neutral inline blank, clearly pending, never display-scale.
+.pending {
+  font-family: var(--font-sans);
+  font-size: 0.82em;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--fg-2);
+  border-bottom: 1px dotted currentColor;
+  white-space: nowrap;
+}
+
+.label,
+.eyebrow {
+  @include label;
+  color: var(--fg-2);
+}
+
+.eyebrow {
+  letter-spacing: var(--ls-eyebrow);
+}
+
+.lede {
+  font-size: var(--fs-lede);
+  line-height: 1.6;
+  color: var(--fg-2);
+}

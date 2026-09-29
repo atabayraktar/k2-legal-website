@@ -1,0 +1,105 @@
+@use 'tokens/mixins' as *;
+
+:root {
+  // palette (brand_guidelines)
+  --ink: #0b0b0c;
+  --graphite: #161719;
+  --bone: #f2efe9;
+  --paper: #faf8f4;
+  --stone: #5f5d59;
+  --ash: #a9a59d;
+  --wax: #b3222c;
+  --wax-lit: #e0525b;
+  --line: rgba(11, 11, 12, 0.16);
+  --hair: rgba(11, 11, 12, 0.09);
+  --line-dk: rgba(242, 239, 233, 0.18);
+  --hair-dk: rgba(242, 239, 233, 0.09);
+
+  // semantic (light default)
+  --bg: var(--bone);
+  --fg: var(--ink);
+  --fg-2: var(--stone);
+  --rule: var(--line);
+  --rule-2: var(--hair);
+  --accent: var(--wax);
+  --focus: var(--wax);
+  --surface: var(--paper);
+
+  // font families are overridden by the next/font variable classes on .app
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  // fluid type scale (375 -> 1440)
+  --fs-display-1: clamp(3.75rem, 2.6rem + 4.4vw, 6.5rem);
+  --fs-display-2: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
+  --fs-manifesto: clamp(1.75rem, 1.2rem + 2.2vw, 3.25rem);
+  --fs-h3: clamp(1.75rem, 1.3rem + 1.9vw, 3.5rem);
+  --fs-h4: clamp(1.375rem, 1.15rem + 0.9vw, 1.75rem);
+  --fs-lede: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --fs-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --fs-small: 0.875rem;
+  --fs-label: 0.71875rem;
+  --ls-label: 0.2em;
+  --ls-eyebrow: 0.24em;
+
+  // spacing scale
+  --sp-4: 4px;
+  --sp-8: 8px;
+  --sp-12: 12px;
+  --sp-16: 16px;
+  --sp-24: 24px;
+  --sp-32: 32px;
+  --sp-48: 48px;
+  --sp-64: 64px;
+  --sp-96: 96px;
+  --sp-144: 144px;
+  --sp-200: 200px;
+
+  // layout
+  --gutter: clamp(20px, 4vw, 56px);
+  --container: #{$container-max};
+  --section-y: clamp(72px, 10vw, 144px);
+  --header-h: 64px;
+  --grid-gap: 16px;
+  --touch: 44px;
+  --control-h: 52px;
+
+  // z-index scale: content < header < menu < skip link
+  --z-base: 0;
+  --z-content: 1;
+  --z-header: 50;
+  --z-menu: 80;
+  --z-skip: 100;
+
+  // motion
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --dur-fast: 200ms;
+  --dur-color: 300ms;
+  --dur-btn: 450ms;
+  --dur-fill: 550ms;
+  --dur-menu: 500ms;
+  --dur-reveal: 800ms;
+  --dur-hair: 1000ms;
+  --dur-hero: 900ms;
+  --reveal-y: 24px;
+  --stagger: 80ms;
+}
+
+@include up(tab-max) {
+  :root {
+    --header-h: 80px;
+    --grid-gap: 24px;
+  }
+}
+
+[data-theme='dark'] {
+  @include dark-vars;
+}
+
+@include reduced-motion {
+  :root {
+    --dur-reveal: 0ms;
+    --dur-hair: 0ms;
+    --dur-hero: 0ms;
+  }
+}

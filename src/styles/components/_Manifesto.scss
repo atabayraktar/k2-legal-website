@@ -1,0 +1,72 @@
+@use 'tokens/mixins' as *;
+
+.manifesto {
+  padding-block: var(--section-y);
+
+  &__label {
+    margin-bottom: var(--sp-16);
+
+    @include up(tab-max) {
+      grid-column: 1 / span 3;
+      margin-bottom: 0;
+      padding-top: 0.9em;
+    }
+  }
+
+  &__text {
+    max-width: 30ch;
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: var(--fs-manifesto);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    text-wrap: initial;
+
+    @include up(tab-mini) {
+      max-width: 34ch;
+    }
+
+    @include up(tab-max) {
+      grid-column: 4 / -1;
+      max-width: 36ch;
+    }
+  }
+
+  // Word groups "light" from stone to ink as they enter the viewport. Colour only (never opacity), so the unlit
+  // state is a real token pair: stone on bone = 5.7:1. Hidden state only exists with JS.
+  &__g {
+    transition: color 600ms var(--ease);
+
+    .js &:not(.is-in) {
+      color: var(--stone);
+    }
+  }
+
+  &__cta {
+    margin-top: var(--sp-48);
+
+    .btn {
+      width: 100%;
+    }
+
+    @include up(tab-mini) {
+      .btn {
+        width: auto;
+      }
+    }
+
+    @include up(tab-max) {
+      grid-column: 4 / span 4;
+      margin-top: var(--sp-64);
+    }
+  }
+}
+
+@include reduced-motion {
+  .manifesto__g,
+  .js .manifesto__g:not(.is-in) {
+    color: var(--ink);
+    transition: none;
+  }
+}

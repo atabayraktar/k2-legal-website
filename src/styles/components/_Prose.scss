@@ -1,0 +1,40 @@
+@use 'tokens/mixins' as *;
+
+.prose {
+  max-width: 68ch;
+  padding-bottom: var(--section-y);
+
+  &__updated {
+    @include label;
+    font-size: 11px;
+    color: var(--fg-2);
+    margin-bottom: var(--sp-48);
+  }
+
+  &__section + &__section {
+    margin-top: var(--sp-64);
+  }
+
+  &__h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: var(--fs-h4);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--sp-16);
+  }
+
+  p + p {
+    margin-top: var(--sp-16);
+  }
+
+  &__list {
+    margin-top: var(--sp-16);
+    border-top: 1px solid var(--rule);
+
+    li {
+      padding: var(--sp-12) 0;
+      border-bottom: 1px solid var(--rule);
+    }
+  }
+}

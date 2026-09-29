@@ -1,0 +1,207 @@
+@use 'tokens/mixins' as *;
+
+// Fixed, hairline bottom border, bone on light sections, transparent on ink. No blur, no shadow.
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-header);
+  height: var(--header-h);
+  color: var(--ink);
+  transition: color var(--dur-color) var(--ease);
+
+  &[data-header-theme='dark'] {
+    @include dark-vars;
+    color: var(--bone);
+  }
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    background: var(--bone);
+    border-bottom: 1px solid var(--line);
+    transition:
+      background-color var(--dur-color) var(--ease),
+      border-color var(--dur-color) var(--ease);
+  }
+
+  // Solid ink (not transparent) so content scrolling under the bar never collides with the logo and nav.
+  &[data-header-theme='dark'] &__bg {
+    background: var(--ink);
+    border-bottom-color: var(--line-dk);
+  }
+
+  // Keep a visible hairline even when the fill is transparent.
+  &[data-header-theme='dark']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--line-dk);
+  }
+
+  &__bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: var(--sp-24);
+  }
+
+  &__brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    min-width: var(--touch);
+    margin-right: auto;
+    position: relative;
+  }
+
+  &__logo {
+    height: 34px;
+    width: auto;
+    display: none;
+    transition: opacity var(--dur-color) var(--ease);
+
+    @include up(phablet) {
+      display: block;
+    }
+
+    @include up(tab-max) {
+      height: 42px;
+    }
+
+    &--light {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+    }
+  }
+
+  &[data-header-theme='dark'] &__logo--dark {
+    opacity: 0;
+  }
+
+  &[data-header-theme='dark'] &__logo--light {
+    opacity: 1;
+  }
+
+  &__mark {
+    height: 28px;
+    width: auto;
+
+    @include up(phablet) {
+      display: none;
+    }
+  }
+
+  &__nav {
+    display: none;
+
+    @include up(tab-max) {
+      display: block;
+      margin-right: var(--sp-16);
+    }
+
+    ul {
+      display: flex;
+      gap: var(--sp-24);
+
+      @include up(desktop) {
+        gap: var(--sp-32);
+      }
+    }
+
+    @include up(desktop) {
+      ul {
+        gap: var(--sp-48);
+      }
+    }
+  }
+
+  &__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--fg);
+    transition: color var(--dur-color) var(--ease);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 10px;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--dur-fill) var(--ease);
+    }
+
+    @include hover {
+      color: var(--accent);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    // "You are here" = underline only; wax stays reserved for hover.
+    &.is-current::after {
+      transform: scaleX(1);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-24);
+  }
+
+  &__lang,
+  &__cta {
+    display: none;
+
+    @include up(tab-max) {
+      display: inline-flex;
+    }
+  }
+
+  &__menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--touch);
+    min-height: var(--touch);
+    padding: 0 4px;
+    @include label;
+    font-size: 12px;
+    color: var(--fg);
+    transition: color var(--dur-color) var(--ease);
+
+    @include up(tab-max) {
+      display: none;
+    }
+
+    @include hover {
+      color: var(--accent);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}

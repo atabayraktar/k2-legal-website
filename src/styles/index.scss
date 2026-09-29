@@ -1,0 +1,33 @@
+// Single entry, imported once in _app.jsx (Pages Router allows global CSS only there).
+@use 'tokens/tokens';
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/layout';
+@use 'base/a11y';
+
+@use 'components/Layout';
+@use 'components/Button';
+@use 'components/Reveal';
+@use 'components/Monogram';
+@use 'components/LangSwitch';
+@use 'components/Header';
+@use 'components/MenuOverlay';
+@use 'components/Footer';
+@use 'components/PageHero';
+@use 'components/Breadcrumbs';
+@use 'components/Prose';
+
+@use 'pages/legal';
+@use 'pages/notfound';
+@use 'components/Hero';
+@use 'components/Manifesto';
+@use 'components/PracticeList';
+@use 'components/Process';
+@use 'components/TeamCards';
+@use 'components/ContactSection';
+@use 'components/ContactForm';
+@use 'pages/home';
+@use 'pages/about';
+@use 'pages/practice';
+@use 'pages/team';
+@use 'pages/contact';

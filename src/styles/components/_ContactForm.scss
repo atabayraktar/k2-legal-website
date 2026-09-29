@@ -1,0 +1,186 @@
+@use 'tokens/mixins' as *;
+
+// Paper fields on a graphite panel. Errors sit under the field; status is an aria-live region.
+.cf {
+  display: grid;
+  gap: var(--sp-24);
+  padding: var(--sp-24);
+  background: var(--graphite);
+  border: 1px solid var(--line-dk);
+  color: var(--bone);
+
+  @include up(tab-mini) {
+    padding: var(--sp-48);
+  }
+
+  &__warning {
+    padding: var(--sp-16) 20px;
+    border: 1px solid var(--line-dk);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ash);
+  }
+
+  &__row {
+    display: grid;
+    gap: var(--sp-8);
+  }
+
+  &__label {
+    @include label;
+    color: var(--ash);
+  }
+
+  &__req {
+    color: var(--ash);
+  }
+
+  &__input {
+    width: 100%;
+    height: var(--control-h);
+    padding: 0 var(--sp-16);
+    border: 1px solid transparent;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 16px/1.4 var(--font-sans);
+    appearance: none;
+    transition: border-color var(--dur-color) var(--ease);
+
+    &:focus-visible {
+      outline: 2px solid var(--wax-lit);
+      outline-offset: 2px;
+    }
+
+    &[aria-invalid='true'] {
+      border-color: var(--wax);
+      border-width: 1px 1px 1px 4px;
+    }
+  }
+
+  &__textarea {
+    height: auto;
+    min-height: 160px;
+    padding-block: 14px;
+    resize: vertical;
+  }
+
+  &__error {
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--wax-lit);
+  }
+
+  &__consent-line {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-16);
+  }
+
+  // Native checkbox, restyled square. The hit area is the 44px label row.
+  &__check {
+    flex: none;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    margin: 10px 0;
+    border: 1px solid var(--bone);
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+
+    &:checked {
+      background: var(--bone);
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 7px;
+        top: 2px;
+        width: 7px;
+        height: 13px;
+        border: solid var(--ink);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax-lit);
+      outline-offset: 4px;
+    }
+
+    &[aria-invalid='true'] {
+      border-color: var(--wax-lit);
+    }
+  }
+
+  &__consent-label {
+    box-sizing: border-box;
+    min-height: var(--touch);
+    padding-block: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--bone);
+  }
+
+  &__link {
+    color: var(--bone);
+    // Inline link: padding extends the hit area to ~44px without touching the line box.
+    padding-block: 12px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: color var(--dur-color) var(--ease);
+
+    @include hover {
+      color: var(--wax-lit);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax-lit);
+      outline-offset: 4px;
+    }
+  }
+
+  &__actions {
+    .btn {
+      width: 100%;
+
+      @include up(tab-mini) {
+        width: auto;
+        min-width: 220px;
+      }
+    }
+  }
+
+  &__status {
+    min-height: 1.5em;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--bone);
+
+    &--error {
+      color: var(--wax-lit);
+    }
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  // Honeypot: out of the visual and tab flow, hidden from assistive tech.
+  &__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+}
+
+@include reduced-motion {
+  .cf__input,
+  .cf__link {
+    transition: none;
+  }
+}

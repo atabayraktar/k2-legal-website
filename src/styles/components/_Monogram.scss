@@ -1,0 +1,15 @@
+// Size via font-size or an explicit height on the parent/class. Never rotated, stretched, shadowed.
+.monogram {
+  height: 1em;
+  width: auto;
+  color: inherit;
+
+  &__two--accent {
+    stroke: var(--wax);
+  }
+}
+
+[data-theme='dark'] .monogram__two--accent,
+.menu .monogram__two--accent {
+  stroke: var(--wax-lit);
+}

@@ -1,0 +1,273 @@
+@use 'tokens/mixins' as *;
+
+// Full-screen overlay: fades and translates in (no hard cut), sits above the header.
+.menu {
+  @include dark-vars;
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-menu);
+  background: var(--ink);
+  color: var(--bone);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-menu) var(--ease),
+    visibility 0s linear var(--dur-menu);
+
+  &--open {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity var(--dur-menu) var(--ease),
+      visibility 0s;
+  }
+
+  &__inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: var(--sp-32);
+    transform: translateY(16px);
+    transition: transform var(--dur-menu) var(--ease);
+
+    .menu--open & {
+      transform: translateY(0);
+    }
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-h);
+    flex: none;
+  }
+
+  &__brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+  }
+
+  &__logo {
+    height: 34px;
+    width: auto;
+    display: none;
+
+    @include up(phablet) {
+      display: block;
+    }
+  }
+
+  &__mark {
+    height: 28px;
+    width: auto;
+
+    @include up(phablet) {
+      display: none;
+    }
+  }
+
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--touch);
+    min-height: var(--touch);
+    padding: 0 4px;
+    @include label;
+    font-size: 12px;
+    color: var(--bone);
+    transition: color var(--dur-color) var(--ease);
+
+    @include hover {
+      color: var(--wax-lit);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  &__nav {
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    padding-block: var(--sp-32);
+
+    @include short-landscape {
+      padding-block: var(--sp-12);
+    }
+  }
+
+  &__list {
+    width: 100%;
+
+    // Landscape phones: two columns so links, contact block and language switch fit without hidden overflow.
+    @include short-landscape {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--sp-32);
+    }
+  }
+
+  &__item {
+    border-top: 1px solid var(--line-dk);
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity var(--dur-menu) var(--ease),
+      transform var(--dur-menu) var(--ease);
+
+    &:last-child {
+      border-bottom: 1px solid var(--line-dk);
+    }
+
+    @include short-landscape {
+      &:nth-last-child(-n + 2) {
+        border-bottom: 1px solid var(--line-dk);
+      }
+    }
+
+    .menu--open & {
+      opacity: 1;
+      transform: none;
+
+      @for $i from 1 through 4 {
+        &:nth-child(#{$i}) {
+          transition-delay: #{$i * 80}ms;
+        }
+      }
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-24);
+    padding-block: var(--sp-16);
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 1.6rem + 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--bone);
+    transition: color var(--dur-color) var(--ease);
+
+    @include short-landscape {
+      font-size: clamp(1.5rem, 8vh, 2.25rem);
+      padding-block: var(--sp-4);
+      gap: var(--sp-16);
+    }
+
+    @include hover {
+      color: var(--wax-lit);
+    }
+
+  }
+
+  // Numerals stay ash; wax only on hover and for the current page.
+  &__num {
+    @include label;
+    color: var(--ash);
+    min-width: 2ch;
+    transition: color var(--dur-color) var(--ease);
+  }
+
+  &__link:hover &__num,
+  &__link.is-current &__num {
+    color: var(--wax-lit);
+  }
+
+  &__foot {
+    flex: none;
+    display: grid;
+    gap: var(--sp-24);
+    padding-top: var(--sp-24);
+
+    @include up(tab-mini) {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+
+    @include short-landscape {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: var(--sp-16);
+    }
+  }
+
+  &__contact {
+    display: grid;
+    gap: var(--sp-8);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ash);
+
+    strong {
+      display: block;
+      @include label;
+      font-size: 11px;
+      color: var(--ash);
+      margin-bottom: var(--sp-4);
+    }
+
+    @include short-landscape {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-4) var(--sp-16);
+      font-size: 13px;
+
+      strong {
+        flex-basis: 100%;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__side {
+    display: grid;
+    gap: var(--sp-16);
+    justify-items: start;
+
+    @include up(tab-mini) {
+      justify-items: end;
+    }
+
+    @include short-landscape {
+      justify-items: end;
+    }
+  }
+
+  &__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--sp-16);
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-height: var(--touch);
+      font-size: 13px;
+      color: var(--ash);
+      transition: color var(--dur-color) var(--ease);
+
+      @include hover {
+        color: var(--wax-lit);
+      }
+    }
+  }
+}
+
+@include reduced-motion {
+  .menu,
+  .menu--open,
+  .menu__inner,
+  .menu__item {
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+    transform: none;
+  }
+}

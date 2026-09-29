@@ -1,0 +1,58 @@
+export const notFound = {
+  title: 'Sayfa bulunamadı',
+  text: 'Aradığınız sayfa yayında değil veya taşınmış olabilir.',
+  cta: 'Ana Sayfa',
+};
+
+export default {
+  htmlLang: 'tr',
+  skip: 'İçeriğe geç',
+  nav: [
+    { key: 'about', label: 'Hakkımızda' },
+    { key: 'practice', label: 'Çalışma Alanları' },
+    { key: 'team', label: 'Ekibimiz' },
+    { key: 'contact', label: 'İletişim' },
+  ],
+  cta: {
+    appointment: 'Randevu Talep Et',
+    practice: 'Çalışma Alanları',
+    all: 'Tümünü Gör',
+    team: 'Ekibimiz',
+    about: 'Hakkımızda',
+    write: 'Bize Yazın',
+    back: 'Geri',
+  },
+  menu: { open: 'Menü', close: 'Kapat', label: 'Ana menü', linksLabel: 'Menü bağlantıları', contactTitle: 'İletişim' },
+  lang: { label: 'Dil', tr: 'TR', en: 'EN', trName: 'Türkçe', enName: 'English' },
+  labels: {
+    address: 'Adres',
+    phone: 'Telefon',
+    email: 'E-posta',
+    kep: 'KEP',
+    hours: 'Çalışma saatleri',
+    whatsapp: 'WhatsApp',
+    registeredName: 'Tescilli unvan',
+    cityBaro: 'Şehir / Baro',
+    contact: 'İletişim',
+    photoPending: 'Fotoğraf eklenecek',
+    partner: 'Ortak {n}',
+    mapPending: 'Harita görseli eklenecek',
+    openMap: 'Haritada aç',
+    pendingNote: '',
+  },
+  breadcrumbs: { label: 'İçerik yolu', home: 'Ana Sayfa' },
+  footer: {
+    legalTitle: 'Yasal',
+    navTitle: 'Sayfalar',
+    contactTitle: 'İletişim',
+    legalLinks: [
+      { key: 'privacy', label: 'Aydınlatma Metni' },
+      { key: 'cookies', label: 'Çerez Politikası' },
+      { key: 'disclaimer', label: 'Yasal Uyarı' },
+    ],
+    disclaimer:
+      'Bu internet sitesi 1136 sayılı Avukatlık Kanunu ve Türkiye Barolar Birliği Reklam Yasağı Yönetmeliği kapsamında yalnızca bilgilendirme amacıyla hazırlanmıştır; reklam ve tanıtım niteliği taşımaz.',
+    rights: '© {year} {legalName}',
+  },
+  notFound,
+};

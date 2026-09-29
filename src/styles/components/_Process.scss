@@ -1,0 +1,102 @@
+@use 'tokens/mixins' as *;
+
+.process {
+  padding-block: var(--section-y);
+
+  &__head {
+    display: grid;
+    gap: var(--sp-24);
+    margin-bottom: var(--sp-48);
+
+    @include up(tab-max) {
+      margin-bottom: var(--sp-96);
+    }
+  }
+
+  &__title {
+    max-width: 14ch;
+    color: var(--fg);
+  }
+
+  &__steps {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @include up(tab-mini) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include up(desktop) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  &__step {
+    padding: var(--sp-32) 0 var(--sp-48);
+    border-top: 1px solid var(--rule);
+
+    @include up(tab-mini) {
+      padding: var(--sp-32) var(--sp-32) var(--sp-64);
+
+      &:nth-child(odd) {
+        padding-left: 0;
+      }
+
+      &:nth-child(even) {
+        border-left: 1px solid var(--rule);
+        padding-left: var(--sp-32);
+      }
+    }
+
+    @include up(desktop) {
+      padding: var(--sp-32) var(--sp-32) 0;
+
+      &:nth-child(n) {
+        border-left: 1px solid var(--rule);
+        padding-left: var(--sp-32);
+      }
+
+      &:first-child {
+        border-left: 0;
+        padding-left: 0;
+      }
+    }
+  }
+
+  &__num {
+    display: block;
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ash);
+
+    @include up(tab-mini) {
+      font-size: 72px;
+    }
+
+    @include up(desktop) {
+      font-size: 88px;
+    }
+  }
+
+  &__step-title {
+    margin-top: var(--sp-32);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+  }
+
+  &__text {
+    max-width: 30ch;
+    margin-top: var(--sp-16);
+    line-height: 1.65;
+    color: var(--fg-2);
+  }
+}

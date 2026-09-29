@@ -1,0 +1,42 @@
+@use 'tokens/mixins' as *;
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+// The dark surfaces flip --focus to wax-lit through their own vars.
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: var(--z-skip);
+  min-height: var(--touch);
+  display: inline-flex;
+  align-items: center;
+  padding: 0 20px;
+  background: var(--ink);
+  color: var(--bone);
+  @include label;
+  transform: translateY(-200%);
+  transition: transform var(--dur-fast) var(--ease);
+
+  &:focus-visible {
+    transform: translateY(0);
+    outline: 2px solid var(--wax-lit);
+    outline-offset: 2px;
+  }
+}

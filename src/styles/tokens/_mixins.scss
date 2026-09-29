@@ -1,0 +1,80 @@
+@use 'sass:map';
+// Build-time tokens: breakpoints, spacing map, mixins.
+$bp: (
+  mobile: 375px,
+  phablet: 480px,
+  tab-mini: 768px,
+  tab-midi: 834px,
+  tab-max: 1024px,
+  desktop: 1280px,
+  wide: 1440px,
+);
+
+$space: (
+  4: 4px,
+  8: 8px,
+  12: 12px,
+  16: 16px,
+  24: 24px,
+  32: 32px,
+  48: 48px,
+  64: 64px,
+  96: 96px,
+  144: 144px,
+  200: 200px,
+);
+
+$container-max: 1440px;
+
+@mixin up($k) {
+  @media (min-width: map.get($bp, $k)) {
+    @content;
+  }
+}
+
+@mixin down($k) {
+  @media (max-width: map.get($bp, $k) - 0.02px) {
+    @content;
+  }
+}
+
+@mixin short-landscape {
+  @media (max-height: 520px) and (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Semantic variables for dark surfaces. Emitted on [data-theme='dark'], the menu and the dark header.
+@mixin dark-vars {
+  --bg: var(--ink);
+  --fg: var(--bone);
+  --fg-2: var(--ash);
+  --rule: var(--line-dk);
+  --rule-2: var(--hair-dk);
+  --accent: var(--wax-lit);
+  --focus: var(--wax-lit);
+  --surface: var(--graphite);
+}
+
+@mixin label {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--fs-label);
+  line-height: 1;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}

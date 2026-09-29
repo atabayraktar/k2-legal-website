@@ -1,0 +1,43 @@
+@use 'tokens/mixins' as *;
+
+.notfound {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--header-h) + 96px);
+  padding-bottom: var(--section-y);
+  min-height: 70vh;
+
+  // Whole monogram, fully inside the frame (bone section, hairline-tone mark).
+  &__mark {
+    position: absolute;
+    right: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+    bottom: var(--sp-48);
+    height: min(38vh, 300px);
+    width: auto;
+    color: var(--rule-2);
+    pointer-events: none;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-16) var(--sp-32);
+  }
+
+  &__inner {
+    position: relative;
+  }
+
+  &__title {
+    font-size: var(--fs-display-1);
+    margin: var(--sp-24) 0 var(--sp-24);
+    max-width: 12ch;
+  }
+
+  &__text {
+    max-width: 44ch;
+    margin-bottom: var(--sp-48);
+    color: var(--fg-2);
+  }
+}

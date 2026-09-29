@@ -1,0 +1,233 @@
+@use 'tokens/mixins' as *;
+
+.practice-page {
+  padding-bottom: var(--section-y);
+
+  &__note {
+    margin-top: var(--sp-32);
+    max-width: 62ch;
+    color: var(--fg-2);
+  }
+}
+
+// Detail page: topics + approach, same two-column hairline rows as the About page.
+.area {
+  padding-bottom: 0;
+
+  &__line {
+    height: 1px;
+    background: var(--line);
+    transform-origin: left;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-24);
+    padding-block: var(--sp-32) var(--sp-48);
+
+    @include up(tab-max) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+      padding-block: var(--sp-48) var(--sp-96);
+    }
+  }
+
+  &__h2 {
+    font-size: var(--fs-h4);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+
+    @include up(tab-max) {
+      grid-column: 1 / span 4;
+    }
+  }
+
+  &__topics,
+  &__approach {
+    @include up(tab-max) {
+      grid-column: 5 / span 7;
+    }
+  }
+
+  &__topics {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--rule-2);
+  }
+
+  &__topic {
+    padding-block: 18px;
+    border-top: 1px solid var(--rule-2);
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: var(--fs-h4);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+
+    &:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+
+  &__approach {
+    max-width: 62ch;
+
+    p {
+      font-size: var(--fs-lede);
+      line-height: 1.7;
+    }
+  }
+}
+
+.area-cta {
+  padding-block: var(--section-y);
+
+  &__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-32);
+
+    @include up(tab-max) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+    }
+  }
+
+  &__title {
+    font-size: var(--fs-display-2);
+
+    @include up(tab-max) {
+      grid-column: 1 / span 5;
+    }
+  }
+
+  &__body {
+    @include up(tab-max) {
+      grid-column: 7 / span 6;
+      padding-top: 0.6em;
+    }
+  }
+
+  &__text {
+    max-width: 46ch;
+    font-size: var(--fs-lede);
+    line-height: 1.6;
+    color: var(--fg-2);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-16) var(--sp-32);
+    margin-top: var(--sp-32);
+  }
+}
+
+// Previous / next area: two hairline cells, no fills.
+.area-nav {
+  padding-block: var(--sp-48);
+
+  @include up(tab-max) {
+    padding-block: var(--sp-64);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+
+    @include up(tab-mini) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__link {
+    display: block;
+    padding: var(--sp-24) 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    color: var(--fg);
+    text-decoration: none;
+
+    & + & {
+      border-top: 0;
+    }
+
+    @include up(tab-mini) {
+      padding: var(--sp-32) var(--sp-24);
+
+      &--prev {
+        padding-left: 0;
+      }
+
+      &--next {
+        padding-right: 0;
+        text-align: right;
+        border-left: 1px solid var(--rule);
+      }
+
+      & + & {
+        border-top: 1px solid var(--rule);
+      }
+    }
+
+    @include hover {
+      .area-nav__title {
+        color: var(--accent);
+      }
+
+      .area-nav__arrow {
+        transform: translateX(6px);
+      }
+
+      .area-nav__arrow--prev {
+        transform: scaleX(-1) translateX(6px);
+      }
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-16);
+    margin-top: var(--sp-12);
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    transition: color var(--dur-color) var(--ease);
+  }
+
+  @include up(tab-mini) {
+    &__link--next &__title {
+      justify-content: flex-end;
+    }
+  }
+
+  &__arrow {
+    flex: none;
+    width: 22px;
+    height: 12px;
+    transition: transform var(--dur-btn) var(--ease);
+
+    &--prev {
+      transform: scaleX(-1);
+    }
+  }
+}
+
+@include reduced-motion {
+  .area-nav__title,
+  .area-nav__arrow {
+    transition: none;
+  }
+}

@@ -1,0 +1,252 @@
+@use 'tokens/mixins' as *;
+
+// Ported from brand_guidelines.html section 05. Transitions are scoped: color, border-color, transform.
+
+.btn {
+  --b-bg: var(--ink);
+  --b-fg: var(--bone);
+  --b-bd: var(--ink);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  height: 52px;
+  min-width: var(--touch);
+  padding: 0 24px;
+  border: 1px solid var(--b-bd);
+  background: var(--b-bg);
+  color: var(--b-fg);
+  @include label;
+  font-size: 11.5px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color var(--dur-btn) var(--ease),
+    border-color var(--dur-btn) var(--ease),
+    transform var(--dur-fast);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--b-fill, var(--wax));
+    transform: scaleX(0);
+    transform-origin: left;
+    z-index: -1;
+    transition: transform var(--dur-fill) var(--ease);
+  }
+
+  &__arrow {
+    width: 18px;
+    height: 10px;
+    flex: none;
+    transition: transform var(--dur-btn) var(--ease);
+  }
+
+  @include hover {
+    &::before {
+      transform: scaleX(1);
+    }
+
+    .btn__arrow {
+      transform: translateX(5px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--wax);
+    outline-offset: 4px;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &--sm {
+    height: 44px;
+    padding: 0 20px;
+  }
+
+  &--primary {
+    @include hover {
+      --b-bd: var(--wax);
+    }
+  }
+
+  &--ghost {
+    --b-bg: transparent;
+    --b-fg: var(--ink);
+    --b-bd: var(--ink);
+    --b-fill: var(--ink);
+
+    @include hover {
+      color: var(--bone);
+    }
+  }
+
+  &--wax {
+    --b-bg: var(--wax);
+    --b-bd: var(--wax);
+    --b-fg: var(--bone);
+    --b-fill: var(--ink);
+
+    @include hover {
+      --b-bd: var(--ink);
+    }
+  }
+
+  &--dark {
+    --b-bg: var(--bone);
+    --b-fg: var(--ink);
+    --b-bd: var(--bone);
+    --b-fill: var(--wax);
+
+    @include hover {
+      color: var(--bone);
+      --b-bd: var(--wax);
+    }
+  }
+
+  &--ghost-dark {
+    --b-bg: transparent;
+    --b-fg: var(--bone);
+    --b-bd: rgba(242, 239, 233, 0.5);
+    --b-fill: var(--bone);
+
+    @include hover {
+      color: var(--ink);
+      --b-bd: var(--bone);
+    }
+  }
+
+  // Focus ring must stay visible on ink surfaces.
+  &--dark,
+  &--ghost-dark {
+    &:focus-visible {
+      outline-color: var(--wax-lit);
+    }
+  }
+
+  // The single wax CTA on a dark section: ink fill would vanish on graphite, so it sweeps bone.
+  [data-theme='dark'] &--wax {
+    --b-fill: var(--bone);
+
+    @include hover {
+      color: var(--ink);
+      --b-bd: var(--bone);
+    }
+
+    &:focus-visible {
+      outline-color: var(--wax-lit);
+    }
+  }
+
+  &[disabled],
+  &[aria-disabled='true'] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+// Underlined text link. The underline is a 1px pseudo element (no gradient) that retracts on hover.
+.lnk {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--touch);
+  padding: 8px 0;
+  color: var(--fg);
+  @include label;
+  font-size: 11.5px;
+  text-decoration: none;
+  transition: color var(--dur-color) var(--ease);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8px;
+    height: 1px;
+    background: currentColor;
+    transform-origin: left;
+    transition: transform var(--dur-fill) var(--ease);
+  }
+
+  &__arrow {
+    width: 18px;
+    height: 10px;
+    transition: transform var(--dur-btn) var(--ease);
+  }
+
+  @include hover {
+    color: var(--accent);
+
+    &::after {
+      transform: scaleX(0);
+      transform-origin: right;
+    }
+
+    .lnk__arrow {
+      transform: translateX(5px);
+    }
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &--on-dark {
+    color: var(--bone);
+
+    @include hover {
+      color: var(--wax-lit);
+    }
+
+    &:focus-visible {
+      outline-color: var(--wax-lit);
+    }
+  }
+}
+
+.ibtn {
+  width: 52px;
+  height: 52px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--fg);
+  color: var(--fg);
+  background: transparent;
+  transition:
+    background-color var(--dur-color) var(--ease),
+    color var(--dur-color) var(--ease),
+    border-color var(--dur-color) var(--ease),
+    transform var(--dur-fast);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @include hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  &--whatsapp {
+    @include hover {
+      background: var(--wax);
+      border-color: var(--wax);
+      color: var(--bone);
+    }
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}

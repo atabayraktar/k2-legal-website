@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+.firebase/
+firebase-debug.log
+.env
+.env.*.local
+.DS_Store
+*.log
+# generated at prebuild
+public/sitemap.xml
+public/robots.txt
+public/llms.txt
+# Claude Code workspace (rules, brand assets, research, reviews, scripts) - not pushed
+.claude/

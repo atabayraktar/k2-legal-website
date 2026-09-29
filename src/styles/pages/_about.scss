@@ -1,0 +1,119 @@
+@use 'tokens/mixins' as *;
+
+// Two-column editorial rows: label-like heading left, text right, drawn on hairlines.
+.about {
+  padding-bottom: 0;
+
+  &__line {
+    height: 1px;
+    background: var(--line);
+    transform-origin: left;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-16);
+    padding-block: var(--sp-32) var(--sp-48);
+
+    @include up(tab-max) {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
+      padding-block: var(--sp-48) var(--sp-96);
+    }
+  }
+
+  &__h2 {
+    font-size: var(--fs-h4);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+
+    @include up(tab-max) {
+      grid-column: 1 / span 4;
+    }
+  }
+
+  &__text {
+    max-width: 62ch;
+
+    @include up(tab-max) {
+      grid-column: 5 / span 7;
+    }
+
+    p {
+      font-size: var(--fs-lede);
+      line-height: 1.65;
+      color: var(--fg);
+    }
+
+    p + p {
+      margin-top: var(--sp-16);
+      color: var(--fg-2);
+    }
+  }
+}
+
+.principles {
+  padding-block: var(--section-y);
+
+  &__title {
+    margin-bottom: var(--sp-48);
+    font-size: var(--fs-display-2);
+
+    @include up(tab-max) {
+      margin-bottom: var(--sp-96);
+    }
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+
+    @include up(tab-max) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  &__item {
+    padding: var(--sp-24) 0 var(--sp-32);
+    border-top: 1px solid var(--rule);
+
+    @include up(tab-max) {
+      padding: var(--sp-24) var(--sp-32) var(--sp-32);
+      border-top: 0;
+      border-left: 1px solid var(--rule);
+
+      &:first-child {
+        padding-left: 0;
+        border-left: 0;
+      }
+    }
+  }
+
+  &__name {
+    font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  &__text {
+    margin-top: var(--sp-16);
+    max-width: 30ch;
+    color: var(--fg-2);
+    line-height: 1.6;
+  }
+}
+
+.about-cta {
+  padding-block: var(--sp-48);
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-16);
+  }
+}

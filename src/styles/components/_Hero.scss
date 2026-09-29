@@ -1,0 +1,256 @@
+@use 'tokens/mixins' as *;
+
+// Ink hero: type first, cropped monogram in graphite, three factual hairline cells at the foot.
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: max(720px, 100svh);
+  padding-top: calc(var(--header-h) + 40px);
+
+  @include up(tab-max) {
+    padding-top: calc(var(--header-h) + 64px);
+  }
+
+  @include short-landscape {
+    min-height: auto;
+    padding-top: calc(var(--header-h) + 32px);
+  }
+
+  // The monogram is stamped whole (K and the angular ²) on the right edge of the content grid, in graphite on ink.
+  // Never cropped: it stays inside the hero frame at every size. It only drifts up slightly on scroll.
+  &__mark {
+    position: absolute;
+    z-index: 0;
+    right: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+    top: calc(var(--header-h) + 24px);
+    height: 132px;
+    width: auto;
+    color: var(--graphite);
+    pointer-events: none;
+
+    @include up(tab-mini) {
+      top: calc(var(--header-h) + 56px);
+      height: 300px;
+    }
+
+    @include up(tab-max) {
+      top: calc(var(--header-h) + 64px);
+      height: min(520px, 52svh);
+    }
+
+    @include short-landscape {
+      top: calc(var(--header-h) + 16px);
+      height: 200px;
+    }
+
+    // Slow scroll drift, CSS only. Uses the standalone `translate` so it composes with the placement transform.
+    @supports (animation-timeline: scroll()) {
+      animation: hero-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    padding-bottom: 48px;
+
+    @include up(tab-max) {
+      padding-bottom: 64px;
+    }
+  }
+
+  &__eyebrow {
+    margin-bottom: var(--sp-24);
+
+    @include up(tab-max) {
+      margin-bottom: var(--sp-32);
+    }
+  }
+
+  &__title {
+    max-width: 12ch;
+    font-size: var(--fs-display-1);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--fg);
+    text-wrap: initial;
+  }
+
+  // Each line is a mask; the inner span slides up into it.
+  &__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+
+  &__line-inner {
+    display: block;
+
+    .js & {
+      animation: hero-line var(--dur-hero) var(--ease) both;
+      animation-delay: calc(var(--i, 0) * 100ms);
+    }
+  }
+
+  @for $i from 0 through 5 {
+    &__line[data-i='#{$i}'] {
+      --i: #{$i};
+    }
+  }
+
+  &__entity {
+    max-width: 52ch;
+    margin-top: var(--sp-32);
+    font-size: var(--fs-lede);
+    line-height: 1.6;
+    color: var(--fg-2);
+
+    @include up(tab-max) {
+      margin-top: var(--sp-48);
+    }
+
+    .js & {
+      animation: hero-rise var(--dur-hero) var(--ease) both;
+      animation-delay: 320ms;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-16);
+    margin-top: var(--sp-32);
+
+    .btn {
+      width: 100%;
+    }
+
+    @include up(tab-mini) {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--sp-16) var(--sp-32);
+      margin-top: var(--sp-48);
+
+      .btn {
+        width: auto;
+      }
+    }
+
+    .js & {
+      animation: hero-rise var(--dur-hero) var(--ease) both;
+      animation-delay: 420ms;
+    }
+  }
+
+  &__cells {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+
+    // Full-bleed top hairline while the cells stay on the container grid.
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100vw;
+      height: 1px;
+      background: var(--rule);
+      transform: translateX(-50%);
+    }
+
+    @include up(tab-mini) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  &__cell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-12);
+    padding: 20px 0;
+
+    + .hero__cell {
+      border-top: 1px solid var(--rule);
+    }
+
+    @include up(tab-mini) {
+      padding: 28px 0 32px;
+
+      + .hero__cell {
+        border-top: 0;
+        border-left: 1px solid var(--rule);
+        padding-left: var(--sp-24);
+      }
+    }
+
+    @include up(tab-max) {
+      padding-block: 32px 36px;
+
+      + .hero__cell {
+        padding-left: var(--sp-32);
+      }
+    }
+  }
+
+  &__cell-label {
+    @include label;
+    color: var(--fg-2);
+  }
+
+  &__cell-value {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--fg);
+    overflow-wrap: anywhere;
+  }
+}
+
+// Text is already painted when the animation starts (transform only, no opacity): protects LCP.
+@keyframes hero-line {
+  from {
+    transform: translateY(32%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(16px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes hero-drift {
+  to {
+    translate: 0 -72px;
+  }
+}
+
+@include reduced-motion {
+  .hero__mark {
+    animation: none;
+  }
+
+  .js .hero__line-inner,
+  .js .hero__entity,
+  .js .hero__actions {
+    animation: none;
+  }
+}

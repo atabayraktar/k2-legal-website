@@ -1,0 +1,47 @@
+@use 'tokens/mixins' as *;
+
+.app {
+  font-family: var(--font-sans);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--grid-gap);
+
+  > * {
+    grid-column: 1 / -1;
+  }
+
+  @include up(tab-max) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+// Sections carry their own theme through the data-theme attribute.
+main [data-theme],
+.footer[data-theme] {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+// Anchor clearance comes from html { scroll-padding-top: var(--header-h) } in _reset.scss (one source, no doubling).
+
+.layout__main {
+  display: block;
+
+  &:focus {
+    outline: none;
+  }
+}
