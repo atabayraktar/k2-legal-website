@@ -3,11 +3,8 @@
 // {tokens} resolve via fmt(str, siteVars()); an item that still contains a pending value is left out of JSON-LD.
 // gate: 'practice' -> left out of JSON-LD until FEATURES.practiceConfirmed (TODO(client) confirm the areas).
 export default {
-  docket: 'SSS',
   h2: 'Sıkça sorulan sorular',
   intro: 'Altı kısa soru ve cevap. Cevaplar bilgilendirme amaçlıdır; hukuki görüş yerine geçmez.',
-  tabPrefix: 'S.',
-  answerLabel: 'Cevap',
   items: [
     {
       id: 's-01',

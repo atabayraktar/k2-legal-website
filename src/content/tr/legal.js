@@ -3,7 +3,7 @@
 const updated = '[…]'; // TODO(client) son güncelleme tarihi, yayın anında
 
 export default {
-  tocLabel: 'Bu sayfada',
+  tocLabel: 'İçerik',
   updatedLabel: 'Son güncelleme',
 
   privacy: {

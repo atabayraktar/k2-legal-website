@@ -1,5 +1,5 @@
 // A title of <= 24 chars gets " | {legalName}" appended by buildTitle (total stays <= 60); longer titles stand alone.
-// Standalone pages: home, 3 flagship practice areas (seo.areas.<id>), 3 legal pages, 404.
+// Standalone pages: home, 8 practice areas (seo.areas.<id>), 3 legal pages, 404.
 export default {
   home: {
     title: 'Karaman Berat Avukatlık Ortaklığı',
@@ -22,6 +22,31 @@ export default {
       title: 'İş ve Sosyal Güvenlik Hukuku',
       description:
         'Karaman Berat Avukatlık Ortaklığı’nın iş ve sosyal güvenlik hukuku alanındaki faaliyetleri: iş sözleşmeleri, fesih, sosyal sigorta ve süreç.',
+    },
+    realestate: {
+      title: 'Gayrimenkul ve İnşaat Hukuku',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın gayrimenkul ve inşaat hukuku alanındaki faaliyetleri: taşınmaz, kira, kat mülkiyeti, konu başlıkları ve süreç.',
+    },
+    family: {
+      title: 'Aile ve Miras Hukuku',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın aile ve miras hukuku alanındaki faaliyetleri: boşanma, velayet, mal rejimi, miras, konu başlıkları ve süreç.',
+    },
+    enforcement: {
+      title: 'İcra ve İflas Hukuku',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın icra ve iflas hukuku alanındaki faaliyetleri: takip, itiraz, haciz ve iflas süreçleri, konu başlıkları.',
+    },
+    ip: {
+      title: 'Fikri Mülkiyet ve Bilişim Hukuku',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın fikri mülkiyet ve bilişim hukuku alanındaki faaliyetleri: marka, telif, kişisel veriler, konu başlıkları ve süreç.',
+    },
+    arbitration: {
+      title: 'Tahkim ve Uyuşmazlık Çözümü',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın tahkim ve uyuşmazlık çözümü alanındaki faaliyetleri: tahkim, arabuluculuk, uzlaşma, konu başlıkları ve süreç.',
     },
   },
   privacy: {

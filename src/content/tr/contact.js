@@ -1,32 +1,77 @@
+// Contact form copy. Neutral wording: no promises of a reply time, no solicitation, no "ücretsiz".
+// {email} / {n} tokens are filled by ContactForm. Field order = groups below.
 export default {
-  docket: 'İletişim',
   title: 'İletişim',
   intro: 'Randevu talebi ve genel sorular için aşağıdaki kanallar kullanılabilir.',
-  formLabel: 'Talep formu',
   infoTitle: 'İletişim bilgileri',
-  formTitle: 'İletişim formu',
+  formTitle: 'Randevu talep formu',
+  formLead:
+    'Formu üç bölümde doldurun. Her alanın yanında zorunlu olup olmadığı yazar. Gönderdiğiniz bilgiler yalnızca talebinizi değerlendirmek için kullanılır; dönüş, verdiğiniz e-posta veya telefon üzerinden yapılabilir.',
+  groups: [
+    { id: 'who', title: 'Kimliğiniz', fields: ['name'] },
+    { id: 'reach', title: 'Size nasıl ulaşılır', fields: ['email', 'phone'] },
+    { id: 'ask', title: 'Talebiniz', fields: ['subject', 'message'] },
+  ],
+  groupDone: 'tamamlandı',
+  required: 'Zorunlu',
+  optional: 'İsteğe bağlı',
+  errorPrefix: 'Hata',
   fields: {
-    name: { n: '01', label: 'Ad Soyad', error: 'Lütfen adınızı ve soyadınızı yazın.' },
-    email: { n: '02', label: 'E-posta', error: 'Geçerli bir e-posta adresi yazın.' },
-    phone: { n: '03', label: 'Telefon (isteğe bağlı)' },
-    subject: { n: '04', label: 'Konu (isteğe bağlı)' },
-    message: { n: '05', label: 'Mesaj', error: 'Lütfen mesajınızı yazın.' },
+    name: {
+      label: 'Ad Soyad',
+      hint: 'Adınızı ve soyadınızı yazın.',
+      error: 'Lütfen adınızı ve soyadınızı yazın.',
+    },
+    email: {
+      label: 'E-posta',
+      hint: 'Dönüş için kullanılacak adres.',
+      error: 'Geçerli bir e-posta adresi yazın (örnek: ad@alanadi.com).',
+    },
+    phone: {
+      label: 'Telefon',
+      hint: 'Görüşme ayarlamak gerekirse kullanılır.',
+    },
+    subject: {
+      label: 'Konu',
+      hint: 'Talebin kısa başlığı; örneğin bir faaliyet alanının adı.',
+    },
+    message: {
+      label: 'Mesaj',
+      hint: 'Talebinizin genel çerçevesini yazın. Gizli bilgi ve belge eklemeyin.',
+      error: 'Lütfen mesajınızı yazın (en az birkaç kelime).',
+    },
   },
+  consentTitle: 'Onay',
   consent: {
     label: 'Aydınlatma Metni’ni okudum.',
     linkText: 'Aydınlatma Metni',
     error: 'Devam etmek için Aydınlatma Metni’ni okuduğunuzu onaylayın.',
   },
-  warningTag: 'Gizli bilgi göndermeyin',
-  warning: 'Bu forma gizli bilgi veya belge yazmayın. Form üzerinden yapılan yazışma avukat–müvekkil ilişkisi kurmaz.',
-  submit: 'Gönder',
+  warning: {
+    title: 'Gizli bilgi ve belge göndermeyin',
+    text: 'Bu forma kimlik, sağlık, mali durum gibi gizli bilgiler yazmayın; dava belgesi veya başka bir belge eklemeyin. Form üzerinden yapılan yazışma avukat–müvekkil ilişkisi kurmaz; ilişki yazılı vekâlet veya hizmet sözleşmesi ile başlar.',
+  },
+  submit: 'Talebi Gönder',
   sending: 'Gönderiliyor…',
-  status: {
-    invalid: 'Formda düzeltilmesi gereken {n} alan var.',
-    success: 'Mesajınız iletildi.',
-    mailto: 'E-posta uygulamanız açıldı. Mesajı oradan göndermeniz gerekir.',
-    error: 'Mesaj gönderilemedi. Lütfen doğrudan {email} adresine yazın.',
-    pending: 'İletişim bilgileri henüz eklenmedi; form etkin değildir.',
+  result: {
+    invalid: { title: 'Formda eksik alan var', text: '{n} alan tamamlanmalı:' },
+    success: {
+      title: 'Talebiniz iletildi',
+      text: 'Mesajınız ortaklığa ulaştı. Dönüş, verdiğiniz e-posta veya telefon üzerinden yapılabilir. Bu mesaj avukat–müvekkil ilişkisi kurmaz.',
+      again: 'Yeni talep yaz',
+    },
+    mailto: {
+      title: 'E-posta taslağı hazırlandı',
+      text: 'E-posta uygulamanız açıldı. Talebin iletilmesi için mesajı e-posta uygulamanızdan göndermeniz gerekir.',
+    },
+    error: {
+      title: 'Talep gönderilemedi',
+      text: 'Bağlantı sorunu olmuş olabilir. Yazdıklarınız formda duruyor; tekrar deneyebilir veya doğrudan {email} adresine yazabilirsiniz.',
+    },
+    pending: {
+      title: 'Form henüz etkin değil',
+      text: 'İletişim bilgileri henüz eklenmediği için form etkin değildir.',
+    },
   },
   honeypotLabel: 'Bu alanı boş bırakın',
 };

@@ -122,7 +122,7 @@
     align-items: center;
     min-height: var(--touch);
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 600; // 600 is the heaviest Instrument Sans weight loaded (400/600)
     line-height: 1;
     white-space: nowrap;
     color: var(--fg);
@@ -149,7 +149,11 @@
       }
     }
 
-    // "You are here" = underline only; wax stays reserved for hover.
+    // "You are here" = wax text + underline (wax on bone, wax-lit on ink via --accent).
+    &.is-current {
+      color: var(--accent);
+    }
+
     &.is-current::after {
       transform: scaleX(1);
     }

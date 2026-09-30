@@ -5,10 +5,8 @@ import Principles from '../components/Principles';
 import PracticePanels from '../components/PracticePanels';
 import Process from '../components/Process';
 import TeamCards from '../components/TeamCards';
-import PhotoBand from '../components/PhotoBand';
 import Faq from '../components/Faq';
 import ContactSection from '../components/ContactSection';
-import Docket from '../components/Docket';
 import Reveal from '../components/Reveal';
 import { site } from '../content/site.js';
 import { orgSchema, websiteSchema, faqSchema, graph } from '../lib/schema.js';
@@ -24,33 +22,28 @@ export default function HomeView({ common, seo, page, faq, areas, team, contact 
       jsonLd={[graph(orgSchema(), websiteSchema(), faqSchema(faq.items))]}
     >
       <Hero t={page.hero} />
-      <AboutSection t={page.about} site={site} />
+      <AboutSection t={page.about} site={site}>
+        <div id="ekibimiz" className="ekibimiz" role="group" aria-labelledby="ekibimiz-title">
+          <div className="container">
+            <div className="grid ekibimiz__grid">
+              <div className="ekibimiz__head">
+                <h2 id="ekibimiz-title" className="ekibimiz__title">
+                  <Reveal as="span" variant="line">
+                    {page.team.h2}
+                  </Reveal>
+                </h2>
+              </div>
+              <div className="ekibimiz__cards">
+                <TeamCards partners={site.partners} t={team} common={common} variant="home" headingId="ekibimiz-title" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </AboutSection>
       <Principles t={page.principles} />
       <PracticePanels areas={areas} t={page.practice} />
       <Process t={page.process} />
 
-      <section id="ekibimiz" className="ekibimiz" data-theme="dark" aria-labelledby="ekibimiz-title">
-        <div className="container">
-          <div className="grid ekibimiz__grid">
-            <div className="ekibimiz__head">
-              <Docket prefix="" label={page.team.docket} />
-              <h2 id="ekibimiz-title" className="ekibimiz__title">
-                <Reveal as="span" variant="line">
-                  {page.team.h2}
-                </Reveal>
-              </h2>
-              <Reveal as="p" delay={1} className="ekibimiz__intro">
-                {page.team.intro}
-              </Reveal>
-            </div>
-            <div className="ekibimiz__cards">
-              <TeamCards partners={site.partners} t={team} common={common} variant="home" headingId="ekibimiz-title" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <PhotoBand t={page.band} />
       <Faq t={faq} />
       <ContactSection
         t={contact}
@@ -58,7 +51,7 @@ export default function HomeView({ common, seo, page, faq, areas, team, contact 
         site={site}
         variant="home"
         headingId="contact-title"
-        heading={{ title: page.contact.title, intro: page.contact.intro, docket: page.contact.docket, as: 'h2' }}
+        heading={{ title: page.contact.title, intro: page.contact.intro }}
       />
     </Layout>
   );

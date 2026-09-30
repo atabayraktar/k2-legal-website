@@ -1,8 +1,8 @@
 import IdxCard from './IdxCard';
 import ImageFrame from './ImageFrame';
-import Mark from './Mark';
 import Reveal from './Reveal';
 import { useRef } from 'react';
+import { ROLE } from '../content/images.js';
 import { useTabs } from '../hooks/useTabs';
 import { scrollToEl } from '../lib/scroll.js';
 
@@ -12,10 +12,9 @@ const PREFIX = 'ilke-';
 
 // Double-ruled seal: the index on top, the principle name below. It grows with its word, so no word is ever cut.
 // Decorative twin of the tab name, so it is hidden from assistive tech.
-function Seal({ index, name }) {
+function Seal({ name }) {
   return (
     <div className="principles__seal" aria-hidden="true">
-      <span className="principles__seal-idx">{index}</span>
       <span className="principles__seal-name">{name}</span>
     </div>
   );
@@ -38,13 +37,10 @@ export default function Principles({ t }) {
     <section id="ilkeler" className="principles" data-theme="light" aria-labelledby="ilkeler-title">
       <div className="container principles__grid">
         <div className="principles__desk">
-          <Reveal className="principles__mark">
-            <Mark>{t?.mark}</Mark>
-          </Reveal>
-          <Reveal as="h2" id="ilkeler-title" delay={1} className="principles__title">
+          <Reveal as="h2" id="ilkeler-title" className="principles__title">
             {t?.h2}
           </Reveal>
-          <Reveal as="p" delay={2} className="principles__lede">
+          <Reveal as="p" delay={1} className="principles__lede">
             {t?.lede}
           </Reveal>
 
@@ -59,7 +55,6 @@ export default function Principles({ t }) {
                     aria-controls={`${PREFIX}${it.id}-panel`}
                     className={`principles__tab${active === it.id ? ' is-active' : ''}`}
                   >
-                    <span className="principles__idx">{it.index}</span>
                     <span className="principles__name">{it.name}</span>
                   </button>
                 </div>
@@ -81,13 +76,8 @@ export default function Principles({ t }) {
                     aria-labelledby={`${PREFIX}${it.id}`}
                     className="principles__panel"
                   >
-                    <p className="principles__sheet-label">
-                      <span className="principles__typed">
-                        {t?.sheetLabel} {it.index}
-                      </span>
-                    </p>
                     <div className="principles__lead">
-                      <Seal index={it.index} name={it.name} />
+                      <Seal name={it.name} />
                       <h3 className="principles__statement">{it.statement}</h3>
                     </div>
                     <p className="principles__detail">{it.detail}</p>
@@ -98,11 +88,10 @@ export default function Principles({ t }) {
           </IdxCard>
 
           <ImageFrame
-            name="about-stamp"
+            name={ROLE.principles}
             alt=""
             aspect="3-2"
             sizes="(min-width: 1024px) 24vw, 90vw"
-            caption={t?.photoCaption}
             className="principles__photo"
           />
         </div>

@@ -22,7 +22,7 @@
     height: auto;
   }
 
-  @each $w, $h in (11, 10), (3, 4), (3, 2), (4, 5), (4, 3), (16, 9), (21, 9) {
+  @each $w, $h in (11, 10), (3, 4), (3, 2), (4, 5), (4, 3), (16, 9), (21, 9), (16, 7) {
     &--a-#{$w}-#{$h} &__img {
       aspect-ratio: #{$w} / #{$h};
       object-fit: cover;
@@ -62,14 +62,5 @@
       border-right: 1px solid currentColor;
       border-bottom: 1px solid currentColor;
     }
-  }
-
-  &__cap {
-    @include mono-label;
-    margin: var(--sp-16) 0 0 auto;
-    font-weight: 400;
-    font-size: 12px;
-    text-align: right;
-    color: var(--fg-2);
   }
 }

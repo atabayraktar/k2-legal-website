@@ -36,8 +36,7 @@
 
   // the tab sits on the hairline like an index divider
   &__lead {
-    padding-top: var(--sp-24);
-    border-top: 1px solid var(--rule);
+    padding-top: 0;
   }
 
   &__title {
@@ -87,7 +86,7 @@
   &__btn {
     position: relative;
     display: grid;
-    grid-template-columns: 56px minmax(0, 1fr) 32px;
+    grid-template-columns: minmax(0, 1fr) 32px;
     align-items: center;
     gap: var(--sp-16);
     min-height: 72px;
@@ -95,23 +94,13 @@
     color: var(--fg);
 
     @include up(tab-mini) {
-      grid-template-columns: 72px minmax(0, 1fr) 40px;
+      grid-template-columns: minmax(0, 1fr) 40px;
       min-height: 88px;
     }
 
     &:focus-visible {
       outline: 2px solid var(--focus);
       outline-offset: -4px;
-    }
-
-    .acc__index {
-      justify-self: start;
-      padding: 2px 6px;
-      margin-left: -6px;
-      color: var(--fg-2);
-      transition:
-        color var(--dur-fast) var(--ease),
-        background-color var(--dur-fast) var(--ease);
     }
 
     .acc__title {
@@ -132,21 +121,17 @@
       .acc__title {
         transform: translateX(8px);
       }
-
-      .acc__index {
-        color: var(--accent);
-      }
     }
   }
 
-  // open: the index turns into an inverted label, the glyph into a wax minus
-  &__item.is-open &__btn .acc__index {
-    background: var(--fg);
-    color: var(--bg);
+  // open: the glyph turns into a wax minus
+  &__item.is-open &__btn .acc__glyph,
+  &__item.is-open &__btn .acc__title {
+    color: var(--accent); // --wax-lit on the dark section: 5.2:1 on ink
   }
 
-  &__item.is-open &__btn .acc__glyph {
-    color: var(--accent);
+  &__item.is-open {
+    border-top-color: var(--accent);
   }
 
   &__panel {
@@ -217,7 +202,7 @@
         position: absolute;
         left: 0;
         font-family: var(--font-mono);
-        color: var(--stone);
+        color: var(--wax);
       }
     }
   }

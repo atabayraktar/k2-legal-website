@@ -11,7 +11,6 @@ export default {
   nav: [
     { key: 'about', id: 'hakkimizda', label: 'Hakkımızda', href: '/#hakkimizda' },
     { key: 'practice', id: 'calisma-alanlari', label: 'Çalışma Alanları', href: '/#calisma-alanlari' },
-    { key: 'team', id: 'ekibimiz', label: 'Ekibimiz', href: '/#ekibimiz' },
     { key: 'faq', id: 'sss', label: 'SSS', href: '/#sss' },
     { key: 'contact', id: 'iletisim', label: 'İletişim', href: '/#iletisim' },
   ],
@@ -23,7 +22,7 @@ export default {
     about: 'Hakkımızda',
     write: 'Bize Yazın',
     back: 'Geri',
-    readSeparate: 'Ayrı sayfada oku',
+    readSeparate: 'Detaylı bilgi için',
     backHome: 'Ana sayfaya dön',
     allAreas: 'Tüm faaliyet alanları',
   },

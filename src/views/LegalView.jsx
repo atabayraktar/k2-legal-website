@@ -41,7 +41,7 @@ export default function LegalView({ routeKey, common, seo, legal }) {
 
   return (
     <Layout routeKey={routeKey} common={common} seo={seo} headerTheme="light" jsonLd={[ld]}>
-      <PageHero title={doc.h1} lede={doc.lede} breadcrumbs={crumbs} />
+      <PageHero title={doc.h1} lede={doc.lede} />
       <div className="legal">
         <div className="container legal__grid">
           <nav className="legal__toc" aria-label={legal.tocLabel}>

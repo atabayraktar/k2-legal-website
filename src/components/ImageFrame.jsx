@@ -1,21 +1,20 @@
 import Reveal from './Reveal';
-import Typed from './Typed';
-import images from '../content/images.generated.js';
+import images from '../content/images.js';
 
-// Photograph in a deliberate crop with crop marks. name = key of images.generated.js (scripts/build-images.mjs).
-// alt: "" for decoration. priority: the one eager image (LCP). aspect: optional re-crop, one of 11-10 3-4 3-2 4-5 4-3 16-9 21-9.
-// Explicit width/height always come from the manifest, so layout shift is zero.
+// Photograph in a deliberate crop with crop marks. name = key of content/images.js (auto-indexed from public/images).
+// eager: below the fold but fetched at low priority right after the critical assets (no late pop-in).
+// alt: "" for decoration. priority: the one eager image (LCP). aspect: optional re-crop, one of 11-10 3-4 3-2 4-5 4-3 16-9 21-9 16-7.
+// Explicit width/height always come from the manifest, so layout shift is zero. No captions: images carry no descriptive text.
 export default function ImageFrame({
   name,
   alt = '',
   sizes = '100vw',
   aspect,
   priority = false,
-  caption,
+  eager = false,
   crop = true,
   reveal = true,
   className = '',
-  captionClassName = '',
 }) {
   const img = images[name];
   if (!img) return null;
@@ -29,9 +28,9 @@ export default function ImageFrame({
       width={img.width}
       height={img.height}
       alt={alt}
-      loading={priority ? 'eager' : 'lazy'}
+      loading={priority || eager ? 'eager' : 'lazy'}
       decoding="async"
-      fetchPriority={priority ? 'high' : undefined}
+      fetchPriority={priority ? 'high' : eager ? 'low' : undefined}
     />
   );
   return (
@@ -53,11 +52,6 @@ export default function ImageFrame({
           </>
         ) : null}
       </div>
-      {caption ? (
-        <Typed as="figcaption" className={`frame__cap${captionClassName ? ` ${captionClassName}` : ''}`}>
-          {caption}
-        </Typed>
-      ) : null}
     </figure>
   );
 }

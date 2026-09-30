@@ -10,7 +10,6 @@
 @use 'components/Reveal';
 @use 'components/Docket';
 @use 'components/Tab';
-@use 'components/Stamp';
 @use 'components/Mark';
 @use 'components/Typed';
 @use 'components/IdxCard';
@@ -31,13 +30,13 @@
 @use 'pages/notfound';
 @use 'components/Hero';
 @use 'components/AboutSection';
-@use 'components/PhotoBand';
 @use 'components/Process';
 @use 'components/PracticePanels';
 @use 'components/Principles';
 @use 'components/TeamCards';
 @use 'components/Faq';
 @use 'components/ContactSection';
+@use 'components/MapCard';
 @use 'components/ContactForm';
 @use 'pages/home';
 @use 'pages/practice';

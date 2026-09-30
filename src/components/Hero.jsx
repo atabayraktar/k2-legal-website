@@ -2,10 +2,8 @@ import Head from 'next/head';
 import Button from './Button';
 import TextLink from './TextLink';
 import Reveal from './Reveal';
-import Typed from './Typed';
-import Stamp from './Stamp';
 import ImageFrame from './ImageFrame';
-import images from '../content/images.generated.js';
+import images, { ROLE } from '../content/images.js';
 import { fmt } from '../lib/format.js';
 import { siteVars } from '../lib/schema.js';
 import { renderPending } from '../lib/text.js';
@@ -13,11 +11,11 @@ import { pagePath } from '../lib/routes-util.js';
 
 const PHOTO_SIZES = '(min-width: 900px) 40vw, calc(100vw - 40px)';
 
-// "Dosya Kapagi": the cover of a case file. Typed meta band, a two-row headline that runs under the tower photo,
-// the entity statement in the gap between the rows, a square stamp on the photo corner and one typed kunye line.
+// "Dosya Kapagi": the cover of a case file. A two-row headline that runs beside the photograph (scales of justice, B&W),
+// one general-information line in the gap, and one typed kunye line.
 export default function Hero({ t }) {
   const vars = siteVars();
-  const photo = images['hero-tower'];
+  const photo = images[ROLE.hero];
   return (
     <section id="hero" className="hero" data-theme="light" aria-labelledby="hero-title">
       <Head>
@@ -32,18 +30,6 @@ export default function Hero({ t }) {
         />
       </Head>
       <div className="container hero__frame">
-        <div className="hero__meta">
-          <Typed now className="hero__meta-l">
-            {t.metaLeft}
-          </Typed>
-          <Typed now className="hero__meta-r">
-            {renderPending(fmt(t.metaRight, vars))}
-          </Typed>
-          <span className="hero__reg hero__reg--1" aria-hidden="true" />
-          <span className="hero__reg hero__reg--2" aria-hidden="true" />
-          <span className="hero__reg hero__reg--3" aria-hidden="true" />
-        </div>
-
         <div className="hero__grid">
           <h1 id="hero-title" className="hero__title">
             <span className="hero__row hero__row--1">
@@ -60,17 +46,17 @@ export default function Hero({ t }) {
 
           <div className="hero__photo">
             <ImageFrame
-              name="hero-tower"
+              name={ROLE.hero}
               alt=""
               sizes={PHOTO_SIZES}
               priority
-              caption={t.photoCaption}
-              captionClassName="hero__cap"
             />
-            <Stamp className="hero__stamp">{t.stamp}</Stamp>
           </div>
 
           <div className="hero__copy">
+            <Reveal as="p" now delay={2} className="hero__slogan">
+              {t.slogan}
+            </Reveal>
             <Reveal as="p" now delay={2} className="hero__entity">
               {t.entity}
             </Reveal>

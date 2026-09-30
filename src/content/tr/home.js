@@ -1,17 +1,16 @@
-// Home page copy (redesign v2). No emphasis markers, no eyebrow strings. Display case is applied by CSS.
+// Home page copy (redesign v2). No emphasis markers, no eyebrow strings, no photo captions. Display case is applied by CSS.
 // {tokens} resolve via fmt(str, siteVars()); unresolved data renders as bracket placeholders.
 export default {
   hero: {
-    metaLeft: 'Karaman Berat Avukatlık Ortaklığı',
-    metaRight: '{city} / {baro}',
     // Neutral, descriptive statement. Rendered inside one h1 as two spans (CSS uppercase).
     lines: ['Dava ve', 'Danışmanlık'],
+    // Short general-information line: how files are handled, no promise, no solicitation. The entity statement
+    // (tescilli unvan, what the partnership is) lives in the Hakkımızda section and the footer.
+    slogan: 'Hukukta söz uçar, yazı kalır.',
     entity:
-      'Karaman Berat Avukatlık Ortaklığı, tescilli bir avukatlık ortaklığıdır. Ortaklık dava ve danışmanlık faaliyeti yürütür; faaliyet alanları bu sayfada yer alır.',
+      'Dava ve danışmanlık dosyaları; mevzuat, süre ve yazılı kayıt esasıyla yürütülür. Her dosya kendi gerekçesiyle, kendi takvimiyle ve düzenli bir dosya diliyle ele alınır. Sekiz faaliyet alanında, bir ortaklık olarak çalışırız.',
     ctaPrimary: 'Randevu Talep Et',
     ctaSecondary: 'Çalışma Alanları',
-    photoCaption: 'Beton, alt açı',
-    stamp: 'Karaman Berat Avukatlık Ortaklığı',
     kunye: [
       { label: 'Tescilli unvan', value: '{legalName}' },
       { label: 'Şehir / Baro', value: '{city} · {baro}' },
@@ -20,13 +19,20 @@ export default {
     ],
   },
   about: {
-    docket: 'Hakkımızda',
-    h2: 'Tescilli bir avukatlık ortaklığı',
-    lede: 'Ortaklığın faaliyeti 1136 sayılı Avukatlık Kanunu ve Türkiye Barolar Birliği meslek kurallarına tabidir. Müvekkile ait bilgi ve belgeler, avukatın kanundan doğan sır saklama yükümlülüğü kapsamındadır.',
-    photoCaption: 'Sarmal merdiven',
+    h2: 'Ortaklığın kuruluşu ve faaliyeti',
+    // Generic, fact-safe text. Specifics (year, names, place) are TODO(client) in site.js (foundedYear, founding.note).
+    foundingTitle: 'Nasıl kuruldu',
+    founding: [
+      'Karaman Berat Avukatlık Ortaklığı, avukatların ortak bir çatı altında çalışmak üzere bir araya gelmesiyle kurulmuş, baroya kayıtlı bir avukatlık ortaklığıdır.',
+      'Ortaklar, dava ve danışmanlık işlerini ortak bir dosya düzeni içinde yürütmek amacıyla birlikte çalışır.',
+    ],
+    foundedSentence: 'Ortaklık {foundedYear} yılında kurulmuştur.',
+    activityTitle: 'Ne yapıyoruz',
+    activity: [
+      'Ortaklığın faaliyeti; dosyanın incelenmesini, dilekçe ve sözleşme hazırlanmasını, dava ve takip işlemlerinin yürütülmesini ve müvekkilin bilgilendirilmesini kapsar. Faaliyet alanları bu sayfada ayrıca listelenmiştir.',
+      'Faaliyet, 1136 sayılı Avukatlık Kanunu ve Türkiye Barolar Birliği meslek kurallarına tabidir; müvekkile ait bilgi ve belgeler sır saklama yükümlülüğü kapsamındadır.',
+    ],
     kunye: {
-      trigger: 'Ortaklık künyesi',
-      close: 'Künyeyi daralt',
       rows: [
         { key: 'legalName', label: 'Tescilli unvan', value: '{legalName}' },
         { key: 'cityBaro', label: 'Şehir / Baro', value: '{city} · {baro}' },
@@ -37,12 +43,9 @@ export default {
     },
   },
   principles: {
-    mark: 'İlkeler',
     h2: 'Çalışma ilkeleri',
     lede: 'Aşağıdaki başlıklar, avukatlık mevzuatından doğan genel yükümlülükleri özetler. Bir başlık seçin; açıklaması kâğıda işlenir.',
     rackLabel: 'Çalışma ilkeleri',
-    sheetLabel: 'Dosya kâğıdı',
-    photoCaption: 'Kâğıt ve damga',
     items: [
       {
         id: 'gizlilik',
@@ -79,19 +82,15 @@ export default {
     ],
   },
   practice: {
-    tab: 'Çalışma alanları',
     h2: 'Faaliyet alanları',
     intro:
       'Ortaklık aşağıdaki alanlarda dava ve danışmanlık faaliyeti yürütür. Liste, bilgilendirme amaçlı bir dökümdür; ihtisas veya üstünlük beyanı içermez.',
-    photoCaption: 'Mimari detay',
-    indexPrefix: 'A.',
     topicsLabel: 'Konu başlıkları',
     approachLabel: 'Süreç',
     cta: 'İletişim',
-    readSeparate: 'Ayrı sayfada oku',
+    readSeparate: 'Detaylı bilgi için',
   },
   process: {
-    stamp: 'Evreler',
     h2: 'Bir dosya nasıl yürür',
     stageLabel: 'Evre',
     steps: [
@@ -102,19 +101,11 @@ export default {
     ],
   },
   team: {
-    docket: 'Ekibimiz',
-    label: 'Sicil',
     h2: 'Ortaklar',
-    intro: 'Ortakların baro ve sicil bilgileri.',
-  },
-  band: {
-    caption: 'Koridor',
   },
   contact: {
-    docket: 'İletişim',
     title: 'İletişim',
     intro: 'Randevu talebi ve genel sorular için aşağıdaki kanallar kullanılabilir.',
-    formLabel: 'Talep formu',
     whatsappLink: 'WhatsApp',
   },
 };

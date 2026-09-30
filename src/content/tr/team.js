@@ -12,8 +12,6 @@ export default {
   card: {
     partnerNo: 'Ortak {n}',
     sicilLine: 'Baro sicil {baroSicil}',
-    expand: 'Künyenin tamamı',
-    collapse: 'Künyeyi daralt',
     photoAlt: '',
   },
   factsTemplate: '{name}, {startYear} yılından beri avukatlık mesleğini sürdürmektedir; {university} mezunudur.',

@@ -1,5 +1,5 @@
 // After `next build`: checks out/ against the route/content source (redesign v2, plan section 2.4).
-//  - exactly the expected pages exist (home, 3 flagship practice pages, 3 legal, 404); removed pages and inline-only
+//  - exactly the expected pages exist (home, 8 practice pages, 3 legal, 404); removed pages and inline-only
 //    practice slugs are NOT exported; firebase.json carries the 301 redirects for the removed URLs
 //  - every page: lang, exactly one h1, self-canonical (or noindex while the domain is a placeholder), parseable JSON-LD
 //  - home: section ids, 8 practice slug ids, 4 principle ids, FAQ ids, FAQPage JSON-LD == visible FAQ text,

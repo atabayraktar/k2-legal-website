@@ -3,7 +3,6 @@
 export const anchorNav = [
   { id: 'hakkimizda', label: 'Hakkımızda' },
   { id: 'calisma-alanlari', label: 'Çalışma Alanları' },
-  { id: 'ekibimiz', label: 'Ekibimiz' },
   { id: 'sss', label: 'SSS' },
   { id: 'iletisim', label: 'İletişim' },
 ];

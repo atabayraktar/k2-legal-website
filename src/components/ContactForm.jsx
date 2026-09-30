@@ -1,7 +1,6 @@
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import Button from './Button';
-import Mark from './Mark';
 import Redact from './Redact';
 import { buildMailto } from '../lib/contact-mailto.js';
 import { fmt } from '../lib/format.js';
@@ -11,6 +10,8 @@ import { pagePath } from '../lib/routes-util.js';
 const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || '';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const EMPTY = { name: '', email: '', phone: '', subject: '', message: '', consent: false, _gotcha: '' };
+const REQUIRED = { name: true, email: true, message: true };
+const ORDER = ['name', 'email', 'message', 'consent'];
 
 function validate(v) {
   const e = {};
@@ -21,17 +22,21 @@ function validate(v) {
   return e;
 }
 
-// t = contact page content. States: idle | invalid | submitting | success | mailto | error | pending.
-export default function ContactForm({ t, site, labelledBy }) {
+// Contact form: a heading with instructions, three labelled groups (numbered fieldsets, each square fills when its required
+// fields are valid), helper text under every label, a confidentiality notice, the KVKK checkbox and one submit.
+// Result block (aria-live) covers invalid / success / mailto / error / pending. Field fill: none; hairline boxes only.
+// t = tr.contact. States: idle | invalid | submitting | success | mailto | error | pending.
+export default function ContactForm({ t, site, headingId }) {
   const uid = useId();
   const id = (k) => `${uid}-${k}`;
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [state, setState] = useState('idle');
-  const [invalidCount, setInvalidCount] = useState(0);
-  const refs = { name: useRef(null), email: useRef(null), message: useRef(null), consent: useRef(null) };
+  const [invalid, setInvalid] = useState([]);
+  const refs = { name: useRef(null), email: useRef(null), phone: useRef(null), subject: useRef(null), message: useRef(null), consent: useRef(null) };
   const emailPending = isPending(site.contact.email, { required: true });
+  const now = validate(values);
 
   const setField = (k, val) => {
     const next = { ...values, [k]: val };
@@ -44,18 +49,26 @@ export default function ContactForm({ t, site, labelledBy }) {
     setErrors((prev) => ({ ...prev, [k]: validate(values)[k] }));
   };
 
+  const reset = () => {
+    setValues(EMPTY);
+    setErrors({});
+    setTouched({});
+    setInvalid([]);
+    setState('idle');
+  };
+
   const onSubmit = async (ev) => {
     ev.preventDefault();
     if (state === 'submitting') return;
     const errs = validate(values);
     setErrors(errs);
     setTouched({ name: true, email: true, message: true, consent: true });
-    const first = ['name', 'email', 'message', 'consent'].find((k) => errs[k]);
-    if (first) {
-      // Summary goes into the polite live region; focus moves to the first invalid field (its error is read via aria-describedby).
-      setInvalidCount(Object.keys(errs).length);
+    const bad = ORDER.filter((k) => errs[k]);
+    if (bad.length) {
+      // The result block (polite live region) lists what is missing; focus moves to the first invalid field.
+      setInvalid(bad);
       setState('invalid');
-      refs[first].current?.focus();
+      refs[bad[0]].current?.focus();
       return;
     }
     if (values._gotcha) {
@@ -76,10 +89,12 @@ export default function ContactForm({ t, site, labelledBy }) {
             message: values.message.trim(),
           }),
         });
-        setState(res.ok ? 'success' : 'error');
         if (res.ok) {
           setValues(EMPTY);
           setTouched({});
+          setState('success');
+        } else {
+          setState('error');
         }
       } catch {
         setState('error');
@@ -94,7 +109,6 @@ export default function ContactForm({ t, site, labelledBy }) {
     setState('mailto');
   };
 
-  const status = t.status[state] ? fmt(t.status[state], { email: site.contact.email, n: invalidCount }) : '';
   const c = t.consent;
   const at = c.label.indexOf(c.linkText);
   const consentLabel =
@@ -110,99 +124,164 @@ export default function ContactForm({ t, site, labelledBy }) {
       </>
     );
 
-  const field = (k, { type = 'text', area = false, autoComplete, required = false }) => {
+  const field = (k, { type = 'text', area = false, autoComplete }) => {
     const Tag = area ? 'textarea' : 'input';
+    const f = t.fields[k];
+    const req = REQUIRED[k] === true;
     const err = errors[k];
+    const described = [f.hint ? id(`${k}-hint`) : null, err ? id(`${k}-err`) : null].filter(Boolean).join(' ');
     return (
-      <div className={`cf__row${err ? ' has-error' : ''}`}>
-        <label className="cf__label" htmlFor={id(k)}>
-          <span className="cf__label-t">{t.fields[k].label}</span>
-          {required ? (
-            <span className="cf__req" aria-hidden="true">
-              *
-            </span>
-          ) : null}
-        </label>
+      <div className={`cf__row${err ? ' has-error' : ''}`} key={k}>
+        <div className="cf__label-line">
+          <label className="cf__label" htmlFor={id(k)}>
+            {f.label}
+          </label>
+          <span className="cf__tag">{req ? t.required : t.optional}</span>
+        </div>
+        {f.hint ? (
+          <p className="cf__hint" id={id(`${k}-hint`)}>
+            {f.hint}
+          </p>
+        ) : null}
         <Tag
           ref={refs[k]}
           id={id(k)}
           name={k}
           className={area ? 'cf__input cf__textarea' : 'cf__input'}
           type={area ? undefined : type}
-          rows={area ? 5 : undefined}
+          rows={area ? 6 : undefined}
           autoComplete={autoComplete}
           value={values[k]}
-          required={required}
-          aria-required={required || undefined}
+          required={req}
+          aria-required={req || undefined}
           aria-invalid={err ? 'true' : undefined}
-          aria-describedby={err ? id(`${k}-err`) : undefined}
+          aria-describedby={described || undefined}
           onChange={(e) => setField(k, e.target.value)}
           onBlur={() => blur(k)}
         />
         {err ? (
           <p className="cf__error" id={id(`${k}-err`)}>
-            {t.fields[k].error}
+            <span className="cf__error-k">{t.errorPrefix}</span> {f.error}
           </p>
         ) : null}
       </div>
     );
   };
 
+  const fieldProps = {
+    name: { autoComplete: 'name' },
+    email: { type: 'email', autoComplete: 'email' },
+    phone: { type: 'tel', autoComplete: 'tel' },
+    subject: {},
+    message: { area: true },
+  };
+  // a group is done when every required field in it is valid (optional-only groups never fill)
+  const groupDone = (g) => {
+    const req = g.fields.filter((k) => REQUIRED[k]);
+    return req.length > 0 && req.every((k) => !now[k]);
+  };
+
+  const res = t.result[state];
+  const showResult = Boolean(res) && state !== 'idle';
+  const hideForm = state === 'success';
+  const resultText = res ? fmt(res.text, { email: site.contact.email, n: invalid.length }) : '';
+
   return (
-    <form className="cf" onSubmit={onSubmit} noValidate aria-labelledby={labelledBy}>
-      {field('name', { autoComplete: 'name', required: true })}
-      {field('email', { type: 'email', autoComplete: 'email', required: true })}
-      {field('phone', { type: 'tel', autoComplete: 'tel' })}
-      {field('subject', {})}
-      {field('message', { area: true, required: true })}
+    <form className="cf" onSubmit={onSubmit} noValidate aria-labelledby={headingId}>
+      <header className="cf__head">
+        <h3 className="cf__title" id={headingId}>
+          {t.formTitle}
+        </h3>
+        <p className="cf__lead">{t.formLead}</p>
+      </header>
 
-      <div className="cf__warning" role="note">
-        <div className="cf__warning-top">
-          <Mark className="cf__tag">{t.warningTag}</Mark>
-          <Redact w={12} className="cf__redact" />
-        </div>
-        <p className="cf__warning-t">{t.warning}</p>
-      </div>
-
-      <div className="cf__hp" aria-hidden="true">
-        <label htmlFor={id('hp')}>{t.honeypotLabel}</label>
-        <input id={id('hp')} name="_gotcha" type="text" tabIndex={-1} autoComplete="off" value={values._gotcha} onChange={(e) => setField('_gotcha', e.target.value)} />
-      </div>
-
-      <div className="cf__row cf__consent">
-        <div className="cf__consent-line">
-          <input
-            ref={refs.consent}
-            id={id('consent')}
-            className="cf__check"
-            type="checkbox"
-            checked={values.consent}
-            required
-            aria-required="true"
-            aria-invalid={errors.consent ? 'true' : undefined}
-            aria-describedby={errors.consent ? id('consent-err') : undefined}
-            onChange={(e) => setField('consent', e.target.checked)}
-            onBlur={() => blur('consent')}
-          />
-          <label htmlFor={id('consent')} className="cf__consent-label">
-            {consentLabel}
-          </label>
-        </div>
-        {errors.consent ? (
-          <p className="cf__error" id={id('consent-err')}>
-            {c.error}
-          </p>
+      <div className="cf__result-wrap" role="status" aria-live="polite">
+        {showResult ? (
+          <div className={`cf__result cf__result--${state}`}>
+            <p className="cf__result-title">{res.title}</p>
+            <p className="cf__result-text">{resultText}</p>
+            {state === 'invalid' ? (
+              <ul className="cf__result-list">
+                {invalid.map((k) => (
+                  <li key={k}>
+                    <button type="button" className="cf__result-link" onClick={() => refs[k].current?.focus()}>
+                      {k === 'consent' ? t.consentTitle : t.fields[k].label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {state === 'success' ? (
+              <button type="button" className="cf__result-link cf__result-again" onClick={reset}>
+                {res.again}
+              </button>
+            ) : null}
+          </div>
         ) : null}
       </div>
 
-      <div className="cf__actions">
-        <Button variant="wax" type="submit" className="cf__submit" disabled={state === 'submitting'}>
-          {state === 'submitting' ? t.sending : t.submit}
-        </Button>
+      <div className="cf__body" hidden={hideForm}>
+        {t.groups.map((g, gi) => (
+          <fieldset className="cf__group" key={g.id}>
+            <legend className="cf__legend">
+              <span className={`cf__step${groupDone(g) ? ' is-done' : ''}`} aria-hidden="true">
+                {gi + 1}
+              </span>
+              <span className="cf__legend-t">{g.title}</span>
+              {groupDone(g) ? <span className="cf__sr">({t.groupDone})</span> : null}
+            </legend>
+            <div className={`cf__fields${g.fields.length > 1 && g.id === 'reach' ? ' cf__fields--pair' : ''}`}>
+              {g.fields.map((k) => field(k, fieldProps[k]))}
+            </div>
+          </fieldset>
+        ))}
+
+        <div className="cf__notice" role="note">
+          <div className="cf__notice-top">
+            <span className="cf__notice-mark" aria-hidden="true" />
+            <p className="cf__notice-title">{t.warning.title}</p>
+            <Redact w={10} className="cf__redact" />
+          </div>
+          <p className="cf__notice-text">{t.warning.text}</p>
+        </div>
+
+        <div className="cf__hp" aria-hidden="true">
+          <label htmlFor={id('hp')}>{t.honeypotLabel}</label>
+          <input id={id('hp')} name="_gotcha" type="text" tabIndex={-1} autoComplete="off" value={values._gotcha} onChange={(e) => setField('_gotcha', e.target.value)} />
+        </div>
+
+        <div className={`cf__consent${errors.consent ? ' has-error' : ''}`}>
+          <div className="cf__consent-line">
+            <input
+              ref={refs.consent}
+              id={id('consent')}
+              className="cf__check"
+              type="checkbox"
+              checked={values.consent}
+              required
+              aria-required="true"
+              aria-invalid={errors.consent ? 'true' : undefined}
+              aria-describedby={errors.consent ? id('consent-err') : undefined}
+              onChange={(e) => setField('consent', e.target.checked)}
+              onBlur={() => blur('consent')}
+            />
+            <label htmlFor={id('consent')} className="cf__consent-label">
+              {consentLabel} <span className="cf__tag cf__tag--inline">{t.required}</span>
+            </label>
+          </div>
+          {errors.consent ? (
+            <p className="cf__error" id={id('consent-err')}>
+              <span className="cf__error-k">{t.errorPrefix}</span> {c.error}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="cf__actions">
+          <Button variant="wax" type="submit" className="cf__submit" disabled={state === 'submitting'}>
+            {state === 'submitting' ? t.sending : t.submit}
+          </Button>
+        </div>
       </div>
-      <p className={`cf__status${state === 'error' || state === 'invalid' ? ' cf__status--error' : ''}`} role="status" aria-live="polite">
-        {status}
-      </p>
     </form>
   );
 }

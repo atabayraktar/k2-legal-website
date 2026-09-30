@@ -32,23 +32,11 @@
 
   &__logo {
     display: block;
-    width: 148px;
+    width: clamp(220px, 26vw, 340px);
+    max-width: 100%;
     height: auto;
     aspect-ratio: 414 / 100;
-    margin-bottom: var(--sp-32);
-  }
-
-  &__unvan {
-    max-width: 12em;
-    margin: 0 0 var(--sp-32);
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(28px, 4.2vw, 56px);
-    line-height: 0.96;
-    letter-spacing: var(--ls-h2);
-    text-transform: uppercase;
-    text-wrap: balance;
-    color: var(--bone);
+    margin-bottom: var(--sp-48);
   }
 
   &__ledger {

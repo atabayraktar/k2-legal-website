@@ -1,0 +1,120 @@
+@use 'tokens/mixins' as *;
+
+// Static map card: hairline street grid on bone (own SVG, no tiles). Whole card is the link when the address is real.
+.map {
+  position: relative;
+  display: block;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color var(--dur-color) var(--ease);
+
+  @include up(tab-mini) {
+    aspect-ratio: 4 / 3;
+  }
+
+  @include up(tab-max) {
+    aspect-ratio: 5 / 4;
+  }
+
+  &__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__grid line {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  &__blocks rect {
+    fill: none;
+    stroke: var(--stone);
+    stroke-width: 1;
+  }
+
+  &__streets path {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 2;
+  }
+
+  &__pin rect {
+    fill: var(--ink);
+  }
+
+  &__pin .map__pin-dot {
+    fill: var(--wax);
+  }
+
+  // address line, typed onto a paper slip in the lower-left corner
+  &__addr {
+    position: absolute;
+    left: var(--sp-16);
+    right: var(--sp-16);
+    bottom: var(--sp-16);
+    max-width: max-content;
+    padding: var(--sp-8) var(--sp-12);
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.45;
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+    color: var(--ink);
+  }
+
+  &__go {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-left: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--bone);
+    font-size: 20px;
+    line-height: 1;
+    transition:
+      background-color var(--dur-color) var(--ease),
+      transform var(--dur-fast) var(--ease);
+  }
+
+  &--link:focus-visible {
+    outline: 2px solid var(--wax);
+    outline-offset: 4px;
+  }
+
+  &--link:active {
+    transform: translateY(1px);
+  }
+
+  @include hover {
+    &.map--link {
+      border-color: var(--wax);
+    }
+
+    &.map--link .map__go {
+      background: var(--wax);
+      border-color: var(--wax);
+    }
+  }
+
+  @include reduced-motion {
+    &,
+    &__go {
+      transition: none;
+    }
+  }
+}

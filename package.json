@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev",
     "assets": "node scripts/build-assets.mjs",
-    "prebuild": "node scripts/check-design.mjs && node scripts/generate-seo.mjs && node scripts/check-copy.mjs && node scripts/check-placeholders.mjs",
+    "prebuild": "node scripts/wire-images.mjs && node scripts/check-design.mjs && node scripts/generate-seo.mjs && node scripts/check-copy.mjs && node scripts/check-placeholders.mjs",
     "build": "next build",
     "start:static": "node .claude/serve.mjs",
     "check:placeholders": "node scripts/check-placeholders.mjs --strict",

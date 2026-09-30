@@ -3,10 +3,11 @@
 // Home-only layout for the Ekibimiz section head. The cards themselves are styled in components/_TeamCards.
 // Ink. The headline runs the full width with its one-line note at the far right; the two cards sit under it.
 .ekibimiz {
-  padding-block: var(--sp-96) var(--sp-64);
+  // continuation of Hakkimizda: same ink, no seam; the About section keeps only a small bottom pad
+  padding-block: var(--sp-48) var(--sp-96);
 
   @include up(tab-max) {
-    padding-block: var(--sp-144) var(--sp-96);
+    padding-block: var(--sp-64) var(--sp-144);
   }
 
   &__grid {
@@ -25,14 +26,14 @@
       column-gap: var(--sp-48);
       align-items: end;
 
-      > .docket {
-        grid-column: 1 / -1;
-      }
     }
   }
 
+  // sub-block heading (h2 for semantics, reads as a sub-head of Hakkimizda)
   &__title {
     margin: 0;
+    font-size: clamp(28px, 3vw, 44px);
+    line-height: 1;
   }
 
   &__intro {

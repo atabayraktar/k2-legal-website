@@ -1,8 +1,8 @@
 import ImageFrame from './ImageFrame';
 import Reveal from './Reveal';
-import Stamp from './Stamp';
+import { ROLE } from '../content/images.js';
 
-// Calisma Bicimi: four ticket stubs on a descending staircase beside a sticky photograph (stairwell from below).
+// Calisma Bicimi: four ticket stubs on a descending staircase beside a sticky photograph (a hand signing a document).
 export default function Process({ t }) {
   const steps = t?.steps ?? [];
   return (
@@ -10,9 +10,6 @@ export default function Process({ t }) {
       <div className="container process__grid">
         <div className="process__main">
           <div className="process__head">
-            <Stamp size="sm" className="process__stamp">
-              {t?.stamp}
-            </Stamp>
             <Reveal as="h2" id="calisma-bicimi-title" className="process__title">
               {t?.h2}
             </Reveal>
@@ -42,7 +39,7 @@ export default function Process({ t }) {
         </div>
 
         <div className="process__aside">
-          <ImageFrame name="process-stair" alt="" aspect="4-5" sizes="(min-width: 1024px) 28vw, 90vw" className="process__photo" />
+          <ImageFrame name={ROLE.process} alt="" aspect="4-5" sizes="(min-width: 1024px) 28vw, 90vw" className="process__photo" />
         </div>
       </div>
     </section>

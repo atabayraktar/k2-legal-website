@@ -11,6 +11,9 @@ export const site = {
   legalName: 'Karaman Berat Avukatlık Ortaklığı', // TODO(client) confirm exact spelling against the baro record
   domain: 'https://alan-adi.example', // TODO(client) final production origin, no trailing slash
   foundedYear: null, // TODO(client) only if verified; UI hides the row when null
+  // TODO(client) how the partnership was founded (year, who came together, when the baro registered it). The Hakkımızda
+  // text is generic until then; a verified sentence set here is appended to the "Nasıl kuruldu" block. Never invent.
+  founding: { note: null },
   city: '[Şehir]', // TODO(client)
   baro: '[Baro adı] Barosu', // TODO(client) baro the ortaklık is registered with
   baroRegistry: '[Ortaklık baro sicil no]', // TODO(client) partnership registry number at the baro
@@ -47,11 +50,11 @@ export const site = {
     phone: { display: '+90 (___) ___ __ __', tel: null }, // TODO(client) tel = '+90…' digits for the tel: link
     email: '[E-posta adresi]', // TODO(client)
     kep: '[KEP adresi]', // TODO(client)
-    address: { street: '[Adres satırı]', district: '[İlçe]', city: '[Şehir]', postalCode: '[Posta kodu]', country: 'TR' }, // TODO(client)
+    address: { street: 'Atatürk Bulvarı, Deposite İş Merkezi A1 Blok, Kat: 4, No: 424', district: null, city: 'İstanbul', postalCode: null, country: 'TR' }, // TODO(client) confirm ilçe + posta kodu; city inferred from the map pin coordinates, confirm
     hours: { display: '[Çalışma saatleri]', schema: null }, // TODO(client) schema e.g. 'Mo-Fr 09:00-18:00'
     whatsapp: { display: '[WhatsApp numarası]', url: null }, // TODO(client) url 'https://wa.me/90…'
-    geo: { lat: null, lng: null }, // TODO(client)
-    map: { image: null, href: null }, // TODO(client) static map image { src, width, height } + Google/Apple Maps URL
+    geo: { lat: 41.0702133, lng: 28.809309 }, // from the client's Google Maps pin
+    map: { image: null, href: 'https://maps.app.goo.gl/XNg7uHJrreQrYKLx8' }, // client's Google Maps link
   },
   social: { instagram: null, linkedin: null, x: null }, // TODO(client) real URLs only; they feed sameAs
   seo: { ogImage: '/og/og-default.png', themeColor: '#0B0B0C' },

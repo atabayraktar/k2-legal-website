@@ -9,7 +9,7 @@ import { useT } from '../hooks/useCommon';
 import { isPending } from '../lib/pending.js';
 import { renderPending } from '../lib/text.js';
 
-// Footer (ink): the case file's back sheet. Unvan set in display type, address as a typed ledger,
+// Footer (ink): the case file's back sheet. Large logo, address as a typed ledger,
 // two docket-labelled link columns, then the disclaimer as a typewritten note under one hairline.
 export default function Footer() {
   const t = useT();
@@ -33,7 +33,6 @@ export default function Footer() {
         <div className="grid footer__top">
           <div className="footer__brand">
             <img className="footer__logo" src="/logos/k2-horizontal-light.svg" width="414" height="100" alt="" />
-            <p className="footer__unvan">{site.legalName}</p>
             <Ledger items={rows} className="footer__ledger" />
           </div>
 

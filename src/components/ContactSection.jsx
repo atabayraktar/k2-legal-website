@@ -1,21 +1,20 @@
-import Reveal from './Reveal';
-import Docket from './Docket';
 import Ledger from './Ledger';
-import ImageFrame from './ImageFrame';
+import MapCard from './MapCard';
 import ContactForm from './ContactForm';
 import { addressLine } from '../lib/format.js';
 import { isPending } from '../lib/pending.js';
 import { renderPending } from '../lib/text.js';
 
-// İletişim: bone, one shared 2px ink rule across both columns. Both columns open with the same 32px typewriter label row,
-// so the heading block (left) and the form (right) start on the same line at >=1024px.
-// t = tr.contact (docket, title, intro, formLabel, form strings; whatsappLink optional). The map is a link only (never an iframe).
+// İletişim: bone, one shared 2px ink rule across both columns. Heading block (left) and form (right) start on the same line
+// at >=1024px. The map is our own static SVG card linking to Google Maps (never an iframe, no tracking).
+// t = tr.contact (title, intro, form strings; whatsappLink optional).
 export default function ContactSection({ t, common, site, headingId = 'iletisim-title', heading }) {
-  const h = { docket: t.docket, title: t.title, intro: t.intro, ...heading };
+  const h = { title: t.title, intro: t.intro, ...heading };
   const L = common.labels;
   const c = site.contact;
   const address = addressLine(c.address);
   const realAddress = !isPending(c.address.street) && !isPending(c.address.city);
+  // TODO(client): c.map.href overrides; until then the link is built from the address in site.js (only when it is real).
   const mapHref =
     c.map?.href ?? (realAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : null);
 
@@ -53,30 +52,17 @@ export default function ContactSection({ t, common, site, headingId = 'iletisim-
   return (
     <section id="iletisim" className="contact" data-theme="light" aria-labelledby={headingId}>
       <div className="container">
-        <Reveal variant="hair" className="contact__rule" aria-hidden="true" />
         <div className="contact__grid">
           <div className="contact__info">
-            <div className="contact__label-row">
-              <Docket prefix="" label={h.docket} />
-            </div>
             <h2 id={headingId} className="contact__title">
               {h.title}
             </h2>
             <p className="contact__intro">{h.intro}</p>
             <Ledger className="contact__ledger" items={rows} />
-            <ImageFrame
-              name="contact-stacks"
-              alt=""
-              aspect="4-3"
-              sizes="(min-width: 1280px) 480px, (min-width: 768px) 60vw, 100vw"
-              className="contact__photo"
-            />
+            <MapCard href={mapHref} address={address} openLabel={L.openMap} className="contact__map" />
           </div>
           <div className="contact__form">
-            <div className="contact__label-row">
-              <Docket prefix="" label={t.formLabel} id="iletisim-form-label" />
-            </div>
-            <ContactForm t={t} site={site} labelledBy="iletisim-form-label" />
+            <ContactForm t={t} site={site} headingId="iletisim-form-title" />
           </div>
         </div>
       </div>

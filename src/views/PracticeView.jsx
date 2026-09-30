@@ -1,54 +1,57 @@
+import { useEffect } from 'react';
 import Link from 'next/link';
 import Layout from '../components/Layout';
-import Breadcrumbs from '../components/Breadcrumbs';
 import Reveal from '../components/Reveal';
-import Docket from '../components/Docket';
 import Tab from '../components/Tab';
 import IdxCard from '../components/IdxCard';
 import ImageFrame from '../components/ImageFrame';
 import Button from '../components/Button';
 import TextLink from '../components/TextLink';
 import { FEATURES } from '../content/site.js';
-import { abs, pagePath, practicePath, practiceIdBySlug, practiceSlugs } from '../lib/routes-util.js';
+import { abs, pagePath, practiceArea, practicePath, practiceIdBySlug, practiceSlugs } from '../lib/routes-util.js';
 import { practiceAreas } from '../content/routes.js';
+import images, { practiceBannerName } from '../content/images.js';
 import { orgSchema, websiteSchema, breadcrumbSchema, serviceSchema, graph } from '../lib/schema.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 
-// "Dosya" page: one of the three flagship areas. detail = practice.detail strings.
-export default function PracticeView({ common, seo, detail, area, code, prev, next }) {
+// "Dosya" page: one of the eight practice areas. detail = practice.detail strings.
+export default function PracticeView({ common, seo, detail, area, slug, prev, next }) {
   const url = abs(practicePath(area.id));
-  const crumbs = [
-    { label: common.breadcrumbs.home, href: pagePath('home') },
-    { label: common.breadcrumbs.area, href: pagePath('practice') },
-    { label: area.title },
-  ];
   // Fragments are not valid crumb URLs, so the structured data lists two items only.
   const ld = graph(
     orgSchema(),
     websiteSchema(),
     breadcrumbSchema([
-      { name: crumbs[0].label, url: abs(pagePath('home')) },
+      { name: common.breadcrumbs.home, url: abs(pagePath('home')) },
       { name: area.title, url },
     ]),
     FEATURES.practiceConfirmed ? serviceSchema(area, url) : null,
   );
 
+  // Warm the neighbours' banners so previous/next lands with the photograph already cached.
+  useEffect(() => {
+    const warm = () =>
+      [prev, next].forEach((n) => {
+        const img = images[practiceBannerName(practiceArea(n.id)?.slug)];
+        if (img) new Image().src = img.src;
+      });
+    const t = window.setTimeout(warm, 1200);
+    return () => window.clearTimeout(t);
+  }, [prev, next]);
+
   return (
     <Layout routeKey="practiceDetail" params={{ id: area.id }} common={common} seo={seo} headerTheme="light" jsonLd={[ld]}>
-      <article className="case" aria-labelledby="case-title">
+      <article className="case" key={slug} aria-labelledby="case-title">
         <div className="container">
-          <Breadcrumbs items={crumbs} />
           <div className="case__grid">
             <aside className="case__side">
               <IdxCard stacked className="case__card">
                 <div className="case__card-in">
-                  <Docket prefix={detail.docket} label={code} />
                   <Reveal now as="h1" id="case-title" className="case__title">
                     {area.title}
                   </Reveal>
                   <div className="case__summary">
-                    <p className="case__summary-label">{detail.summaryLabel}</p>
                     <p className="case__summary-text">{area.oneLine}</p>
                   </div>
                 </div>
@@ -100,7 +103,7 @@ export default function PracticeView({ common, seo, detail, area, code, prev, ne
         </div>
 
         <div className="case__band">
-          <ImageFrame name="practice-archive" aspect="21-9" crop={false} sizes="100vw" />
+          <ImageFrame name={practiceBannerName(slug)} aspect="16-7" crop={false} eager sizes="100vw" />
         </div>
       </article>
 
@@ -153,7 +156,7 @@ export function practiceStaticProps(slug, getContent) {
   const id = practiceIdBySlug(slug);
   const { common, page, all } = getContent('practice');
   const area = page.areas.find((a) => a.id === id);
-  const flagships = practiceAreas.filter((a) => a.page);
+  const flagships = practiceAreas.filter((a) => a.page); // all eight today
   const i = flagships.findIndex((a) => a.id === id);
   const n = flagships.length;
   const brief = (f) => ({ id: f.id, title: page.areas.find((a) => a.id === f.id).title });
@@ -164,7 +167,7 @@ export function practiceStaticProps(slug, getContent) {
       seo: { title: meta?.title ?? area.title, description: meta?.description ?? describe(area) },
       detail: page.detail,
       area,
-      code: `A.${pad(practiceAreas.findIndex((a) => a.id === id) + 1)}`,
+      slug,
       prev: brief(flagships[(i - 1 + n) % n]),
       next: brief(flagships[(i + 1) % n]),
     },

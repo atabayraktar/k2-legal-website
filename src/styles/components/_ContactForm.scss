@@ -1,55 +1,173 @@
 @use 'tokens/mixins' as *;
 
-// Form: no background, no box. Underline fields, typewriter labels, wax only on error/focus and the submit.
+// Contact form. No background colour: same bone as the section. Structure = heading + instructions, three numbered groups
+// (fieldsets), hairline boxed fields with helper text, a notice block, consent, submit, and a result block.
 .cf {
   display: grid;
-  gap: var(--sp-24);
-  margin-top: var(--sp-16);
+  gap: var(--sp-32);
+  min-width: 0;
 
+  &__head {
+    display: grid;
+    gap: var(--sp-12);
+  }
+
+  &__title {
+    margin: 0;
+    @include display(clamp(28px, 3vw, 44px), 800, var(--ls-h3), 0.98);
+    text-transform: uppercase;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+
+  &__lead {
+    max-width: 52ch;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--stone);
+    text-wrap: pretty;
+  }
+
+  &__body {
+    display: grid;
+    gap: var(--sp-32);
+  }
+
+  &__body[hidden] {
+    display: none;
+  }
+
+  // ---- groups ------------------------------------------------------------------------------------------------------
+  &__group {
+    min-width: 0;
+    margin: 0;
+    padding: var(--sp-24) 0 0;
+    border: 0;
+    border-top: 1px solid var(--ink);
+  }
+
+  &__legend {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-12);
+    width: 100%;
+    margin: 0 0 var(--sp-16);
+    padding: 0;
+  }
+
+  // numbered square: outline until the group's required fields are valid, then filled ink
+  &__step {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1;
+    color: var(--ink);
+    transition:
+      background-color var(--dur-color) var(--ease),
+      color var(--dur-color) var(--ease);
+
+    &.is-done {
+      background: var(--ink);
+      color: var(--bone);
+    }
+  }
+
+  &__legend-t {
+    @include display(clamp(20px, 1.8vw, 24px), 700, var(--ls-h4), 1.1);
+    color: var(--ink);
+  }
+
+  &__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  &__fields {
+    display: grid;
+    gap: var(--sp-24);
+
+    &--pair {
+      @include up(tab-mini) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: var(--sp-24);
+        align-items: start;
+      }
+    }
+  }
+
+  // ---- one field ---------------------------------------------------------------------------------------------------
   &__row {
     position: relative;
     display: grid;
-    gap: var(--sp-4);
+    align-content: start;
+    gap: var(--sp-8);
+    min-width: 0;
+  }
+
+  &__label-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-12);
   }
 
   &__label {
-    display: flex;
-    align-items: baseline;
-    gap: var(--sp-12);
     font-family: var(--font-mono);
     font-weight: 700;
-    font-size: var(--t-label);
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  // "Zorunlu" / "İsteğe bağlı": text, not colour, tells required from optional
+  &__tag {
+    flex: none;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 12px;
     line-height: 1.4;
     letter-spacing: var(--ls-mono);
     text-transform: uppercase;
     color: var(--stone);
 
-    @include up(tab-max) {
-      font-size: 13px;
+    &--inline {
+      margin-left: var(--sp-8);
+      white-space: nowrap;
     }
   }
 
-  &__n {
-    color: var(--ink);
-  }
-
-  &__req {
-    color: var(--ink);
+  &__hint {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--stone);
   }
 
   &__input {
     display: block;
     width: 100%;
     margin: 0;
-    padding: 6px 0 10px;
-    border: 0;
-    border-bottom: 1px solid var(--ink);
+    padding: 12px 14px;
+    border: 1px solid var(--stone);
     border-radius: 0;
     background: transparent;
     color: var(--ink);
     font-family: var(--font-sans);
     font-weight: 400;
-    font-size: 20px; // 16px+ also prevents iOS zoom on focus
+    font-size: 18px; // 16px+ also prevents iOS zoom on focus
     line-height: 1.4;
     appearance: none;
     transition: border-color var(--dur-color) var(--ease);
@@ -58,81 +176,112 @@
       color: var(--stone);
     }
 
-    &:focus {
-      outline: none;
+    @include hover {
+      border-color: var(--ink);
     }
 
-    // focus: the underline thickens (2px drawn as an inset ring on the bottom) and an outline sits on the field
+    &:focus {
+      outline: none;
+      border-color: var(--ink);
+    }
+
     &:focus-visible {
       outline: 2px solid var(--wax);
       outline-offset: 2px;
-      border-bottom-color: var(--wax);
+      border-color: var(--ink);
     }
 
     &[aria-invalid='true'] {
-      border-bottom: 2px solid var(--wax);
+      border-color: var(--wax);
+      border-width: 2px;
+      padding: 11px 13px;
     }
   }
 
   &__textarea {
-    min-height: 132px;
+    min-height: 160px;
     resize: vertical;
-    // ruled-line feel without gradients: nothing extra, the underline is the field
   }
 
   &__error {
-    margin: var(--sp-8) 0 0;
+    margin: 0;
     font-family: var(--font-mono);
     font-weight: 400;
     font-size: 13px;
     line-height: 1.5;
     color: var(--wax);
-
-    &::before {
-      content: 'Hata — ';
-      font-weight: 700;
-      text-transform: uppercase;
-    }
   }
 
-  // confidentiality note
-  &__warning {
+  &__error-k {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  // ---- confidentiality notice: hairline box, thick ink rule on the left, typed heading, one wax square, redaction bar ----
+  &__notice {
     display: grid;
     gap: var(--sp-12);
-    padding-top: var(--sp-16);
-    border-top: 1px dotted var(--line);
+    padding: var(--sp-16) var(--sp-16) var(--sp-16) var(--sp-24);
+    border: 1px solid var(--ink);
+    border-left-width: 6px;
   }
 
-  &__warning-top {
+  &__notice-top {
     display: flex;
     align-items: center;
-    gap: var(--sp-16);
+    gap: var(--sp-12);
   }
 
-  &__redact {
-    flex: 0 1 12ch;
-    height: 0.9em;
-    font-size: 13px;
+  &__notice-mark {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    background: var(--wax);
   }
 
-  &__warning-t {
-    max-width: 52ch;
+  &__notice-title {
     margin: 0;
-    font-size: 15px;
-    line-height: 1.55;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.35;
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
     color: var(--ink);
   }
 
-  // consent checkbox: square, 2px ink border, ink fill with a drawn check. 44px row = hit area.
+  &__redact {
+    flex: 1 1 4ch;
+    min-width: 4ch;
+    max-width: 10ch;
+    margin-left: auto;
+    height: 0.75em;
+    font-size: 13px;
+  }
+
+  &__notice-text {
+    max-width: 58ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  // ---- consent -----------------------------------------------------------------------------------------------------
   &__consent {
-    gap: 0;
+    display: grid;
+    gap: var(--sp-8);
+    padding-block: var(--sp-8);
+    border-top: 1px dotted var(--line);
+    border-bottom: 1px dotted var(--line);
   }
 
   &__consent-line {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--sp-16);
     min-height: var(--touch);
+    padding-block: var(--sp-8);
   }
 
   &__check {
@@ -140,7 +289,7 @@
     position: relative;
     width: 24px;
     height: 24px;
-    margin: 0;
+    margin: 2px 0 0;
     border: 2px solid var(--ink);
     border-radius: 0;
     background: transparent;
@@ -181,7 +330,7 @@
 
   &__consent-label {
     font-size: 16px;
-    line-height: 1.4;
+    line-height: 1.5;
     color: var(--ink);
     cursor: pointer;
   }
@@ -213,19 +362,83 @@
     }
   }
 
-  // status line reserves its height so success/error never shifts the layout
-  &__status {
-    min-height: 48px;
-    margin: 0;
-    font-family: var(--font-mono);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.5;
+  // ---- result block (aria-live) -------------------------------------------------------------------------------------
+  &__result-wrap:empty {
+    display: none;
+  }
+
+  &__result {
+    display: grid;
+    gap: var(--sp-8);
+    padding: var(--sp-16) var(--sp-16) var(--sp-16) var(--sp-24);
+    border: 1px solid var(--ink);
+    border-left-width: 6px;
     color: var(--ink);
 
+    &--invalid,
     &--error {
+      border-color: var(--wax);
+    }
+
+    &--success {
+      border-color: var(--ink);
+    }
+  }
+
+  &__result-title {
+    margin: 0;
+    @include display(var(--t-h4), 700, var(--ls-h4), 1.15);
+    color: var(--ink);
+  }
+
+  &__result--invalid &__result-title,
+  &__result--error &__result-title {
+    color: var(--wax);
+  }
+
+  &__result-text {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  &__result-list {
+    display: grid;
+    gap: 0;
+    margin: var(--sp-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__result-link {
+    min-height: var(--touch);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: var(--ls-mono);
+    text-align: left;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+    cursor: pointer;
+
+    @include hover {
       color: var(--wax);
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax);
+      outline-offset: 4px;
+    }
+  }
+
+  &__result-again {
+    justify-self: start;
   }
 
   // honeypot: off-screen, not display:none (some bots skip hidden fields)
@@ -239,6 +452,7 @@
 
   @include reduced-motion {
     &__input,
+    &__step,
     &__check,
     &__check::after,
     &__link {

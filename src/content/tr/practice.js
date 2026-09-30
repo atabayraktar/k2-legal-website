@@ -1,12 +1,11 @@
-// Practice areas. Wording rules: neutral description of what an area covers; no service verbs aimed at clients,
+// Practice areas (all eight have their own page). Wording rules: neutral description of what an area covers; no service verbs aimed at clients,
 // no assurances, no "uzman", no outcome claims. Whether these areas get their own URLs is a client / bar decision.
 // TODO(client): confirm the eight areas before launch.
 export default {
   detail: {
-    docket: 'Çalışma alanı',
     summaryLabel: 'Alan özeti',
-    topicsTitle: 'Bu alandaki konu başlıkları',
-    approachTitle: 'Süreç',
+    topicsTitle: 'Bu alanda ele aldığımız konular',
+    approachTitle: 'Nasıl ilerleriz',
     ctaTitle: 'İletişim',
     ctaText: 'İletişim bilgileri ve form ana sayfadaki iletişim bölümünde yer alır.',
     ctaButton: 'İletişim',

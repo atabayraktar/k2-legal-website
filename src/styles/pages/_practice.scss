@@ -1,6 +1,6 @@
 @use 'tokens/mixins' as *;
 
-// "Dosya" page for the three flagship practice areas. Bone page, sticky file card left, text right,
+// "Dosya" page for a practice area (all eight). Bone page, sticky file card left, text right,
 // full-bleed archive band, prev/next as two tabbed index cards.
 .case {
   padding-top: calc(var(--header-h) + var(--sp-24));
@@ -8,6 +8,10 @@
   @include up(tab-max) {
     padding-top: calc(var(--header-h) + var(--sp-48));
   }
+
+  // Keyed by slug in the view: previous/next remounts the article, so it fades in instead of cutting. Opacity only (no
+  // containing block for the sticky card); the Reveal rises supply the translate.
+  animation: case-enter 600ms var(--ease) backwards;
 
   &__grid {
     display: grid;
@@ -144,7 +148,8 @@
     margin-top: var(--sp-32);
   }
 
-  // Full-bleed photo 07, cropped 21:9. Crop marks stay off (they would sit outside the viewport).
+  // Full-bleed topic photograph (practice-<slug>-800 / -1600, 16:7). Shown in its native ratio from tablet up, so the
+  // 1600px file is never scaled beyond ~1.2x; phones crop to 16:9. Crop marks stay off (they would sit outside the viewport).
   &__band {
     margin: 0;
     overflow: hidden;
@@ -154,13 +159,9 @@
       aspect-ratio: 16 / 9;
 
       @include up(tab-mini) {
-        aspect-ratio: 21 / 9;
-        max-height: 420px;
+        aspect-ratio: 16 / 7;
+        max-height: 700px;
       }
-    }
-
-    .frame__cap {
-      display: none;
     }
   }
 }
@@ -228,8 +229,16 @@
 }
 
 @include reduced-motion {
+  .case,
   .case-nav__title,
   .case-nav__glyph {
     transition: none;
+    animation: none;
+  }
+}
+
+@keyframes case-enter {
+  from {
+    opacity: 0;
   }
 }

@@ -55,7 +55,21 @@
       position: absolute;
       left: 0;
       font-family: var(--font-mono);
-      color: var(--fg-2);
+      color: var(--accent);
+    }
+  }
+
+  // in-text links: wax underline
+  p a,
+  li a {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    transition: color var(--dur-color) var(--ease);
+
+    @include hover {
+      color: var(--accent);
     }
   }
 
