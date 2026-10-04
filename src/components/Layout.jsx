@@ -4,6 +4,7 @@ import Seo from './Seo';
 import Header from './Header';
 import MenuOverlay from './MenuOverlay';
 import Footer from './Footer';
+import FloatingActions from './FloatingActions';
 import { CommonContext } from '../hooks/useCommon';
 
 export default function Layout({ routeKey, params, common, seo, headerTheme = 'light', jsonLd = [], children }) {
@@ -44,6 +45,7 @@ export default function Layout({ routeKey, params, common, seo, headerTheme = 'l
             {children}
           </main>
           <Footer />
+          <FloatingActions />
         </div>
         <MenuOverlay
           open={menuOpen}

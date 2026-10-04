@@ -156,6 +156,9 @@
 .lnk {
   position: relative;
   display: inline-flex;
+  align-self: flex-start; // underline ends with the label, even inside stretched flex columns
+  justify-self: start;
+  width: fit-content;
   align-items: center;
   gap: 10px;
   min-height: var(--touch);

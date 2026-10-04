@@ -18,36 +18,17 @@ export default function ContactSection({ t, common, site, headingId = 'iletisim-
   const mapHref =
     c.map?.href ?? (realAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : null);
 
+  // Telefon and WhatsApp are one row: the number is a tel: link (calls; it does not open WhatsApp).
   const rows = [
     { k: L.address, v: renderPending(address) },
-    { k: L.phone, v: c.phone.tel ? <a className="contact__a" href={`tel:${c.phone.tel}`}>{c.phone.display}</a> : renderPending(c.phone.display) },
+    { k: L.phoneWhatsapp, v: c.phone.tel ? <a className="contact__a" href={`tel:${c.phone.tel}`}>{c.phone.display}</a> : renderPending(c.phone.display) },
     {
       k: L.email,
       v: isPending(c.email, { required: true }) ? renderPending(c.email) : <a className="contact__a" href={`mailto:${c.email}`}>{c.email}</a>,
     },
     { k: L.kep, v: renderPending(c.kep) },
     { k: L.hours, v: renderPending(c.hours.display) },
-    {
-      k: L.whatsapp,
-      v: c.whatsapp.url ? (
-        <a className="contact__a" href={c.whatsapp.url} target="_blank" rel="noopener noreferrer">
-          {t.whatsappLink ?? c.whatsapp.display}
-        </a>
-      ) : (
-        renderPending(c.whatsapp.display)
-      ),
-    },
-    mapHref
-      ? {
-          k: L.openMap,
-          v: (
-            <a className="contact__a" href={mapHref} target="_blank" rel="noopener noreferrer">
-              {L.openMap}
-            </a>
-          ),
-        }
-      : null,
-  ].filter(Boolean);
+  ];
 
   return (
     <section id="iletisim" className="contact" data-theme="light" aria-labelledby={headingId}>

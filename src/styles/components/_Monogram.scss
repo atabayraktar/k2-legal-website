@@ -13,3 +13,7 @@
 .menu .monogram__two--accent {
   stroke: var(--wax-lit);
 }
+
+[data-header-theme='dark'] .monogram__two--accent {
+  stroke: var(--wax-lit);
+}

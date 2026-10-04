@@ -41,7 +41,7 @@ export default function Header({ theme: initialTheme = 'light', menuOpen, onMenu
             alt=""
             fetchPriority={initialTheme === 'dark' ? 'high' : 'low'}
           />
-          <Monogram className="header__mark" />
+          <Monogram accent className="header__mark" />
         </Link>
 
         <nav className="header__nav" aria-label={t.menu.label}>

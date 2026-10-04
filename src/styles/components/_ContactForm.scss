@@ -129,7 +129,7 @@
     line-height: 1.4;
     letter-spacing: var(--ls-mono);
     text-transform: uppercase;
-    color: var(--ink);
+    color: var(--wax);
   }
 
   // "Zorunlu" / "İsteğe bağlı": text, not colour, tells required from optional
@@ -180,15 +180,11 @@
       border-color: var(--ink);
     }
 
-    &:focus {
-      outline: none;
-      border-color: var(--ink);
-    }
-
+    // focus = the existing border changes colour; no second outline ring
+    &:focus,
     &:focus-visible {
-      outline: 2px solid var(--wax);
-      outline-offset: 2px;
-      border-color: var(--ink);
+      outline: none;
+      border-color: var(--wax);
     }
 
     &[aria-invalid='true'] {
@@ -248,6 +244,10 @@
     letter-spacing: var(--ls-mono);
     text-transform: uppercase;
     color: var(--ink);
+
+    &--wax {
+      color: var(--wax);
+    }
   }
 
   &__redact {

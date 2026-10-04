@@ -17,6 +17,21 @@ export default {
   },
   areas: [
     {
+      id: 'enforcement',
+      title: 'İcra ve İflas Hukuku',
+      oneLine: 'Takip, itiraz, haciz ve iflas süreçlerine ilişkin konular.',
+      lede: 'İcra ve iflas hukuku alanı, para alacaklarının takibine ve bu takiplere karşı itiraz ve şikâyet yollarına ilişkin konuları kapsar. İlamlı ve ilamsız takipler, haciz işlemleri, konkordato ve iflas İcra ve İflas Kanunu’nun konusudur.',
+      topics: [
+        'İlamsız icra takipleri ve ödeme emrine itiraz',
+        'İlamlı icra takipleri',
+        'Haciz, satış ve sıra cetveli işlemleri',
+        'İtirazın iptali ve menfi tespit davaları',
+        'Konkordato ve iflas süreçleri',
+        'Kambiyo senetlerine özgü takip yolları',
+      ],
+      approach: 'Takip dosyasındaki belgeler ve tebligat tarihleri incelenir; itiraz ve başvuru süreleri bu tarihlere göre belirlenir. İzlenecek yol müvekkille görüşülür.',
+    },
+    {
       id: 'criminal',
       title: 'Ceza Hukuku',
       oneLine: 'Soruşturma ve kovuşturma aşamalarına ilişkin ceza hukuku konuları.',
@@ -90,21 +105,6 @@ export default {
         'Tenkis ve muris muvazaası davaları',
       ],
       approach: 'Hukuki durum, süreler ve belgeler ilk aşamada yazılı olarak özetlenir; uzlaşma yolu ile dava yolu birlikte ele alınır. Karar müvekkile aittir.',
-    },
-    {
-      id: 'enforcement',
-      title: 'İcra ve İflas Hukuku',
-      oneLine: 'Takip, itiraz, haciz ve iflas süreçlerine ilişkin konular.',
-      lede: 'İcra ve iflas hukuku alanı, para alacaklarının takibine ve bu takiplere karşı itiraz ve şikâyet yollarına ilişkin konuları kapsar. İlamlı ve ilamsız takipler, haciz işlemleri, konkordato ve iflas İcra ve İflas Kanunu’nun konusudur.',
-      topics: [
-        'İlamsız icra takipleri ve ödeme emrine itiraz',
-        'İlamlı icra takipleri',
-        'Haciz, satış ve sıra cetveli işlemleri',
-        'İtirazın iptali ve menfi tespit davaları',
-        'Konkordato ve iflas süreçleri',
-        'Kambiyo senetlerine özgü takip yolları',
-      ],
-      approach: 'Takip dosyasındaki belgeler ve tebligat tarihleri incelenir; itiraz ve başvuru süreleri bu tarihlere göre belirlenir. İzlenecek yol müvekkille görüşülür.',
     },
     {
       id: 'ip',

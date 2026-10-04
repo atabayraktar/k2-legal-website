@@ -41,12 +41,9 @@ export default function ContactForm({ t, site, headingId }) {
   const setField = (k, val) => {
     const next = { ...values, [k]: val };
     setValues(next);
-    if (touched[k] || errors[k]) setErrors((prev) => ({ ...prev, [k]: validate(next)[k] }));
+    // errors appear only after a submit attempt; once shown they update live as the field is fixed
+    if (errors[k]) setErrors((prev) => ({ ...prev, [k]: validate(next)[k] }));
     if (state === 'invalid') setState('idle');
-  };
-  const blur = (k) => {
-    setTouched((p) => ({ ...p, [k]: true }));
-    setErrors((prev) => ({ ...prev, [k]: validate(values)[k] }));
   };
 
   const reset = () => {
@@ -157,7 +154,6 @@ export default function ContactForm({ t, site, headingId }) {
           aria-invalid={err ? 'true' : undefined}
           aria-describedby={described || undefined}
           onChange={(e) => setField(k, e.target.value)}
-          onBlur={() => blur(k)}
         />
         {err ? (
           <p className="cf__error" id={id(`${k}-err`)}>
@@ -263,7 +259,6 @@ export default function ContactForm({ t, site, headingId }) {
               aria-invalid={errors.consent ? 'true' : undefined}
               aria-describedby={errors.consent ? id('consent-err') : undefined}
               onChange={(e) => setField('consent', e.target.checked)}
-              onBlur={() => blur('consent')}
             />
             <label htmlFor={id('consent')} className="cf__consent-label">
               {consentLabel} <span className="cf__tag cf__tag--inline">{t.required}</span>

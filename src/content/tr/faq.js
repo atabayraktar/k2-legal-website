@@ -25,7 +25,7 @@ export default {
       id: 's-04',
       gate: 'practice',
       q: 'Ortaklık hangi alanlarda faaliyet gösterir?',
-      a: 'Ortaklık; ceza, ticaret ve şirketler, iş ve sosyal güvenlik, gayrimenkul ve inşaat, aile ve miras, icra ve iflas, fikri mülkiyet ve bilişim ile tahkim ve uyuşmazlık çözümü alanlarında dava ve danışmanlık faaliyeti yürütür. Bu liste bilgilendirme amaçlı bir dökümdür; ihtisas veya üstünlük beyanı içermez.',
+      a: 'Ortaklık; icra ve iflas, ceza, ticaret ve şirketler, iş ve sosyal güvenlik, gayrimenkul ve inşaat, aile ve miras, fikri mülkiyet ve bilişim ile tahkim ve uyuşmazlık çözümü alanlarında dava ve danışmanlık faaliyeti yürütür. Bu liste bilgilendirme amaçlı bir dökümdür; ihtisas veya üstünlük beyanı içermez.',
     },
     {
       id: 's-05',

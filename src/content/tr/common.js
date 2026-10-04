@@ -30,6 +30,9 @@ export default {
   labels: {
     address: 'Adres',
     phone: 'Telefon',
+    phoneWhatsapp: 'Tel / WhatsApp',
+    whatsappFloat: 'WhatsApp ile yaz',
+    toTop: 'Sayfa başına dön',
     email: 'E-posta',
     kep: 'KEP',
     hours: 'Çalışma saatleri',

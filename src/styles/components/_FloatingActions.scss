@@ -1,0 +1,65 @@
+@use 'tokens/mixins' as *;
+
+// Sticky corner buttons: square, hairline-bordered so they read on both bone and ink sections.
+.fab {
+  position: fixed;
+  bottom: var(--sp-16);
+  z-index: var(--z-header);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--bone);
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: var(--ls-mono);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-color) var(--ease),
+    opacity var(--dur-color) var(--ease),
+    transform var(--dur-fast) var(--ease);
+
+  &--wa {
+    right: var(--sp-16);
+    background: var(--wax);
+  }
+
+  &--top {
+    left: var(--sp-16);
+    font-size: 22px;
+    opacity: 0;
+    pointer-events: none;
+
+    &.is-shown {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--wax);
+    outline-offset: 4px;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  @include hover {
+    &.fab--wa:hover {
+      background: var(--ink);
+    }
+
+    &.fab--top:hover {
+      background: var(--wax);
+    }
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
