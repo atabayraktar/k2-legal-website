@@ -75,15 +75,16 @@ const addr = c.address;
 const addressText = [addr.street, addr.district, addr.postalCode, addr.city].map(ok).filter(Boolean).join(', ');
 const contactRows = [
   ['Adres', addressText],
-  ['Telefon', ok(c.phone.display)],
+  ['Telefon (sabit)', ok(c.phone.display)],
+  ['Telefon (cep)', ok(c.mobile && c.mobile.display)],
   ['E-posta', ok(c.email)],
   ['KEP', ok(c.kep)],
   ['Çalışma saatleri', ok(c.hours.display)],
   ['WhatsApp', ok(c.whatsapp.url)],
 ].filter(([, v]) => v);
-const where = [ok(site.city), ok(site.baro)].filter(Boolean);
-const areasText = FEATURES.practiceConfirmed ? ' Ceza, ticaret ve şirketler, iş ve sosyal güvenlik, gayrimenkul ve inşaat, aile ve miras, icra ve iflas, fikri mülkiyet ve bilişim ile tahkim ve uyuşmazlık çözümü alanlarında faaliyet gösterir.' : '';
-const entity = `${site.legalName}, ${[ok(site.city) && `${site.city} merkezli`, ok(site.baro) && `${site.baro} nezdinde kayıtlı`].filter(Boolean).join(', ')}${where.length ? ' ' : ''}tescilli bir avukatlık ortaklığıdır.${areasText}`;
+const where = [ok(site.city)].filter(Boolean);
+const areasText = FEATURES.practiceConfirmed ? ' İcra ve iflas, deniz hukuku, ceza, ticaret ile şirketler hukuku ve danışmanlık alanlarında faaliyet gösterir.' : '';
+const entity = `${site.legalName}, ${[ok(site.city) && `${site.city} merkezli`].filter(Boolean).join(', ')}${where.length ? ' ' : ''}tescilli bir avukatlık ortaklığıdır.${areasText}`;
 // Single-page structure: home sections as anchors; inline-only areas by name with their /#slug anchors.
 const SECTION_TITLES = {
   about: 'Hakkımızda', principles: 'Çalışma ilkeleri', practice: 'Faaliyet alanları', process: 'Çalışma biçimi',
@@ -108,7 +109,7 @@ Bu internet sitesi 1136 sayılı Avukatlık Kanunu ve Türkiye Barolar Birliği 
 
 ## Site yapısı
 
-Ana sayfa tek sayfadır; bölümler sayfa içi bağlantılardır (bir bölümün ayrıntıları aynı sayfada açılır). Ayrı sayfalar yalnızca üç çalışma alanı ile yasal metinler için vardır.
+Ana sayfa tek sayfadır; bölümler sayfa içi bağlantılardır (bir bölümün ayrıntıları aynı sayfada açılır). Ayrı sayfalar yalnızca çalışma alanları ile yasal metinler için vardır.
 
 ${sectionLines()}
 

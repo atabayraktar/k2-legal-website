@@ -2,12 +2,9 @@ import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import Button from './Button';
 import Redact from './Redact';
-import { buildMailto } from '../lib/contact-mailto.js';
 import { fmt } from '../lib/format.js';
-import { isPending } from '../lib/pending.js';
 import { pagePath } from '../lib/routes-util.js';
 
-const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || '';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const EMPTY = { name: '', email: '', phone: '', subject: '', message: '', consent: false, _gotcha: '' };
 const REQUIRED = { name: true, email: true, message: true };
@@ -16,7 +13,7 @@ const ORDER = ['name', 'email', 'message', 'consent'];
 function validate(v) {
   const e = {};
   if (v.name.trim().length < 2) e.name = true;
-  if (!EMAIL_RE.test(v.email.trim())) e.email = true;
+  if (v.email.trim() && !EMAIL_RE.test(v.email.trim())) e.email = true;
   if (v.message.trim().length < 5) e.message = true;
   if (!v.consent) e.consent = true;
   return e;
@@ -24,8 +21,9 @@ function validate(v) {
 
 // Contact form: a heading with instructions, three labelled groups (numbered fieldsets, each square fills when its required
 // fields are valid), helper text under every label, a confidentiality notice, the KVKK checkbox and one submit.
-// Result block (aria-live) covers invalid / success / mailto / error / pending. Field fill: none; hairline boxes only.
-// t = tr.contact. States: idle | invalid | submitting | success | mailto | error | pending.
+// No server: submit opens WhatsApp (wa.me) in a new tab with the message pre-filled; the visitor sends it there.
+// Result block (aria-live) covers invalid / whatsapp. Field fill: none; hairline boxes only.
+// t = tr.contact. States: idle | invalid | whatsapp.
 export default function ContactForm({ t, site, headingId }) {
   const uid = useId();
   const id = (k) => `${uid}-${k}`;
@@ -35,7 +33,6 @@ export default function ContactForm({ t, site, headingId }) {
   const [state, setState] = useState('idle');
   const [invalid, setInvalid] = useState([]);
   const refs = { name: useRef(null), email: useRef(null), phone: useRef(null), subject: useRef(null), message: useRef(null), consent: useRef(null) };
-  const emailPending = isPending(site.contact.email, { required: true });
   const now = validate(values);
 
   const setField = (k, val) => {
@@ -54,9 +51,8 @@ export default function ContactForm({ t, site, headingId }) {
     setState('idle');
   };
 
-  const onSubmit = async (ev) => {
+  const onSubmit = (ev) => {
     ev.preventDefault();
-    if (state === 'submitting') return;
     const errs = validate(values);
     setErrors(errs);
     setTouched({ name: true, email: true, message: true, consent: true });
@@ -69,41 +65,23 @@ export default function ContactForm({ t, site, headingId }) {
       return;
     }
     if (values._gotcha) {
-      setState('success'); // bots get a silent fake success
+      setState('whatsapp'); // bots get a silent fake success
       return;
     }
-    if (ENDPOINT) {
-      setState('submitting');
-      try {
-        const res = await fetch(ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            name: values.name.trim(),
-            email: values.email.trim(),
-            phone: values.phone.trim(),
-            subject: values.subject.trim(),
-            message: values.message.trim(),
-          }),
-        });
-        if (res.ok) {
-          setValues(EMPTY);
-          setTouched({});
-          setState('success');
-        } else {
-          setState('error');
-        }
-      } catch {
-        setState('error');
-      }
-      return;
-    }
-    if (emailPending) {
-      setState('pending');
-      return;
-    }
-    window.location.href = buildMailto({ to: site.contact.email, ...values });
-    setState('mailto');
+    const text = [
+      `Ad Soyad: ${values.name.trim()}`,
+      values.email.trim() && `E-posta: ${values.email.trim()}`,
+      values.phone.trim() && `Telefon: ${values.phone.trim()}`,
+      values.subject.trim() && `Konu: ${values.subject.trim()}`,
+      '',
+      values.message.trim(),
+    ]
+      .filter((l) => l !== false && l !== '')
+      .join('\n');
+    window.open(`${site.contact.whatsapp.url}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+    setValues(EMPTY);
+    setTouched({});
+    setState('whatsapp');
   };
 
   const c = t.consent;
@@ -179,7 +157,7 @@ export default function ContactForm({ t, site, headingId }) {
 
   const res = t.result[state];
   const showResult = Boolean(res) && state !== 'idle';
-  const hideForm = state === 'success';
+  const hideForm = state === 'whatsapp';
   const resultText = res ? fmt(res.text, { email: site.contact.email, n: invalid.length }) : '';
 
   return (
@@ -207,7 +185,7 @@ export default function ContactForm({ t, site, headingId }) {
                 ))}
               </ul>
             ) : null}
-            {state === 'success' ? (
+            {state === 'whatsapp' ? (
               <button type="button" className="cf__result-link cf__result-again" onClick={reset}>
                 {res.again}
               </button>
@@ -272,8 +250,8 @@ export default function ContactForm({ t, site, headingId }) {
         </div>
 
         <div className="cf__actions">
-          <Button variant="wax" type="submit" className="cf__submit" disabled={state === 'submitting'}>
-            {state === 'submitting' ? t.sending : t.submit}
+          <Button variant="wax" type="submit" className="cf__submit">
+            {t.submit}
           </Button>
         </div>
       </div>

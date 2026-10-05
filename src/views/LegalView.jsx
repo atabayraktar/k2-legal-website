@@ -17,7 +17,6 @@ export default function LegalView({ routeKey, common, seo, legal }) {
     kep: c.kep,
     phone: c.phone.display,
     city: site.city,
-    baro: site.baro,
   };
   const r = (s) => fmt(s, vars);
   const sections = doc.sections.map((s) => ({

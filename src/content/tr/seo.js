@@ -8,45 +8,30 @@ export default {
       'Karaman Berat Avukatlık Ortaklığı, dava ve danışmanlık faaliyeti yürüten tescilli bir avukatlık ortaklığıdır. Bilgilendirme amaçlı internet sitesi.',
   },
   areas: {
+    enforcement: {
+      title: 'İcra ve İflas Hukuku',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın icra ve iflas hukuku alanındaki faaliyetleri: takip, itiraz, haciz ve iflas süreçleri, konu başlıkları.',
+    },
+    maritime: {
+      title: 'Deniz Hukuku',
+      description:
+        'Karaman Berat Avukatlık Ortaklığı’nın deniz hukuku alanındaki faaliyetleri: deniz ticareti, gemi alacakları, taşıma, deniz sigortası, konu başlıkları.',
+    },
     criminal: {
       title: 'Ceza Hukuku',
       description:
         'Karaman Berat Avukatlık Ortaklığı’nın ceza hukuku alanındaki faaliyetleri: soruşturma ve kovuşturma süreçlerine ilişkin konu başlıkları ve süreç.',
     },
     commercial: {
-      title: 'Ticaret ve Şirketler Hukuku',
+      title: 'Ticaret Hukuku',
       description:
-        'Karaman Berat Avukatlık Ortaklığı’nın ticaret ve şirketler hukuku alanındaki faaliyetleri: şirket ve sözleşme ilişkileri, konu başlıkları ve süreç.',
+        'Karaman Berat Avukatlık Ortaklığı’nın ticaret hukuku alanındaki faaliyetleri: ticari sözleşmeler, ticari alacaklar, kıymetli evrak, konu başlıkları.',
     },
-    employment: {
-      title: 'İş ve Sosyal Güvenlik Hukuku',
+    corporate: {
+      title: 'Şirketler Hukuku ve Danışmanlık',
       description:
-        'Karaman Berat Avukatlık Ortaklığı’nın iş ve sosyal güvenlik hukuku alanındaki faaliyetleri: iş sözleşmeleri, fesih, sosyal sigorta ve süreç.',
-    },
-    realestate: {
-      title: 'Gayrimenkul ve İnşaat Hukuku',
-      description:
-        'Karaman Berat Avukatlık Ortaklığı’nın gayrimenkul ve inşaat hukuku alanındaki faaliyetleri: taşınmaz, kira, kat mülkiyeti, konu başlıkları ve süreç.',
-    },
-    family: {
-      title: 'Aile ve Miras Hukuku',
-      description:
-        'Karaman Berat Avukatlık Ortaklığı’nın aile ve miras hukuku alanındaki faaliyetleri: boşanma, velayet, mal rejimi, miras, konu başlıkları ve süreç.',
-    },
-    enforcement: {
-      title: 'İcra ve İflas Hukuku',
-      description:
-        'Karaman Berat Avukatlık Ortaklığı’nın icra ve iflas hukuku alanındaki faaliyetleri: takip, itiraz, haciz ve iflas süreçleri, konu başlıkları.',
-    },
-    ip: {
-      title: 'Fikri Mülkiyet ve Bilişim Hukuku',
-      description:
-        'Karaman Berat Avukatlık Ortaklığı’nın fikri mülkiyet ve bilişim hukuku alanındaki faaliyetleri: marka, telif, kişisel veriler, konu başlıkları ve süreç.',
-    },
-    arbitration: {
-      title: 'Tahkim ve Uyuşmazlık Çözümü',
-      description:
-        'Karaman Berat Avukatlık Ortaklığı’nın tahkim ve uyuşmazlık çözümü alanındaki faaliyetleri: tahkim, arabuluculuk, uzlaşma, konu başlıkları ve süreç.',
+        'Karaman Berat Avukatlık Ortaklığı’nın şirketler hukuku ve danışmanlık alanındaki faaliyetleri: şirket kuruluşu, ortaklık ilişkileri, konu başlıkları.',
     },
   },
   privacy: {

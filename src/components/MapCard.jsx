@@ -17,6 +17,7 @@ export default function MapCard({ href, address, openLabel, className = '' }) {
       </svg>
       <span className="map__credit">© OpenStreetMap</span>
       <span className="map__addr">{renderPending(address)}</span>
+      {href ? <span className="visually-hidden">. {openLabel}</span> : null}
       {href ? (
         <span className="map__go" aria-hidden="true">
           &#8599;
@@ -28,7 +29,7 @@ export default function MapCard({ href, address, openLabel, className = '' }) {
   const cls = `map${href ? ' map--link' : ''}${className ? ` ${className}` : ''}`;
   if (href) {
     return (
-      <a className={cls} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${openLabel}: ${address}`}>
+      <a className={cls} href={href} target="_blank" rel="noopener noreferrer">
         {body}
       </a>
     );

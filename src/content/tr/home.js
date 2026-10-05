@@ -8,12 +8,12 @@ export default {
     // (tescilli unvan, what the partnership is) lives in the Hakkımızda section and the footer.
     slogan: 'Hukukta söz uçar, yazı kalır.',
     entity:
-      'Dava ve danışmanlık dosyaları; mevzuat, süre ve yazılı kayıt esasıyla yürütülür. Her dosya kendi gerekçesiyle, kendi takvimiyle ve düzenli bir dosya diliyle ele alınır. Sekiz faaliyet alanında, bir ortaklık olarak çalışırız.',
+      'Dava ve danışmanlık dosyaları; mevzuat, süre ve yazılı kayıt esasıyla yürütülür. Her dosya kendi gerekçesiyle, kendi takvimiyle ve düzenli bir dosya diliyle ele alınır. Beş faaliyet alanında, bir ortaklık olarak çalışırız.',
     ctaPrimary: 'Randevu Talep Et',
     ctaSecondary: 'Çalışma Alanları',
     kunye: [
       { label: 'Tescilli unvan', value: '{legalName}' },
-      { label: 'Şehir / Baro', value: '{city} · {baro}' },
+      { label: 'Şehir', value: '{city}' },
       { label: 'Telefon', value: '{phone}' },
       { label: 'E-posta', value: '{email}' },
     ],
@@ -35,8 +35,7 @@ export default {
     kunye: {
       rows: [
         { key: 'legalName', label: 'Tescilli unvan', value: '{legalName}' },
-        { key: 'cityBaro', label: 'Şehir / Baro', value: '{city} · {baro}' },
-        { key: 'baroRegistry', label: 'Baro sicil', value: '{baroRegistry}' },
+        { key: 'cityBaro', label: 'Şehir', value: '{city}' },
         { key: 'foundedYear', label: 'Kuruluş', value: '{foundedYear}' },
         { key: 'activity', label: 'Faaliyet', value: 'Dava ve danışmanlık' },
       ],

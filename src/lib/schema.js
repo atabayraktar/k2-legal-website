@@ -35,7 +35,7 @@ export function orgSchema() {
     url: abs(pagePath('home')),
     logo: abs('/og/og-default.png'),
     image: abs(site.seo.ogImage),
-    telephone: c.phone.tel,
+    telephone: [c.phone.tel, c.mobile.tel],
     email: c.email,
     address: {
       '@type': 'PostalAddress',
@@ -45,6 +45,15 @@ export function orgSchema() {
       postalCode: a.postalCode,
       addressCountry: a.country,
     },
+    geo: c.geo ? { '@type': 'GeoCoordinates', latitude: c.geo.lat, longitude: c.geo.lng } : undefined,
+    hasMap: c.map && c.map.href,
+    // only when the client has confirmed the weekdays (hours.schema), never guessed
+    openingHours: c.hours.schema,
+    contactPoint: [
+      { '@type': 'ContactPoint', contactType: 'customer service', telephone: c.phone.tel, email: c.email, availableLanguage: 'tr' },
+      { '@type': 'ContactPoint', contactType: 'customer service', telephone: c.mobile.tel, availableLanguage: 'tr' },
+    ],
+    areaServed: { '@type': 'AdministrativeArea', name: a.city },
     sameAs: Object.values(site.social).filter(Boolean),
   });
 }
@@ -86,7 +95,6 @@ export function personSchema(p) {
     honorificPrefix: p.academicTitle,
     jobTitle: p.professionalTitle,
     alumniOf: p.university,
-    knowsLanguage: p.languages,
     memberOf: p.baro,
     worksFor: orgRef(),
   });
@@ -98,10 +106,9 @@ export function siteVars() {
   return {
     legalName: site.legalName,
     city: site.city,
-    baro: site.baro,
-    baroRegistry: site.baroRegistry,
     foundedYear: site.foundedYear,
     phone: c.phone.display,
+    mobile: c.mobile.display,
     email: c.email,
     kep: c.kep,
     address: addressLine(c.address),

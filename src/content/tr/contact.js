@@ -6,7 +6,7 @@ export default {
   infoTitle: 'İletişim bilgileri',
   formTitle: 'Randevu talep formu',
   formLead:
-    'Formu üç bölümde doldurun. Her alanın yanında zorunlu olup olmadığı yazar. Gönderdiğiniz bilgiler yalnızca talebinizi değerlendirmek için kullanılır; dönüş, verdiğiniz e-posta veya telefon üzerinden yapılabilir.',
+    'Formu üç bölümde doldurun. Talep göndermek için WhatsApp açılır; mesajı orada kendiniz gönderirsiniz. Gönderdiğiniz bilgiler yalnızca talebinizi değerlendirmek için kullanılır.',
   groups: [
     { id: 'who', title: 'Kimliğiniz', fields: ['name'] },
     { id: 'reach', title: 'Size nasıl ulaşılır', fields: ['email', 'phone'] },
@@ -24,12 +24,12 @@ export default {
     },
     email: {
       label: 'E-posta',
-      hint: 'Dönüş için kullanılacak adres.',
+      hint: 'İsteğe bağlı; yazışma için kullanılacak adres.',
       error: 'Geçerli bir e-posta adresi yazın (örnek: ad@alanadi.com).',
     },
     phone: {
       label: 'Telefon',
-      hint: 'Görüşme ayarlamak gerekirse kullanılır.',
+      hint: 'Görüşme ayarlamak gerekirse kullanılır. Mesaj WhatsApp numaranızdan gelir.',
     },
     subject: {
       label: 'Konu',
@@ -51,26 +51,13 @@ export default {
     title: 'Gizli bilgi ve belge göndermeyin',
     text: 'Bu forma kimlik, sağlık, mali durum gibi gizli bilgiler yazmayın; dava belgesi veya başka bir belge eklemeyin. Form üzerinden yapılan yazışma avukat–müvekkil ilişkisi kurmaz; ilişki yazılı vekâlet veya hizmet sözleşmesi ile başlar.',
   },
-  submit: 'Talebi Gönder',
-  sending: 'Gönderiliyor…',
+  submit: 'WhatsApp ile Gönder',
   result: {
     invalid: { title: 'Formda eksik alan var', text: '{n} alan tamamlanmalı:' },
-    success: {
-      title: 'Talebiniz iletildi',
-      text: 'Mesajınız ortaklığa ulaştı. Dönüş, verdiğiniz e-posta veya telefon üzerinden yapılabilir. Bu mesaj avukat–müvekkil ilişkisi kurmaz.',
+    whatsapp: {
+      title: 'WhatsApp açıldı',
+      text: 'Mesajınız WhatsApp’ta hazırlandı. Talebin ortaklığa ulaşması için mesajı WhatsApp’tan göndermeniz gerekir. Bu mesaj avukat–müvekkil ilişkisi kurmaz.',
       again: 'Yeni talep yaz',
-    },
-    mailto: {
-      title: 'E-posta taslağı hazırlandı',
-      text: 'E-posta uygulamanız açıldı. Talebin iletilmesi için mesajı e-posta uygulamanızdan göndermeniz gerekir.',
-    },
-    error: {
-      title: 'Talep gönderilemedi',
-      text: 'Bağlantı sorunu olmuş olabilir. Yazdıklarınız formda duruyor; tekrar deneyebilir veya doğrudan {email} adresine yazabilirsiniz.',
-    },
-    pending: {
-      title: 'Form henüz etkin değil',
-      text: 'İletişim bilgileri henüz eklenmediği için form etkin değildir.',
     },
   },
   honeypotLabel: 'Bu alanı boş bırakın',

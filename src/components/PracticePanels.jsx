@@ -8,7 +8,7 @@ import { ROLE } from '../content/images.js';
 import { useSectionNav } from '../hooks/useSectionNav';
 import { practicePath } from '../lib/routes-util.js';
 
-// Calisma Alanlari: eight case files that open in place (single-open accordion, #slug deep links).
+// Calisma Alanlari: five case files that open in place (single-open accordion, #slug deep links).
 // areas: full practice content [{ id, title, lede, topics, approach }] (ids match routes.js practiceAreas).
 // Every area links to its own page ("Detaylı bilgi için"); the approach text lives on that page.
 export default function PracticePanels({ areas = [], t }) {

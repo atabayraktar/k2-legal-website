@@ -18,19 +18,16 @@ export const sections = {
   contact: '/#iletisim',
 };
 
-// order = display order A.01-A.08; id is the stable key.
-// page: true  -> own URL /calisma-alanlari/<slug>/ (all eight areas have a detail page; the home panels link to them).
+// order = display order A.01-A.05; id is the stable key.
+// page: true  -> own URL /calisma-alanlari/<slug>/ (all five areas have a detail page; the home panels link to them).
 //                 The slug wording is a client / bar decision (Reklam Yasagi Yonetmeligi m.7/2-e).
 // page: false -> would be an inline panel only, deep link /#<slug> (currently unused)
 export const practiceAreas = [
   { id: 'enforcement', slug: 'icra-ve-iflas-hukuku', page: true },
+  { id: 'maritime', slug: 'deniz-hukuku', page: true },
   { id: 'criminal', slug: 'ceza-hukuku', page: true },
-  { id: 'commercial', slug: 'ticaret-ve-sirketler-hukuku', page: true },
-  { id: 'employment', slug: 'is-ve-sosyal-guvenlik-hukuku', page: true },
-  { id: 'realestate', slug: 'gayrimenkul-ve-insaat-hukuku', page: true },
-  { id: 'family', slug: 'aile-ve-miras-hukuku', page: true },
-  { id: 'ip', slug: 'fikri-mulkiyet-ve-bilisim-hukuku', page: true },
-  { id: 'arbitration', slug: 'tahkim-ve-uyusmazlik-cozumu', page: true },
+  { id: 'commercial', slug: 'ticaret-hukuku', page: true },
+  { id: 'corporate', slug: 'sirketler-hukuku-ve-danismanlik', page: true },
 ];
 
 // Removed v1 pages -> 301 to the matching home anchor (firebase.json "redirects"; verify-routes asserts them).

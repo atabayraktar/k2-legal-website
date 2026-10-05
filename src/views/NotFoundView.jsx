@@ -7,7 +7,7 @@ import { pagePath } from '../lib/routes-util.js';
 export default function NotFoundView({ common }) {
   const nf = common.notFound;
   return (
-    <Layout routeKey="notFound" common={common} seo={{ title: nf.title, noindex: true }} headerTheme="light">
+    <Layout routeKey="notFound" common={common} seo={{ title: nf.title, description: nf.text, noindex: true }} headerTheme="light">
       <section className="notfound" aria-labelledby="notfound-title">
         <div className="container">
           <h1 id="notfound-title" className="notfound__code">

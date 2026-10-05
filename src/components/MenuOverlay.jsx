@@ -103,7 +103,8 @@ export default function MenuOverlay({ open, onClose, returnFocusRef }) {
         <div className="menu__foot container">
           <address className="menu__contact">
             <strong>{t.menu.contactTitle}</strong>
-            <span>{renderPending(c.phone.display)}</span>
+            <span>{c.phone.display}</span>
+            <span>{c.mobile.display}</span>
             <span>{renderPending(c.email)}</span>
             <span>{renderPending(addressLine(c.address))}</span>
           </address>

@@ -15,7 +15,7 @@ import { orgSchema, websiteSchema, breadcrumbSchema, serviceSchema, graph } from
 
 const pad = (n) => String(n).padStart(2, '0');
 
-// "Dosya" page: one of the eight practice areas. detail = practice.detail strings.
+// "Dosya" page: one of the five practice areas. detail = practice.detail strings.
 export default function PracticeView({ common, seo, detail, area, slug, prev, next }) {
   const url = abs(practicePath(area.id));
   // Fragments are not valid crumb URLs, so the structured data lists two items only.
@@ -69,7 +69,7 @@ export default function PracticeView({ common, seo, detail, area, slug, prev, ne
                 </h2>
                 <ol className="case__topics">
                   {area.topics.map((tp, i) => (
-                    <Reveal as="li" delay={Math.min(i, 4)} className="case__topic" key={tp}>
+                    <Reveal as="li" now={i < 3} delay={Math.min(i, 4)} className="case__topic" key={tp}>
                       <span className="case__topic-n" aria-hidden="true">
                         {pad(i + 1)}
                       </span>
@@ -156,7 +156,7 @@ export function practiceStaticProps(slug, getContent) {
   const id = practiceIdBySlug(slug);
   const { common, page, all } = getContent('practice');
   const area = page.areas.find((a) => a.id === id);
-  const flagships = practiceAreas.filter((a) => a.page); // all eight today
+  const flagships = practiceAreas.filter((a) => a.page); // all five today
   const i = flagships.findIndex((a) => a.id === id);
   const n = flagships.length;
   const brief = (f) => ({ id: f.id, title: page.areas.find((a) => a.id === f.id).title });

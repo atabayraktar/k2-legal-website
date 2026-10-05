@@ -19,7 +19,8 @@ export default function Footer() {
 
   const rows = [
     { k: t.labels.address, v: renderPending(addressLine(c.address)) },
-    { k: t.labels.phone, v: c.phone.tel ? <a href={`tel:${c.phone.tel}`}>{c.phone.display}</a> : renderPending(c.phone.display) },
+    { k: t.labels.phone, v: <a href={`tel:${c.phone.tel}`}>{c.phone.display}</a> },
+    { k: t.labels.mobile, v: <a href={`tel:${c.mobile.tel}`}>{c.mobile.display}</a> },
     {
       k: t.labels.email,
       v: isPending(c.email, { required: true }) ? renderPending(c.email) : <a href={`mailto:${c.email}`}>{c.email}</a>,

@@ -3,9 +3,9 @@
 // Placeholders are rendered in the UI as-is and pruned from JSON-LD / sitemap / llms.txt.
 
 // publications: Yayınlar OFF until the bar approves content.
-// practiceConfirmed: the eight working areas are placeholders until the client confirms them; while false,
+// practiceConfirmed: the five working areas (confirmed by the client 2026-10-05); while false,
 // Service JSON-LD and the llms.txt area list are not published as facts.
-export const FEATURES = { publications: false, practiceConfirmed: false }; // TODO(client) confirm the areas
+export const FEATURES = { publications: false, practiceConfirmed: true };
 
 export const site = {
   legalName: 'Karaman Berat Avukatlık Ortaklığı', // TODO(client) confirm exact spelling against the baro record
@@ -14,47 +14,41 @@ export const site = {
   // TODO(client) how the partnership was founded (year, who came together, when the baro registered it). The Hakkımızda
   // text is generic until then; a verified sentence set here is appended to the "Nasıl kuruldu" block. Never invent.
   founding: { note: null },
-  city: '[Şehir]', // TODO(client)
-  baro: '[Baro adı] Barosu', // TODO(client) baro the ortaklık is registered with
-  baroRegistry: '[Ortaklık baro sicil no]', // TODO(client) partnership registry number at the baro
+  city: 'İstanbul',
+  // Client ruling (2026-10-05): no baro sicil / TBB sicil numbers on the site (they are on the baro levhası). Never add them back.
   partners: [
-    // Two placeholder partners (count unconfirmed; UI derives every count from this array). ONLY fields allowed by Reklam Yasağı Yönetmeliği m.7/1-d. No bio, cases, clients or awards fields exist by design.
+    // ONLY fields allowed by Reklam Yasağı Yönetmeliği m.7/1-d and approved by the client: no sicil numbers, bio, cases, clients or awards.
     {
       id: 'partner-1',
-      name: '[Ortak 1 Ad Soyad]', // TODO(client)
-      academicTitle: null, // TODO(client) e.g. 'Dr.' only for an academic title in law
+      name: 'Enes Talha Karaman',
+      academicTitle: null,
       professionalTitle: 'Avukat',
-      baro: '[Baro adı] Barosu', // TODO(client)
-      baroSicil: '[Baro sicil no]', // TODO(client)
-      tbbSicil: '[TBB sicil no]', // TODO(client)
-      startYear: '[Mesleğe başlama yılı]', // TODO(client)
-      university: '[Mezun olduğu üniversite]', // TODO(client)
-      languages: ['[Yabancı dil]'], // TODO(client)
-      photo: null, // TODO(client) { src: '/images/x.webp', width, height } (black and white)
+      baro: 'İstanbul 1 Nolu Barosu',
+      startYear: '2023',
+      university: 'İstanbul Bilgi Üniversitesi Hukuk Fakültesi; International University of Sarajevo (2015, İngilizce eğitim)',
+      photo: { src: '/images/partner-enes-720.webp', width: 720, height: 960 },
     },
     {
       id: 'partner-2',
-      name: '[Ortak 2 Ad Soyad]', // TODO(client)
-      academicTitle: null, // TODO(client)
+      name: 'Berat Kama',
+      academicTitle: null,
       professionalTitle: 'Avukat',
-      baro: '[Baro adı] Barosu', // TODO(client)
-      baroSicil: '[Baro sicil no]', // TODO(client)
-      tbbSicil: '[TBB sicil no]', // TODO(client)
-      startYear: '[Mesleğe başlama yılı]', // TODO(client)
-      university: '[Mezun olduğu üniversite]', // TODO(client)
-      languages: ['[Yabancı dil]'], // TODO(client)
-      photo: null, // TODO(client)
+      baro: 'İstanbul 2 Nolu Barosu',
+      startYear: '2008',
+      university: 'Marmara Üniversitesi Hukuk Fakültesi (2005)',
+      photo: { src: '/images/partner-berat-720.webp', width: 720, height: 960 },
     },
   ],
   contact: {
-    phone: { display: '+90 (___) ___ __ __', tel: null }, // TODO(client) tel = '+90…' digits for the tel: link
+    phone: { display: '0212 469 36 00', tel: '+902124693600' }, // sabit hat
+    mobile: { display: '0533 924 79 86', tel: '+905339247986' },
     email: '[E-posta adresi]', // TODO(client)
     kep: '[KEP adresi]', // TODO(client)
-    address: { street: 'Atatürk Bulvarı, Deposite İş Merkezi A1 Blok, Kat: 4, No: 424', district: null, city: 'İstanbul', postalCode: null, country: 'TR' }, // TODO(client) confirm ilçe + posta kodu; city inferred from the map pin coordinates, confirm
-    hours: { display: '[Çalışma saatleri]', schema: null }, // TODO(client) schema e.g. 'Mo-Fr 09:00-18:00'
-    whatsapp: { display: '[WhatsApp numarası]', url: null }, // TODO(client) url 'https://wa.me/90…'
+    address: { street: 'Atatürk Bulvarı, Deposite İş Merkezi A1 Blok, Kat: 3, No: 424', district: 'Başakşehir', city: 'İstanbul', postalCode: '34490', country: 'TR' }, // TODO(client) verify postal code (sources conflict: 34490 vs 34306)
+    hours: { display: '09:00 – 18:00', schema: null }, // TODO(client) confirm weekdays (schema e.g. 'Mo-Fr 09:00-18:00')
+    whatsapp: { display: '0533 924 79 86', url: 'https://wa.me/905339247986' }, // same number as mobile
     geo: { lat: 41.0702133, lng: 28.809309 }, // from the client's Google Maps pin
-    map: { image: null, href: 'https://maps.app.goo.gl/XNg7uHJrreQrYKLx8' }, // client's Google Maps link
+    map: { image: null, href: 'https://maps.app.goo.gl/KFL58hSaip2Zc8SE8' }, // client's Google Maps link
   },
   social: { instagram: null, linkedin: null, x: null }, // TODO(client) real URLs only; they feed sameAs
   seo: { ogImage: '/og/og-default.png', themeColor: '#0B0B0C' },
@@ -70,6 +64,6 @@ export const site = {
 export const INDEXABLE = !/\.example(?:[/:]|$)/i.test(site.domain) && /^https:\/\//.test(site.domain);
 
 export const REQUIRED = [
-  'domain', 'city', 'baro', 'baroRegistry', 'partners',
+  'domain', 'partners',
   'contact.phone', 'contact.email', 'contact.kep', 'contact.address', 'contact.hours',
 ];

@@ -14,15 +14,10 @@ function PartnerCard({ p, i, total, t, common }) {
   const card = t.card ?? {};
   const fullName = isPending(p.name) ? fmt(common.labels.partner, { n: i + 1 }) : [p.academicTitle, p.name].filter(Boolean).join(' ');
   const unvan = [p.academicTitle, p.professionalTitle].filter(Boolean).join(' ');
-  const sicilShown = !isPending(p.baroSicil);
 
   const rows = [
-    { k: L.baro, v: renderPending(p.baro) },
-    { k: L.baroSicil, v: renderPending(p.baroSicil) },
-    { k: L.tbbSicil, v: renderPending(p.tbbSicil) },
     { k: L.startYear, v: renderPending(p.startYear) },
     { k: L.university, v: renderPending(p.university) },
-    { k: L.languages, v: renderPending(p.languages.join(', ')) },
   ];
 
   return (

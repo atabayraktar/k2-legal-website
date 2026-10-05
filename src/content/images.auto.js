@@ -44,7 +44,7 @@ export const images = {
   },
   "hero-justice": {
     "src": "/images/hero-justice-1440.webp",
-    "srcSet": "/images/hero-justice-1008.webp 1008w, /images/hero-justice-1440.webp 1440w",
+    "srcSet": "/images/hero-justice-720.webp 720w, /images/hero-justice-1008.webp 1008w, /images/hero-justice-1440.webp 1440w",
     "width": 1440,
     "height": 1800,
     "aspect": "1440 / 1800"
@@ -56,12 +56,19 @@ export const images = {
     "height": 916,
     "aspect": "1008 / 916"
   },
-  "practice-aile-ve-miras-hukuku": {
-    "src": "/images/practice-aile-ve-miras-hukuku-1600.webp",
-    "srcSet": "/images/practice-aile-ve-miras-hukuku-800.webp 800w, /images/practice-aile-ve-miras-hukuku-1600.webp 1600w",
-    "width": 1600,
-    "height": 700,
-    "aspect": "1600 / 700"
+  "partner-berat": {
+    "src": "/images/partner-berat-720.webp",
+    "srcSet": "/images/partner-berat-720.webp 720w",
+    "width": 720,
+    "height": 960,
+    "aspect": "720 / 960"
+  },
+  "partner-enes": {
+    "src": "/images/partner-enes-720.webp",
+    "srcSet": "/images/partner-enes-720.webp 720w",
+    "width": 720,
+    "height": 960,
+    "aspect": "720 / 960"
   },
   "practice-archive": {
     "src": "/images/practice-archive-880.webp",
@@ -84,16 +91,9 @@ export const images = {
     "height": 700,
     "aspect": "1600 / 700"
   },
-  "practice-fikri-mulkiyet-ve-bilisim-hukuku": {
-    "src": "/images/practice-fikri-mulkiyet-ve-bilisim-hukuku-1600.webp",
-    "srcSet": "/images/practice-fikri-mulkiyet-ve-bilisim-hukuku-800.webp 800w, /images/practice-fikri-mulkiyet-ve-bilisim-hukuku-1600.webp 1600w",
-    "width": 1600,
-    "height": 700,
-    "aspect": "1600 / 700"
-  },
-  "practice-gayrimenkul-ve-insaat-hukuku": {
-    "src": "/images/practice-gayrimenkul-ve-insaat-hukuku-1600.webp",
-    "srcSet": "/images/practice-gayrimenkul-ve-insaat-hukuku-800.webp 800w, /images/practice-gayrimenkul-ve-insaat-hukuku-1600.webp 1600w",
+  "practice-deniz-hukuku": {
+    "src": "/images/practice-deniz-hukuku-1600.webp",
+    "srcSet": "/images/practice-deniz-hukuku-800.webp 800w, /images/practice-deniz-hukuku-1600.webp 1600w",
     "width": 1600,
     "height": 700,
     "aspect": "1600 / 700"
@@ -105,23 +105,16 @@ export const images = {
     "height": 700,
     "aspect": "1600 / 700"
   },
-  "practice-is-ve-sosyal-guvenlik-hukuku": {
-    "src": "/images/practice-is-ve-sosyal-guvenlik-hukuku-1600.webp",
-    "srcSet": "/images/practice-is-ve-sosyal-guvenlik-hukuku-800.webp 800w, /images/practice-is-ve-sosyal-guvenlik-hukuku-1600.webp 1600w",
+  "practice-sirketler-hukuku-ve-danismanlik": {
+    "src": "/images/practice-sirketler-hukuku-ve-danismanlik-1600.webp",
+    "srcSet": "/images/practice-sirketler-hukuku-ve-danismanlik-800.webp 800w, /images/practice-sirketler-hukuku-ve-danismanlik-1600.webp 1600w",
     "width": 1600,
     "height": 700,
     "aspect": "1600 / 700"
   },
-  "practice-tahkim-ve-uyusmazlik-cozumu": {
-    "src": "/images/practice-tahkim-ve-uyusmazlik-cozumu-1600.webp",
-    "srcSet": "/images/practice-tahkim-ve-uyusmazlik-cozumu-800.webp 800w, /images/practice-tahkim-ve-uyusmazlik-cozumu-1600.webp 1600w",
-    "width": 1600,
-    "height": 700,
-    "aspect": "1600 / 700"
-  },
-  "practice-ticaret-ve-sirketler-hukuku": {
-    "src": "/images/practice-ticaret-ve-sirketler-hukuku-1600.webp",
-    "srcSet": "/images/practice-ticaret-ve-sirketler-hukuku-800.webp 800w, /images/practice-ticaret-ve-sirketler-hukuku-1600.webp 1600w",
+  "practice-ticaret-hukuku": {
+    "src": "/images/practice-ticaret-hukuku-1600.webp",
+    "srcSet": "/images/practice-ticaret-hukuku-800.webp 800w, /images/practice-ticaret-hukuku-1600.webp 1600w",
     "width": 1600,
     "height": 700,
     "aspect": "1600 / 700"

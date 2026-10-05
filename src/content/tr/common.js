@@ -30,6 +30,8 @@ export default {
   labels: {
     address: 'Adres',
     phone: 'Telefon',
+    mobile: 'Mobil',
+    mobileWhatsapp: 'Mobil / WhatsApp',
     phoneWhatsapp: 'Tel / WhatsApp',
     whatsappFloat: 'WhatsApp ile yaz',
     toTop: 'Sayfa başına dön',

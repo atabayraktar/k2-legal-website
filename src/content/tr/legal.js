@@ -57,8 +57,8 @@ export default {
           'Verileriniz, yukarıdaki amaçlarla sınırlı olarak ve KVKK m.8 ile m.9 hükümlerine uygun biçimde aşağıdaki alıcılara aktarılabilir:',
         ],
         list: [
-          'İletişim formu işleme hizmeti sağlayıcısı: […]. Form verileri bu hizmet sağlayıcı aracılığıyla iletilirse veriler yurt dışındaki sunucularda işlenebilir. Form işleyici seçilmediği sürece form, kullanıcının kendi e-posta uygulaması üzerinden gönderilir.',
-          'WhatsApp üzerinden yazdığınız mesajlar, WhatsApp hizmetinin sağlayıcısı olan Meta Platforms grubunun yurt dışındaki altyapısında işlenir. WhatsApp ile iletişim kurmak tamamen tercihinize bağlıdır.',
+          'İletişim formu: internet sitesinde bir sunucuya veri gönderilmez. Formu doldurup gönderdiğinizde yazdıklarınız WhatsApp’ta hazır bir mesaj olarak açılır ve mesajı WhatsApp üzerinden siz gönderirsiniz.',
+          'İletişim formu dâhil olmak üzere WhatsApp üzerinden yazdığınız mesajlar, WhatsApp hizmetinin sağlayıcısı olan Meta Platforms grubunun yurt dışındaki altyapısında işlenir. WhatsApp ile iletişim kurmak tamamen tercihinize bağlıdır.',
           'İnternet sitesinin barındırma hizmeti (Google Firebase Hosting): sunucu erişim kayıtları yurt dışındaki sunucularda tutulabilir.',
           'Kanunen yetkili kamu kurum ve kuruluşları ile yargı mercileri: mevzuattan doğan zorunluluk hâlinde.',
         ],
@@ -75,7 +75,7 @@ export default {
         h2: 'Saklama süresi',
         paragraphs: [
           'Verileriniz, işleme amacının gerektirdiği süre boyunca ve ilgili mevzuatta öngörülen saklama sürelerine uygun olarak saklanır; sürenin sonunda silinir, yok edilir veya anonim hâle getirilir.',
-          'Saklama süreleri: […]',
+          'Saklama süresi: İletişim talepleri ve yazışmalar, talebin sonuçlandırılmasından itibaren en fazla bir yıl süreyle saklanır. Yazılı vekâlet veya hizmet sözleşmesi kurulması hâlinde dosyaya ilişkin süreler ayrıca ilgili mevzuata göre belirlenir.',
         ],
       },
       {

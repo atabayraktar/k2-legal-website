@@ -7,7 +7,6 @@ export default {
     tbbSicil: 'TBB sicil no',
     startYear: 'Mesleğe başlama yılı',
     university: 'Mezun olduğu üniversite',
-    languages: 'Yabancı diller',
   },
   card: {
     partnerNo: 'Ortak {n}',

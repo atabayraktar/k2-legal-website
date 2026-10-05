@@ -18,10 +18,25 @@ export default function ContactSection({ t, common, site, headingId = 'iletisim-
   const mapHref =
     c.map?.href ?? (realAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : null);
 
-  // Telefon and WhatsApp are one row: the number is a tel: link (calls; it does not open WhatsApp).
   const rows = [
     { k: L.address, v: renderPending(address) },
-    { k: L.phoneWhatsapp, v: c.phone.tel ? <a className="contact__a" href={`tel:${c.phone.tel}`}>{c.phone.display}</a> : renderPending(c.phone.display) },
+    { k: L.phone, v: <a className="contact__a" href={`tel:${c.phone.tel}`}>{c.phone.display}</a> },
+    {
+      k: L.mobileWhatsapp,
+      v: (
+        <>
+          <a className="contact__a" href={`tel:${c.mobile.tel}`}>{c.mobile.display}</a>
+          {c.whatsapp.url && (
+            <>
+              {' · '}
+              <a className="contact__a" href={c.whatsapp.url} target="_blank" rel="noopener noreferrer">
+                {L.whatsapp}
+              </a>
+            </>
+          )}
+        </>
+      ),
+    },
     {
       k: L.email,
       v: isPending(c.email, { required: true }) ? renderPending(c.email) : <a className="contact__a" href={`mailto:${c.email}`}>{c.email}</a>,
