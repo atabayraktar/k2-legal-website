@@ -1,5 +1,6 @@
 import { Bricolage_Grotesque, Courier_Prime, Instrument_Sans } from 'next/font/google';
 import { useLenis } from '../hooks/useLenis';
+import { usePreloadImages } from '../hooks/usePreloadImages';
 import '../styles/index.scss';
 
 // Three families, hard budget (redesign-v2 section 3.2). Only Bricolage 800 + Instrument Sans are on the critical path.
@@ -32,6 +33,7 @@ const sans = Instrument_Sans({
 
 export default function App({ Component, pageProps }) {
   useLenis();
+  usePreloadImages();
   return (
     <div className={`${display.variable} ${mono.variable} ${sans.variable} app`}>
       <Component {...pageProps} />
