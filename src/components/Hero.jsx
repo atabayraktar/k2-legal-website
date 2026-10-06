@@ -4,17 +4,13 @@ import TextLink from './TextLink';
 import Reveal from './Reveal';
 import ImageFrame from './ImageFrame';
 import images, { ROLE } from '../content/images.js';
-import { fmt } from '../lib/format.js';
-import { siteVars } from '../lib/schema.js';
-import { renderPending } from '../lib/text.js';
 import { pagePath } from '../lib/routes-util.js';
 
 const PHOTO_SIZES = '(min-width: 900px) 40vw, calc(100vw - 40px)';
 
 // "Dosya Kapagi": the cover of a case file. A two-row headline that runs beside the photograph (scales of justice, B&W),
-// one general-information line in the gap, and one typed kunye line.
+// and one general-information line in the gap.
 export default function Hero({ t }) {
-  const vars = siteVars();
   const photo = images[ROLE.hero];
   return (
     <section id="hero" className="hero" data-theme="light" aria-labelledby="hero-title">
@@ -68,14 +64,6 @@ export default function Hero({ t }) {
             </Reveal>
           </div>
         </div>
-
-        <ul className="hero__kunye">
-          {t.kunye.map((k) => (
-            <li className="hero__kunye-i" key={k.label}>
-              <span className="hero__kunye-k">{k.label}:</span> {renderPending(fmt(k.value, vars))}
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );

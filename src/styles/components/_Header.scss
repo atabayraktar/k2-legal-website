@@ -171,6 +171,13 @@
 
   &__cta {
     display: none;
+    --b-fill: var(--wax);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--bone);
+      --b-bd: var(--wax);
+    }
 
     @include up(nav) {
       display: inline-flex;

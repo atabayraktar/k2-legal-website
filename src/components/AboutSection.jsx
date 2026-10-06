@@ -1,17 +1,11 @@
 import Reveal from './Reveal';
-import Ledger from './Ledger';
-import IdxCard from './IdxCard';
 import { fmt } from '../lib/format.js';
 import { siteVars } from '../lib/schema.js';
-import { renderPending } from '../lib/text.js';
 
-// Hakkimizda (ink). A full-width headline, two plain text blocks (how the partnership came about, what it does) and the
-// registry card (kunye) fully open at the bottom-right corner. No photograph, no eyebrow, no rotated label.
+// Hakkimizda (ink). A full-width headline and two plain text blocks side by side (how the partnership came about,
+// what it does). No photograph, no eyebrow, no rotated label, no cards.
 export default function AboutSection({ t, site, children }) {
   const vars = siteVars();
-  const rows = t.kunye.rows
-    .filter((r) => !(r.key === 'foundedYear' && site.foundedYear == null))
-    .map((r) => ({ k: r.label, v: renderPending(fmt(r.value, vars)) }));
   const founding = [...t.founding];
   if (site.foundedYear != null) founding.push(fmt(t.foundedSentence, vars));
   if (site.founding?.note) founding.push(site.founding.note);
@@ -44,14 +38,6 @@ export default function AboutSection({ t, site, children }) {
               ))}
             </Reveal>
           </div>
-
-          <Reveal delay={2} className="about-section__kunye">
-            <IdxCard stacked className="about-kunye">
-              <div className="about-kunye__in">
-                <Ledger items={rows} className="about-kunye__ledger" />
-              </div>
-            </IdxCard>
-          </Reveal>
         </div>
       </div>
       {children}

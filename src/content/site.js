@@ -15,15 +15,16 @@ export const site = {
   // text is generic until then; a verified sentence set here is appended to the "Nasıl kuruldu" block. Never invent.
   founding: { note: null },
   city: 'İstanbul',
-  // Client ruling (2026-10-05): no baro sicil / TBB sicil numbers on the site (they are on the baro levhası). Never add them back.
+  // Baro sicil numbers were removed earlier on 2026-10-05, then re-added at the owner's explicit request (baro sicil only, no TBB sicil).
   partners: [
-    // ONLY fields allowed by Reklam Yasağı Yönetmeliği m.7/1-d and approved by the client: no sicil numbers, bio, cases, clients or awards.
+    // ONLY fields allowed by Reklam Yasağı Yönetmeliği m.7/1-d: no bio, cases, clients or awards.
     {
       id: 'partner-1',
       name: 'Enes Talha Karaman',
       academicTitle: null,
       professionalTitle: 'Avukat',
       baro: 'İstanbul 1 Nolu Barosu',
+      baroSicil: '94812',
       startYear: '2023',
       university: 'İstanbul Bilgi Üniversitesi Hukuk Fakültesi; International University of Sarajevo (2015, İngilizce eğitim)',
       photo: { src: '/images/partner-enes-720.webp', width: 720, height: 960 },
@@ -34,6 +35,7 @@ export const site = {
       academicTitle: null,
       professionalTitle: 'Avukat',
       baro: 'İstanbul 2 Nolu Barosu',
+      baroSicil: '1097',
       startYear: '2008',
       university: 'Marmara Üniversitesi Hukuk Fakültesi (2005)',
       photo: { src: '/images/partner-berat-720.webp', width: 720, height: 960 },

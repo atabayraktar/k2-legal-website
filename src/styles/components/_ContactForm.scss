@@ -63,25 +63,25 @@
     place-items: center;
     width: 32px;
     height: 32px;
-    border: 1px solid var(--ink);
+    border: 1px solid var(--wax);
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 15px;
     line-height: 1;
-    color: var(--ink);
+    color: var(--wax);
     transition:
       background-color var(--dur-color) var(--ease),
       color var(--dur-color) var(--ease);
 
     &.is-done {
-      background: var(--ink);
+      background: var(--wax);
       color: var(--bone);
     }
   }
 
   &__legend-t {
     @include display(clamp(20px, 1.8vw, 24px), 700, var(--ls-h4), 1.1);
-    color: var(--ink);
+    color: var(--wax);
   }
 
   &__sr {
@@ -129,7 +129,7 @@
     line-height: 1.4;
     letter-spacing: var(--ls-mono);
     text-transform: uppercase;
-    color: var(--wax);
+    color: var(--ink);
   }
 
   // "Zorunlu" / "İsteğe bağlı": text, not colour, tells required from optional

@@ -11,12 +11,6 @@ export default {
       'Dava ve danışmanlık dosyaları; mevzuat, süre ve yazılı kayıt esasıyla yürütülür. Her dosya kendi gerekçesiyle, kendi takvimiyle ve düzenli bir dosya diliyle ele alınır. Beş faaliyet alanında, bir ortaklık olarak çalışırız.',
     ctaPrimary: 'Randevu Talep Et',
     ctaSecondary: 'Çalışma Alanları',
-    kunye: [
-      { label: 'Tescilli unvan', value: '{legalName}' },
-      { label: 'Şehir', value: '{city}' },
-      { label: 'Telefon', value: '{phone}' },
-      { label: 'E-posta', value: '{email}' },
-    ],
   },
   about: {
     h2: 'Ortaklığın kuruluşu ve faaliyeti',

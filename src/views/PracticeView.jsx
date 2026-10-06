@@ -112,10 +112,10 @@ export default function PracticeView({ common, seo, detail, area, slug, prev, ne
           <div className="case-nav__grid">
             <IdxCard stacked className="case-nav__card" tab={<Tab offset={1}>{detail.prev}</Tab>}>
               <Link className="case-nav__link" href={practicePath(prev.id)} rel="prev">
-                <span className="case-nav__title">{prev.title}</span>
                 <span className="case-nav__glyph" aria-hidden="true">
                   &lt;
                 </span>
+                <span className="case-nav__title">{prev.title}</span>
               </Link>
             </IdxCard>
             <IdxCard stacked className="case-nav__card case-nav__card--next" tab={<Tab offset={2}>{detail.next}</Tab>}>

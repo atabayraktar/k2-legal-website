@@ -16,6 +16,8 @@ function PartnerCard({ p, i, total, t, common }) {
   const unvan = [p.academicTitle, p.professionalTitle].filter(Boolean).join(' ');
 
   const rows = [
+    { k: L.baro, v: renderPending(p.baro) },
+    { k: L.baroSicil, v: renderPending(p.baroSicil) },
     { k: L.startYear, v: renderPending(p.startYear) },
     { k: L.university, v: renderPending(p.university) },
   ];

@@ -35,23 +35,28 @@
     gap: var(--sp-48);
     min-width: 0;
 
+    @include up(tab-mini) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--sp-48);
+    }
+
     @include up(tab-max) {
-      grid-column: 1 / span 5;
+      grid-column: 1 / -1;
       grid-row: 2;
       align-self: start;
+      column-gap: var(--grid-gap);
     }
   }
 
   &__block {
     display: grid;
     gap: var(--sp-16);
+    align-content: start;
     max-width: 52ch;
   }
 
   &__h3 {
     margin: 0;
-    padding-top: var(--sp-12);
-    border-top: 1px solid var(--rule);
     font-family: var(--font-display);
     font-weight: 700;
     font-size: clamp(22px, 2vw, 28px);
@@ -71,38 +76,4 @@
     text-wrap: pretty;
   }
 
-  // bottom-right corner of the section, aligned with the end of the text column
-  &__kunye {
-    min-width: 0;
-
-    @include up(tab-max) {
-      grid-column: 7 / -1;
-      grid-row: 2;
-      align-self: end;
-    }
-  }
-}
-
-// the open registry card: paper on ink, full column width, generous padding
-.about-kunye {
-  &__in {
-    padding: var(--sp-24);
-
-    @include up(tab-mini) {
-      padding: var(--sp-32) var(--sp-48) var(--sp-32);
-    }
-  }
-
-  &__ledger .ledger__row {
-    grid-template-columns: minmax(0, 34%) minmax(0, 1fr);
-    padding-block: var(--sp-16);
-  }
-
-  &__ledger .ledger__k {
-    font-size: 13px;
-  }
-
-  &__ledger .ledger__v {
-    font-size: 17px;
-  }
 }

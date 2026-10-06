@@ -52,11 +52,18 @@
   }
 
   &__title {
-    @include display(clamp(32px, 3.7vw, 54px), 800, var(--ls-h2), 0.94);
+    // longest word (DANIŞMANLIK) must fit the card on one line: never break inside a word
+    @include display(clamp(28px, 8vw, 54px), 800, var(--ls-h2), 0.94);
     text-transform: uppercase;
-    hyphens: auto;
-    overflow-wrap: anywhere;
+    color: var(--wax);
+    hyphens: none;
+    overflow-wrap: normal;
+    word-break: keep-all;
     margin: 0;
+
+    @include up(tab-max) {
+      font-size: clamp(28px, 2.9vw, 44px);
+    }
   }
 
   &__summary {
@@ -180,6 +187,10 @@
     }
   }
 
+  &__card--next .tab {
+    margin-left: auto;
+  }
+
   &__link {
     display: flex;
     align-items: center;
@@ -202,7 +213,9 @@
 
   &__title {
     @include display(var(--t-h4), 700, var(--ls-h4), 1.1);
-    transition: transform var(--dur-fast) var(--ease);
+    transition:
+      transform var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease);
   }
 
   &__glyph {
@@ -215,7 +228,12 @@
 
   @media (hover: hover) {
     &__link:hover .case-nav__title {
+      color: var(--wax);
       transform: translateX(6px);
+    }
+
+    &__link[rel="prev"]:hover .case-nav__title {
+      transform: translateX(-6px);
     }
 
     &__link:hover .case-nav__glyph {

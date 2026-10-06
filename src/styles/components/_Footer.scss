@@ -11,28 +11,6 @@
 
   &__top {
     row-gap: var(--sp-48);
-
-    // two link columns side by side on wider phones and tablets
-    @media (max-width: 1023.98px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  &__col {
-    @media (max-width: 1023.98px) {
-      grid-column: auto;
-    }
-  }
-
-  // Sayfalar sits left, Yasal right (mobile and tablet: both fit side by side)
-  &__col--legal {
-    @media (max-width: 1023.98px) {
-      text-align: right;
-
-      .footer__list {
-        justify-items: end;
-      }
-    }
   }
 
   &__brand {
@@ -67,16 +45,21 @@
     }
   }
 
-  &__col--nav {
+  &__side {
+    display: grid;
+    gap: var(--sp-48);
+    align-content: start;
+
     @include up(tab-max) {
-      grid-column: 8 / span 2;
+      grid-column: 8 / span 5;
     }
   }
 
-  &__col--legal {
-    @include up(tab-max) {
-      grid-column: 10 / span 3;
-    }
+  &__cols {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    justify-content: start;
+    column-gap: var(--sp-64);
   }
 
   // docket label over each link column: a typed heading with a hairline under it
@@ -143,15 +126,13 @@
   // typewritten note under one hairline, with registration crosses at both ends
   &__bottom {
     position: relative;
-    display: grid;
-    gap: var(--sp-16);
-    margin-top: var(--sp-64);
-    padding-top: var(--sp-24);
+    width: 88%;
+    margin: var(--sp-64) auto 0;
+    padding-top: var(--sp-12);
     border-top: 1px solid var(--line-dk);
+    text-align: center;
 
     @include up(tab-max) {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      column-gap: var(--grid-gap);
       margin-top: var(--sp-96);
     }
 
@@ -176,7 +157,7 @@
   }
 
   &__disclaimer {
-    max-width: 80ch;
+    max-width: 56ch;
     margin: 0;
     font-family: var(--font-mono);
     font-weight: 400;
@@ -192,9 +173,5 @@
     font-size: 13px;
     line-height: 1.65;
     color: var(--ash);
-
-    @include up(tab-max) {
-      text-align: right;
-    }
   }
 }

@@ -15,35 +15,6 @@
     align-items: start;
   }
 
-  &__head {
-    display: grid;
-    gap: var(--sp-24);
-    align-content: start;
-
-    @include up(tab-max) {
-      grid-column: 1 / -1;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 30ch);
-      column-gap: var(--sp-48);
-      align-items: end;
-
-    }
-  }
-
-  // sub-block heading (h2 for semantics, reads as a sub-head of Hakkimizda)
-  &__title {
-    margin: 0;
-    font-size: clamp(28px, 3vw, 44px);
-    line-height: 1;
-  }
-
-  &__intro {
-    max-width: 30ch;
-    margin: 0;
-    font-size: var(--t-body);
-    line-height: 1.65;
-    color: var(--fg-2);
-  }
-
   &__cards {
     min-width: 0;
 

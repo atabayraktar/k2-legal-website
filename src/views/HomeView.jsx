@@ -7,7 +7,6 @@ import Process from '../components/Process';
 import TeamCards from '../components/TeamCards';
 import Faq from '../components/Faq';
 import ContactSection from '../components/ContactSection';
-import Reveal from '../components/Reveal';
 import { site } from '../content/site.js';
 import { orgSchema, websiteSchema, faqSchema, graph } from '../lib/schema.js';
 
@@ -26,13 +25,9 @@ export default function HomeView({ common, seo, page, faq, areas, team, contact 
         <div id="ekibimiz" className="ekibimiz" role="group" aria-labelledby="ekibimiz-title">
           <div className="container">
             <div className="grid ekibimiz__grid">
-              <div className="ekibimiz__head">
-                <h2 id="ekibimiz-title" className="ekibimiz__title">
-                  <Reveal as="span" variant="line">
-                    {page.team.h2}
-                  </Reveal>
-                </h2>
-              </div>
+              <h2 id="ekibimiz-title" className="visually-hidden">
+                {page.team.h2}
+              </h2>
               <div className="ekibimiz__cards">
                 <TeamCards partners={site.partners} t={team} common={common} variant="home" headingId="ekibimiz-title" />
               </div>

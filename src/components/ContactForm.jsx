@@ -7,7 +7,7 @@ import { pagePath } from '../lib/routes-util.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const EMPTY = { name: '', email: '', phone: '', subject: '', message: '', consent: false, _gotcha: '' };
-const REQUIRED = { name: true, email: true, message: true };
+const REQUIRED = { name: true, message: true };
 const ORDER = ['name', 'email', 'message', 'consent'];
 
 function validate(v) {
