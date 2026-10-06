@@ -17,7 +17,7 @@ export default {
     // Generic, fact-safe text. Specifics (year, names, place) are TODO(client) in site.js (foundedYear, founding.note).
     foundingTitle: 'Nasıl kuruldu',
     founding: [
-      'Karaman Berat Avukatlık Ortaklığı, avukatların ortak bir çatı altında çalışmak üzere bir araya gelmesiyle kurulmuş, baroya kayıtlı bir avukatlık ortaklığıdır.',
+      'Karaman & Berat Avukatlık Ortaklığı, avukatların ortak bir çatı altında çalışmak üzere bir araya gelmesiyle kurulmuş, baroya kayıtlı bir avukatlık ortaklığıdır.',
       'Ortaklar, dava ve danışmanlık işlerini ortak bir dosya düzeni içinde yürütmek amacıyla birlikte çalışır.',
     ],
     foundedSentence: 'Ortaklık {foundedYear} yılında kurulmuştur.',

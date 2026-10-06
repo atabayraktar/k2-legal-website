@@ -2,36 +2,36 @@
 // Standalone pages: home, 8 practice areas (seo.areas.<id>), 3 legal pages, 404.
 export default {
   home: {
-    title: 'Karaman Berat Avukatlık Ortaklığı',
+    title: 'Karaman & Berat Avukatlık Ortaklığı',
     raw: true,
     description:
-      'Karaman Berat Avukatlık Ortaklığı, dava ve danışmanlık faaliyeti yürüten tescilli bir avukatlık ortaklığıdır. Bilgilendirme amaçlı internet sitesi.',
+      'Karaman & Berat Avukatlık Ortaklığı, dava ve danışmanlık faaliyeti yürüten tescilli bir avukatlık ortaklığıdır. Bilgilendirme amaçlı internet sitesi.',
   },
   areas: {
     enforcement: {
       title: 'İcra ve İflas Hukuku',
       description:
-        'Karaman Berat Avukatlık Ortaklığı’nın icra ve iflas hukuku alanındaki faaliyetleri: takip, itiraz, haciz ve iflas süreçleri, konu başlıkları.',
+        'Karaman & Berat Avukatlık Ortaklığı’nın icra ve iflas hukuku alanındaki faaliyetleri: takip, itiraz, haciz ve iflas süreçleri, konu başlıkları.',
     },
     maritime: {
       title: 'Deniz Hukuku',
       description:
-        'Karaman Berat Avukatlık Ortaklığı’nın deniz hukuku alanındaki faaliyetleri: deniz ticareti, gemi alacakları, taşıma, deniz sigortası, konu başlıkları.',
+        'Karaman & Berat Avukatlık Ortaklığı’nın deniz hukuku alanındaki faaliyetleri: deniz ticareti, gemi alacakları, taşıma, deniz sigortası, konu başlıkları.',
     },
     criminal: {
       title: 'Ceza Hukuku',
       description:
-        'Karaman Berat Avukatlık Ortaklığı’nın ceza hukuku alanındaki faaliyetleri: soruşturma ve kovuşturma süreçlerine ilişkin konu başlıkları ve süreç.',
+        'Karaman & Berat Avukatlık Ortaklığı’nın ceza hukuku alanındaki faaliyetleri: soruşturma ve kovuşturma süreçlerine ilişkin konu başlıkları ve süreç.',
     },
     commercial: {
       title: 'Ticaret Hukuku',
       description:
-        'Karaman Berat Avukatlık Ortaklığı’nın ticaret hukuku alanındaki faaliyetleri: ticari sözleşmeler, ticari alacaklar, kıymetli evrak, konu başlıkları.',
+        'Karaman & Berat Avukatlık Ortaklığı’nın ticaret hukuku alanındaki faaliyetleri: ticari sözleşmeler, ticari alacaklar, kıymetli evrak, konu başlıkları.',
     },
     corporate: {
       title: 'Şirketler Hukuku ve Danışmanlık',
       description:
-        'Karaman Berat Avukatlık Ortaklığı’nın şirketler hukuku ve danışmanlık alanındaki faaliyetleri: şirket kuruluşu, ortaklık ilişkileri, konu başlıkları.',
+        'Karaman & Berat Avukatlık Ortaklığı’nın şirketler hukuku ve danışmanlık alanındaki faaliyetleri: şirket kuruluşu, ortaklık ilişkileri, konu başlıkları.',
     },
   },
   privacy: {

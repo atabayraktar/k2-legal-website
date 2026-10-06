@@ -37,7 +37,7 @@ const RULES = [
   { re: /size yardımcı/iu, why: 'solicitation CTA' },
   { re: /hukuk bürosu/iu, why: 'wrong unvan ("Hukuk Bürosu")' },
   { re: /Danışmanlık A\.?Ş/iu, why: 'wrong unvan suffix' },
-  { re: /Avukatlık Ortaklığı\s*&|&\s*Karaman|Karaman\s*&/iu, why: '"&" next to unvan' },
+  { re: /Avukatlık Ortaklığı\s*&/iu, why: '"&" after the unvan' }, // "Karaman & Berat" is the owner's chosen name (2026-10-07)
   { re: /K2 Legal/u, why: '"K2 Legal" must not appear in copy' },
   // round 2: case-taking / assurance / self-praise patterns
   { re: /temsil (sağlan|yürütül|edilir)|vekilliğini kapsar|vekilliği(?![p{L}])/iu, why: 'case-taking wording (representation offered)' },

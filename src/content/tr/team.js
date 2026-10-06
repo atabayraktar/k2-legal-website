@@ -13,5 +13,5 @@ export default {
     sicilLine: 'Baro sicil {baroSicil}',
     photoAlt: '',
   },
-  factsTemplate: '{name}, {startYear} yılından beri avukatlık mesleğini sürdürmektedir; {university} mezunudur.',
+  factsTemplate: '{name}, {university} mezunudur.',
 };

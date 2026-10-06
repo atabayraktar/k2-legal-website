@@ -24,6 +24,17 @@ function text(str, weight, size, x, y, tracking = 0) {
   return { d, width: cx - x - tracking * size };
 }
 
+// "KARAMAN & BERAT" as three outlined runs laid out exactly like one tracked line; the ampersand takes the accent colour.
+function nameLine(x, y, fg, accent) {
+  const S = 23, TR = 0.2;
+  const a = text('KARAMAN ', 600, S, x, y, TR);
+  const ax = x + a.width + TR * S;
+  const amp = text('&', 600, S, ax, y, TR);
+  const bx = ax + amp.width + TR * S;
+  const b = text(' BERAT', 600, S, bx, y, TR);
+  return `<path fill="${fg}" d="${a.d}"/><path fill="${accent}" d="${amp.d}"/><path fill="${fg}" d="${b.d}"/>`;
+}
+
 // K: stem + detached blade ("<"), a hard 4u slit between them. 100u tall.
 const K_STEM = 'M0 0H23.5V100H0Z';
 const K_BLADE = 'M55.9 0H88.2L47 47L91.2 100H55.9L27.5 63.9V36.1Z';
@@ -43,8 +54,11 @@ function mark({ k = INK, two: c2 = k, solid = false }) {
 }
 const MARK_W = TWO.x1; // 126
 
-const svg = (w, h, body, title) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="${title}"><title>${title}</title>${body}</svg>\n`;
+const xml = (t) => t.replace(/&/g, '&amp;'); // "Karaman & Berat" must be escaped inside XML attributes/text
+const svg = (w, h, body, title0) => {
+  const title = xml(title0);
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="${title}"><title>${title}</title>${body}</svg>\n`;
+};
 
 const themes = {
   dark: { fg: INK, muted: 'rgba(11,11,12,.62)', accent: WAX, bg: PAPER },   // on light surfaces
@@ -53,30 +67,29 @@ const themes = {
 
 const out = {};
 for (const [name, t] of Object.entries(themes)) {
-  const T = 'Karaman Berat Avukatlık Ortaklığı';
+  const T = 'Karaman & Berat Avukatlık Ortaklığı';
   // 1 mark
-  out[`k2-mark-${name}`] = svg(MARK_W, 100, mark({ k: t.fg }), 'Karaman Berat Avukatlık Ortaklığı');
+  out[`k2-mark-${name}`] = svg(MARK_W, 100, mark({ k: t.fg }), 'Karaman & Berat Avukatlık Ortaklığı');
   // 2 mark, accent 2
-  out[`k2-mark-accent-${name}`] = svg(MARK_W, 100, mark({ k: t.fg, two: t.accent }), 'Karaman Berat Avukatlık Ortaklığı');
+  out[`k2-mark-accent-${name}`] = svg(MARK_W, 100, mark({ k: t.fg, two: t.accent }), 'Karaman & Berat Avukatlık Ortaklığı');
   // 3 seal: square block, K knocked out, ² knocked out
   {
     const S = 120, kh = 70, s = kh / 100;
     const kx = 15, ky = S - 15 - kh;
     const inner = `<g transform="translate(${kx} ${ky}) scale(${s})" fill="${t.bg}"><path d="${K_STEM}"/><path d="${K_BLADE}"/></g>
 <path fill="none" stroke="${t.bg}" stroke-width="6" stroke-miterlimit="4" transform="translate(${S - 15 - 19} 15)" d="${two(0, 19, 26, 6)}"/>`;
-    out[`k2-seal-${name}`] = svg(S, S, `<rect width="${S}" height="${S}" fill="${t.fg}"/>${inner}`, 'Karaman Berat Avukatlık Ortaklığı');
+    out[`k2-seal-${name}`] = svg(S, S, `<rect width="${S}" height="${S}" fill="${t.fg}"/>${inner}`, 'Karaman & Berat Avukatlık Ortaklığı');
   }
   // 4 horizontal lockup
   {
-    const l1 = text('KARAMAN BERAT', 600, 23, 0, 0, 0.2);
+    const l1 = text('KARAMAN & BERAT', 600, 23, 0, 0, 0.2);
     const l2 = text('AVUKATLIK ORTAKLIĞI', 500, 13.2, 0, 0, 0.34);
     const tx = MARK_W + 34, w = tx + Math.max(l1.width, l2.width);
     const y1 = 47, y2 = 72;
-    const p1 = text('KARAMAN BERAT', 600, 23, tx, y1, 0.2).d;
     const p2 = text('AVUKATLIK ORTAKLIĞI', 500, 13.2, tx, y2, 0.34).d;
     const body = mark({ k: t.fg, two: t.accent }) +
       `<path d="M${MARK_W + 17} 6V94" stroke="${t.muted}" stroke-width="1.2" fill="none"/>` +
-      `<path fill="${t.fg}" d="${p1}"/><path fill="${t.muted}" d="${p2}"/>`;
+      nameLine(tx, y1, t.fg, t.accent) + `<path fill="${t.muted}" d="${p2}"/>`;
     out[`k2-horizontal-${name}`] = svg(Math.ceil(w), 100, body, T);
     // same lockup without the superscript 2: the site overlays an inline 2 so it can animate on hover (components/Logo.jsx)
     const rest = body.slice(mark({ k: t.fg, two: t.accent }).length);
@@ -85,13 +98,12 @@ for (const [name, t] of Object.entries(themes)) {
   }
   // 5 stacked lockup
   {
-    const l1 = text('KARAMAN BERAT', 600, 23, 0, 0, 0.2);
+    const l1 = text('KARAMAN & BERAT', 600, 23, 0, 0, 0.2);
     const l2 = text('AVUKATLIK ORTAKLIĞI', 500, 13.2, 0, 0, 0.34);
     const W = Math.max(l1.width, l2.width) + 40;
     const mx = (W - MARK_W) / 2;
-    const p1 = text('KARAMAN BERAT', 600, 23, (W - l1.width) / 2, 152, 0.2).d;
     const p2 = text('AVUKATLIK ORTAKLIĞI', 500, 13.2, (W - l2.width) / 2, 178, 0.34).d;
-    const body = `<g transform="translate(${mx} 0)">${mark({ k: t.fg, two: t.accent })}</g><path fill="${t.fg}" d="${p1}"/><path fill="${t.muted}" d="${p2}"/>`;
+    const body = `<g transform="translate(${mx} 0)">${mark({ k: t.fg, two: t.accent })}</g>${nameLine((W - l1.width) / 2, 152, t.fg, t.accent)}<path fill="${t.muted}" d="${p2}"/>`;
     out[`k2-stacked-${name}`] = svg(Math.ceil(W), 190, body, T);
   }
 }

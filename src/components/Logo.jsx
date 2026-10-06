@@ -3,8 +3,8 @@
 export default function Logo({ tone = 'light', className = '', ...rest }) {
   return (
     <span className={`logo logo--${tone}${className ? ` ${className}` : ''}`} {...rest}>
-      <img className="logo__img" src={`/logos/k2-horizontal-${tone}-no2.svg`} width="414" height="100" alt="" />
-      <svg className="logo__two" viewBox="0 0 414 100" aria-hidden="true" focusable="false">
+      <img className="logo__img" src={`/logos/k2-horizontal-${tone}-no2.svg`} width="446" height="100" alt="" />
+      <svg className="logo__two" viewBox="0 0 446 100" aria-hidden="true" focusable="false">
         <path d="M97 4H120V19H101V34H124" pathLength="100" />
       </svg>
     </span>

@@ -8,7 +8,7 @@
 export const FEATURES = { publications: false, practiceConfirmed: true };
 
 export const site = {
-  legalName: 'Karaman Berat Avukatlık Ortaklığı', // TODO(client) confirm exact spelling against the baro record
+  legalName: 'Karaman & Berat Avukatlık Ortaklığı', // TODO(client) confirm exact spelling against the baro record
   domain: 'https://alan-adi.example', // TODO(client) final production origin, no trailing slash
   foundedYear: null, // TODO(client) only if verified; UI hides the row when null
   // TODO(client) how the partnership was founded (year, who came together, when the baro registered it). The Hakkımızda
@@ -23,7 +23,6 @@ export const site = {
       name: 'Enes Talha Karaman',
       academicTitle: null,
       professionalTitle: 'Avukat',
-      startYear: '2023',
       university: 'İstanbul Bilgi Üniversitesi Hukuk Fakültesi; International University of Sarajevo (2015, İngilizce eğitim)',
       photo: { src: '/images/partner-enes-720.webp', width: 720, height: 960 },
     },
@@ -32,7 +31,6 @@ export const site = {
       name: 'Berat Kama',
       academicTitle: null,
       professionalTitle: 'Avukat',
-      startYear: '2008',
       university: 'Marmara Üniversitesi Hukuk Fakültesi (2005)',
       photo: { src: '/images/partner-berat-720.webp', width: 720, height: 960 },
     },
