@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { setLenis, scrollTop } from '../lib/scroll.js';
+import { setLenis, scrollTop, scrollToSection } from '../lib/scroll.js';
 
 // Called once in _app. Lenis stays out of hydration and the first-paint window entirely: it is imported and started on the
 // first real user input (wheel / touch / key / pointer) or, failing that, after a long idle. Skipped under reduced motion.
@@ -48,7 +48,15 @@ export function useLenis() {
   }, []);
 
   useEffect(() => {
-    const done = () => scrollTop(true);
+    // New page: back to the top (stops any running scroll tween and re-syncs Lenis with the new page height). A URL
+    // with a #hash (e.g. /#iletisim pushed without the nav handler) then scrolls down to that section from the top.
+    const done = (url = '') => {
+      scrollTop(true);
+      const hash = String(url).split('#')[1];
+      if (!hash) return;
+      const id = decodeURIComponent(hash);
+      requestAnimationFrame(() => requestAnimationFrame(() => scrollToSection(id)));
+    };
     router.events.on('routeChangeComplete', done);
     return () => router.events.off('routeChangeComplete', done);
   }, [router.events]);

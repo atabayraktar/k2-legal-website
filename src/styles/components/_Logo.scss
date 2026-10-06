@@ -53,7 +53,8 @@
 }
 
 @include reduced-motion {
-  .logo__two path {
-    animation: none !important;
+  // html prefix: ties the hover rule's specificity and comes later, so no !important is needed
+  html .logo .logo__two path {
+    animation: none;
   }
 }

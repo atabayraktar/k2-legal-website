@@ -19,7 +19,16 @@ export default function ContactSection({ t, common, site, headingId = 'iletisim-
     c.map?.href ?? (realAddress ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : null);
 
   const rows = [
-    { k: L.address, v: renderPending(address) },
+    {
+      k: L.address,
+      v: mapHref ? (
+        <a className="contact__a" href={mapHref} target="_blank" rel="noopener noreferrer">
+          {renderPending(address)}
+        </a>
+      ) : (
+        renderPending(address)
+      ),
+    },
     { k: L.phone, v: <a className="contact__a" href={`tel:${c.phone.tel}`}>{c.phone.display}</a> },
     {
       k: L.mobileWhatsapp,

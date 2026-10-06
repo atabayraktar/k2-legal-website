@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Docket from './Docket';
 import Logo from './Logo';
+import { useSectionNav } from '../hooks/useSectionNav';
 import { useLogoHome } from '../hooks/useLogoHome';
 import Ledger from './Ledger';
 import { site } from '../content/site.js';
@@ -18,6 +19,7 @@ export default function Footer() {
   const f = t.footer;
   const c = site.contact;
   const onLogo = useLogoHome();
+  const { go } = useSectionNav();
   const year = new Date().getFullYear();
 
   const rows = [
@@ -58,7 +60,7 @@ export default function Footer() {
                 <ul className="footer__list">
                   {anchorNav.map((item) => (
                     <li key={item.id}>
-                      <Link className="footer__link" href={anchorHref(item.id)}>
+                      <Link className="footer__link" href={anchorHref(item.id)} onClick={go(item.id)}>
                         {item.label}
                       </Link>
                     </li>
