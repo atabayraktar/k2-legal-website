@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Logo from './Logo';
+import { useLogoHome } from '../hooks/useLogoHome';
 import Button from './Button';
 import Monogram from './Monogram';
 import { site } from '../content/site.js';
@@ -17,6 +19,7 @@ export default function Header({ theme: initialTheme = 'light', menuOpen, onMenu
   const t = useT();
   const theme = useHeaderTheme(initialTheme);
   const dark = theme === 'dark';
+  const onLogo = useLogoHome();
   const { onHome, go } = useSectionNav();
   const active = useActiveSection(IDS, onHome);
 
@@ -24,23 +27,9 @@ export default function Header({ theme: initialTheme = 'light', menuOpen, onMenu
     <header className="header" data-header-theme={theme}>
       <div className="header__bg" aria-hidden="true" />
       <div className="header__bar container">
-        <Link className="header__brand" href={pagePath('home')} aria-label={site.legalName}>
-          <img
-            className="header__logo header__logo--dark"
-            src="/logos/k2-horizontal-dark.svg"
-            width="414"
-            height="100"
-            alt=""
-            fetchPriority={initialTheme === 'dark' ? 'low' : 'high'}
-          />
-          <img
-            className="header__logo header__logo--light"
-            src="/logos/k2-horizontal-light.svg"
-            width="414"
-            height="100"
-            alt=""
-            fetchPriority={initialTheme === 'dark' ? 'high' : 'low'}
-          />
+        <Link className="header__brand" href={pagePath('home')} aria-label={site.legalName} onClick={onLogo}>
+          <Logo tone="dark" className="header__logo header__logo--dark" />
+          <Logo tone="light" className="header__logo header__logo--light" />
           <Monogram accent className="header__mark" />
         </Link>
 

@@ -182,6 +182,11 @@
       min-height: 0;
     }
 
+    // less air under DANIŞMANLIK (room for the Ş cedilla stays): the word and the copy above it sit lower
+    &__row--2 {
+      padding-bottom: var(--sp-16);
+    }
+
     &__photo {
       min-height: 0;
 

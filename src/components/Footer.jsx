@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import Docket from './Docket';
+import Logo from './Logo';
+import { useLogoHome } from '../hooks/useLogoHome';
 import Ledger from './Ledger';
 import { site } from '../content/site.js';
 import { anchorNav, anchorHref } from '../content/nav.js';
@@ -15,6 +17,7 @@ export default function Footer() {
   const t = useT();
   const f = t.footer;
   const c = site.contact;
+  const onLogo = useLogoHome();
   const year = new Date().getFullYear();
 
   const rows = [
@@ -42,7 +45,9 @@ export default function Footer() {
       <div className="container">
         <div className="grid footer__top">
           <div className="footer__brand">
-            <img className="footer__logo" src="/logos/k2-horizontal-light.svg" width="414" height="100" alt="" />
+            <Link className="footer__home" href={pagePath('home')} aria-label={site.legalName} onClick={onLogo}>
+              <Logo tone="light" className="footer__logo" />
+            </Link>
             <Ledger items={rows} className="footer__ledger" />
           </div>
 

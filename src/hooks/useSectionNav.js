@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { replaceHash, scrollToId } from '../lib/scroll.js';
+import { replaceHash, scrollToSection } from '../lib/scroll.js';
 
 // Anchor navigation for the home page. On "/" a click scrolls (Lenis or native) under the fixed header and updates the hash;
 // on any other page the link navigates normally to /#id. Returns a click handler factory.
@@ -19,7 +19,7 @@ export function useSectionNav(after) {
       // let a closing overlay unlock scrolling first
       requestAnimationFrame(() =>
         requestAnimationFrame(() => {
-          if (scrollToId(id, { gap: 0 })) replaceHash(id);
+          if (scrollToSection(id)) replaceHash(id);
         }),
       );
     },

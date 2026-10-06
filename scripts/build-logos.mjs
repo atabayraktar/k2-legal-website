@@ -78,6 +78,10 @@ for (const [name, t] of Object.entries(themes)) {
       `<path d="M${MARK_W + 17} 6V94" stroke="${t.muted}" stroke-width="1.2" fill="none"/>` +
       `<path fill="${t.fg}" d="${p1}"/><path fill="${t.muted}" d="${p2}"/>`;
     out[`k2-horizontal-${name}`] = svg(Math.ceil(w), 100, body, T);
+    // same lockup without the superscript 2: the site overlays an inline 2 so it can animate on hover (components/Logo.jsx)
+    const rest = body.slice(mark({ k: t.fg, two: t.accent }).length);
+    const kOnly = mark({ k: t.fg, two: t.accent }).replace(/<path fill="none"[^>]*>$/, "");
+    out[`k2-horizontal-${name}-no2`] = svg(Math.ceil(w), 100, kOnly + rest, T);
   }
   // 5 stacked lockup
   {

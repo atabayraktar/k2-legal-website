@@ -72,7 +72,8 @@
       height: 42px;
     }
 
-    &--light {
+    // doubled class: must beat .logo { position: relative } from Logo.scss
+    &.header__logo--light {
       position: absolute;
       left: 0;
       top: 50%;

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Logo from './Logo';
 import Monogram from './Monogram';
 import { site } from '../content/site.js';
 import { addressLine } from '../lib/format.js';
@@ -77,7 +78,7 @@ export default function MenuOverlay({ open, onClose, returnFocusRef }) {
       <div className="menu__inner" data-lenis-prevent>
         <div className="menu__top container">
           <Link className="menu__brand" href={pagePath('home')} aria-label={site.legalName} onClick={onClose}>
-            <img className="menu__logo" src="/logos/k2-horizontal-light.svg" width="414" height="100" alt="" />
+            <Logo tone="light" className="menu__logo" />
             <Monogram className="menu__mark" />
           </Link>
           <button ref={closeRef} type="button" className="menu__close" onClick={onClose}>

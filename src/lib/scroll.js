@@ -54,3 +54,28 @@ export function replaceHash(id) {
 
 // Animated height changes alter the page length: tell Lenis to re-measure.
 export const lenisResize = () => lenis?.resize();
+
+// Smooth scroll to the very top (logo click on the home page). Instant under reduced motion.
+export function scrollToTopSmooth() {
+  if (lenis) {
+    lenis.scrollTo(0, { immediate: reducedMotion() });
+    return;
+  }
+  window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
+}
+
+// Header nav target: scrolls so the section's heading sits just under the fixed header, skipping the section's own top
+// padding (up to ~144px of empty space) instead of landing on its edge.
+export function scrollToSection(id, { gap = 32 } = {}) {
+  const el = document.getElementById(id);
+  if (!el) return false;
+  const pad = parseFloat(getComputedStyle(el).paddingTop) || 0;
+  const offset = pad - (headerHeight() + gap);
+  if (lenis) {
+    lenis.scrollTo(el, { offset, immediate: reducedMotion() });
+  } else {
+    const top = el.getBoundingClientRect().top + window.scrollY + offset;
+    window.scrollTo({ top, behavior: reducedMotion() ? 'auto' : 'smooth' });
+  }
+  return true;
+}

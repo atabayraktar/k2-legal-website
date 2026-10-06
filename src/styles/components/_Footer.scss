@@ -19,6 +19,17 @@
     }
   }
 
+  &__home {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+
+    &:focus-visible {
+      outline: 2px solid var(--wax-lit);
+      outline-offset: 6px;
+    }
+  }
+
   &__logo {
     display: block;
     width: clamp(220px, 26vw, 340px);
@@ -58,8 +69,8 @@
   &__cols {
     display: grid;
     grid-template-columns: repeat(2, max-content);
-    justify-content: start;
-    column-gap: var(--sp-64);
+    justify-content: space-between;
+    column-gap: var(--sp-32);
   }
 
   // docket label over each link column: a typed heading with a hairline under it
@@ -157,7 +168,6 @@
   }
 
   &__disclaimer {
-    max-width: 56ch;
     margin: 0;
     font-family: var(--font-mono);
     font-weight: 400;

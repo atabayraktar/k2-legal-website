@@ -59,7 +59,7 @@ export default {
       { key: 'disclaimer', label: 'Yasal Uyarı' },
     ],
     disclaimer:
-      'Bu internet sitesi 1136 sayılı Avukatlık Kanunu ve Türkiye Barolar Birliği Reklam Yasağı Yönetmeliği kapsamında yalnızca bilgilendirme amacıyla hazırlanmıştır; reklam ve tanıtım niteliği taşımaz.',
+      '* Bu internet sitesi 1136 sayılı Avukatlık Kanunu ve Türkiye Barolar Birliği Reklam Yasağı Yönetmeliği kapsamında yalnızca bilgilendirme amacıyla hazırlanmıştır; reklam ve tanıtım niteliği taşımaz.',
     rights: '© {year} {legalName}',
   },
   notFound,
