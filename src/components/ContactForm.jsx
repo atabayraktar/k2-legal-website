@@ -1,7 +1,6 @@
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import Button from './Button';
-import Redact from './Redact';
 import { fmt } from '../lib/format.js';
 import { pagePath } from '../lib/routes-util.js';
 
@@ -92,7 +91,7 @@ export default function ContactForm({ t, site, headingId }) {
     ) : (
       <>
         {c.label.slice(0, at)}
-        <Link className="cf__link" href={pagePath('privacy')}>
+        <Link className="cf__link" href={pagePath('privacy')} target="_blank" rel="noopener noreferrer">
           {c.linkText}
         </Link>
         {c.label.slice(at + c.linkText.length)}
@@ -214,7 +213,6 @@ export default function ContactForm({ t, site, headingId }) {
           <div className="cf__notice-top">
             <span className="cf__notice-mark" aria-hidden="true" />
             <p className="cf__notice-title">{t.warning.title}</p>
-            <Redact w={10} className="cf__redact" />
           </div>
           <p className="cf__notice-text">{t.warning.text}</p>
         </div>

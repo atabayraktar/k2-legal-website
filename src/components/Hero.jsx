@@ -5,12 +5,14 @@ import Reveal from './Reveal';
 import ImageFrame from './ImageFrame';
 import images, { ROLE } from '../content/images.js';
 import { pagePath } from '../lib/routes-util.js';
+import { useAppointment, appointmentClick } from '../hooks/useAppointment';
 
 const PHOTO_SIZES = '(min-width: 900px) 40vw, calc(100vw - 40px)';
 
 // "Dosya Kapagi": the cover of a case file. A two-row headline that runs beside the photograph (scales of justice, B&W),
 // and one general-information line in the gap.
 export default function Hero({ t }) {
+  const { openAppointment } = useAppointment();
   const photo = images[ROLE.hero];
   return (
     <section id="hero" className="hero" data-theme="light" aria-labelledby="hero-title">
@@ -57,7 +59,7 @@ export default function Hero({ t }) {
               {t.entity}
             </Reveal>
             <Reveal now delay={3} className="hero__actions">
-              <Button variant="primary" href={pagePath('contact')}>
+              <Button variant="primary" href={pagePath('contact')} onClick={appointmentClick(openAppointment)}>
                 {t.ctaPrimary}
               </Button>
               <TextLink href={pagePath('practice')}>{t.ctaSecondary}</TextLink>

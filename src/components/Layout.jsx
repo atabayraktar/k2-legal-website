@@ -5,22 +5,38 @@ import Header from './Header';
 import MenuOverlay from './MenuOverlay';
 import Footer from './Footer';
 import FloatingActions from './FloatingActions';
+import AppointmentModal from './AppointmentModal';
 import { CommonContext } from '../hooks/useCommon';
+import { AppointmentContext } from '../hooks/useAppointment';
 
 export default function Layout({ routeKey, params, common, seo, headerTheme = 'light', jsonLd = [], children }) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuBtnRef = useRef(null);
   const ctx = useMemo(() => ({ common }), [common]);
+  const [apptOpen, setApptOpen] = useState(false);
+  const apptTriggerRef = useRef(null);
+  const apptCtx = useMemo(
+    () => ({
+      openAppointment: (el) => {
+        apptTriggerRef.current = el ?? null;
+        setApptOpen(true);
+      },
+    }),
+    [],
+  );
+  const closeAppt = useCallback(() => setApptOpen(false), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((v) => !v), []);
 
   useEffect(() => {
     setMenuOpen(false);
+    setApptOpen(false);
   }, [router.asPath]);
 
   return (
     <CommonContext.Provider value={ctx}>
+      <AppointmentContext.Provider value={apptCtx}>
       <Seo
         routeKey={routeKey}
         params={params}
@@ -34,7 +50,7 @@ export default function Layout({ routeKey, params, common, seo, headerTheme = 'l
         <a className="skip" href="#main">
           {common.skip}
         </a>
-        <div className="layout__page" inert={menuOpen}>
+        <div className="layout__page" inert={menuOpen || apptOpen}>
           <Header
             theme={headerTheme}
             menuOpen={menuOpen}
@@ -47,12 +63,14 @@ export default function Layout({ routeKey, params, common, seo, headerTheme = 'l
           <Footer />
           <FloatingActions />
         </div>
+        <AppointmentModal open={apptOpen} onClose={closeAppt} triggerRef={apptTriggerRef} closeLabel={common.menu?.close ?? 'Kapat'} />
         <MenuOverlay
           open={menuOpen}
           onClose={closeMenu}
           returnFocusRef={menuBtnRef}
         />
       </div>
+      </AppointmentContext.Provider>
     </CommonContext.Provider>
   );
 }

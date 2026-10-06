@@ -13,7 +13,7 @@ export default {
     next: 'Sonraki alan',
     navLabel: 'Çalışma alanları arasında gezinme',
     backHome: 'Ana sayfaya dön',
-    allAreas: 'Tüm faaliyet alanları',
+    allAreas: 'Tüm çalışma alanları',
   },
   areas: [
     {

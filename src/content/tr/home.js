@@ -13,7 +13,7 @@ export default {
     ctaSecondary: 'Çalışma Alanları',
   },
   about: {
-    h2: 'Ortaklığın kuruluşu ve faaliyeti',
+    h2: 'Hakkımızda',
     // Generic, fact-safe text. Specifics (year, names, place) are TODO(client) in site.js (foundedYear, founding.note).
     foundingTitle: 'Nasıl kuruldu',
     founding: [
@@ -75,7 +75,7 @@ export default {
     ],
   },
   practice: {
-    h2: 'Faaliyet alanları',
+    h2: 'Çalışma alanları',
     intro:
       'Ortaklık aşağıdaki alanlarda dava ve danışmanlık faaliyeti yürütür. Liste, bilgilendirme amaçlı bir dökümdür; ihtisas veya üstünlük beyanı içermez.',
     topicsLabel: 'Konu başlıkları',

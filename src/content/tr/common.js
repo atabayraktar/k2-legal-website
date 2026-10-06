@@ -24,7 +24,7 @@ export default {
     back: 'Geri',
     readSeparate: 'Detaylı bilgi için',
     backHome: 'Ana sayfaya dön',
-    allAreas: 'Tüm faaliyet alanları',
+    allAreas: 'Tüm çalışma alanları',
   },
   menu: { open: 'Menü', close: 'Kapat', label: 'Ana menü', linksLabel: 'Menü bağlantıları', contactTitle: 'İletişim' },
   labels: {

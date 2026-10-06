@@ -1,0 +1,121 @@
+@use 'tokens/mixins' as *;
+
+// "Randevu talep formu" dialog: ink scrim (no blur), paper panel, square X. The scrim scrolls when the form is taller than the screen.
+.appt {
+  @include light-vars;
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-menu) + 5);
+  display: grid;
+  place-items: start center;
+  padding: var(--sp-16);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: rgba(11, 11, 12, 0.72);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-menu) var(--ease),
+    visibility 0s linear var(--dur-menu);
+
+  @include up(tab-mini) {
+    padding: var(--sp-32) var(--sp-24);
+  }
+
+  &--open {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity var(--dur-menu) var(--ease),
+      visibility 0s;
+  }
+
+  &__panel {
+    position: relative;
+    width: min(100%, 760px);
+    margin-block: auto;
+    padding: var(--sp-48) var(--sp-24) var(--sp-32);
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    transform: translateY(16px);
+    transition: transform var(--dur-menu) var(--ease);
+
+    @include up(tab-mini) {
+      padding: var(--sp-48);
+    }
+
+    .appt--open & {
+      transform: translateY(0);
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: var(--sp-8);
+    right: var(--sp-8);
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+      background-color var(--dur-color) var(--ease),
+      color var(--dur-color) var(--ease),
+      border-color var(--dur-color) var(--ease);
+
+    @include hover {
+      background: var(--ink);
+      color: var(--bone);
+      border-color: var(--ink);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax);
+      outline-offset: 3px;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  // X drawn with two hairlines
+  &__x {
+    position: relative;
+    width: 18px;
+    height: 18px;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1.5px;
+      background: currentColor;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+@include reduced-motion {
+  .appt,
+  .appt__panel,
+  .appt__close {
+    transition: none;
+  }
+}

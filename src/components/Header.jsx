@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Logo from './Logo';
+import { useAppointment, appointmentClick } from '../hooks/useAppointment';
 import { useLogoHome } from '../hooks/useLogoHome';
 import Button from './Button';
 import Monogram from './Monogram';
@@ -20,6 +21,7 @@ export default function Header({ theme: initialTheme = 'light', menuOpen, onMenu
   const theme = useHeaderTheme(initialTheme);
   const dark = theme === 'dark';
   const onLogo = useLogoHome();
+  const { openAppointment } = useAppointment();
   const { onHome, go } = useSectionNav();
   const active = useActiveSection(IDS, onHome);
 
@@ -56,7 +58,7 @@ export default function Header({ theme: initialTheme = 'light', menuOpen, onMenu
             variant={dark ? 'ghost-dark' : 'ghost'}
             size="sm"
             href={anchorHref('iletisim')}
-            onClick={go('iletisim')}
+            onClick={appointmentClick(openAppointment)}
           >
             {t.cta.appointment}
           </Button>
