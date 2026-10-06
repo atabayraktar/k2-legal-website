@@ -103,7 +103,7 @@ export default function ContactForm({ t, site, headingId }) {
     const f = t.fields[k];
     const req = REQUIRED[k] === true;
     const err = errors[k];
-    const described = [f.hint ? id(`${k}-hint`) : null, err ? id(`${k}-err`) : null].filter(Boolean).join(' ');
+    const described = [err ? id(`${k}-err`) : null].filter(Boolean).join(' ');
     return (
       <div className={`cf__row${err ? ' has-error' : ''}`} key={k}>
         <div className="cf__label-line">
@@ -112,11 +112,6 @@ export default function ContactForm({ t, site, headingId }) {
           </label>
           <span className="cf__tag">{req ? t.required : t.optional}</span>
         </div>
-        {f.hint ? (
-          <p className="cf__hint" id={id(`${k}-hint`)}>
-            {f.hint}
-          </p>
-        ) : null}
         <Tag
           ref={refs[k]}
           id={id(k)}
