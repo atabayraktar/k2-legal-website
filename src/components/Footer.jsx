@@ -73,7 +73,7 @@ export default function Footer() {
                 <ul className="footer__list">
                   {f.legalLinks.map((l) => (
                     <li key={l.key}>
-                      <Link className="footer__link" href={pagePath(l.key)}>
+                      <Link className="footer__link" href={pagePath(l.key)} target="_blank" rel="noopener noreferrer">
                         {l.label}
                       </Link>
                     </li>
