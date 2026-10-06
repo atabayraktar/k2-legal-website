@@ -95,7 +95,6 @@ export function personSchema(p) {
     honorificPrefix: p.academicTitle,
     jobTitle: p.professionalTitle,
     alumniOf: p.university,
-    memberOf: p.baro,
     worksFor: orgRef(),
   });
 }
