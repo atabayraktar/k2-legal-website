@@ -3,7 +3,6 @@ import Logo from './Logo';
 import { useAppointment, appointmentClick } from '../hooks/useAppointment';
 import { useLogoHome } from '../hooks/useLogoHome';
 import Button from './Button';
-import Monogram from './Monogram';
 import { site } from '../content/site.js';
 import { anchorNav, anchorHref } from '../content/nav.js';
 import { pagePath } from '../lib/routes-util.js';
@@ -32,7 +31,6 @@ export default function Header({ theme: initialTheme = 'light', menuOpen, onMenu
         <Link className="header__brand" href={pagePath('home')} aria-label={site.legalName} onClick={onLogo}>
           <Logo tone="dark" className="header__logo header__logo--dark" />
           <Logo tone="light" className="header__logo header__logo--light" />
-          <Monogram accent className="header__mark" />
         </Link>
 
         <nav className="header__nav" aria-label={t.menu.label}>
@@ -68,9 +66,12 @@ export default function Header({ theme: initialTheme = 'light', menuOpen, onMenu
             className="header__menu-btn"
             aria-expanded={menuOpen}
             aria-controls="menu-overlay"
+            aria-label={t.menu.open}
             onClick={onMenuToggle}
           >
-            {t.menu.open}
+            <svg className="header__burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" focusable="false">
+              <path d="M3 7h18M3 12h18M3 17h18" />
+            </svg>
           </button>
         </div>
       </div>

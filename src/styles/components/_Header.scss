@@ -58,15 +58,12 @@
     position: relative;
   }
 
-  &__logo {
+  // doubled class: must beat .logo { display: block } from Logo.scss (the mark replaces the lockup on phones)
+  &__logo.logo {
     height: 34px;
     width: auto;
-    display: none;
+    display: block;
     transition: opacity var(--dur-color) var(--ease);
-
-    @include up(phablet) {
-      display: block;
-    }
 
     @include up(tab-max) {
       height: 42px;
@@ -88,15 +85,6 @@
 
   &[data-header-theme='dark'] &__logo--light {
     opacity: 1;
-  }
-
-  &__mark {
-    height: 28px;
-    width: auto;
-
-    @include up(phablet) {
-      display: none;
-    }
   }
 
   &__nav {
@@ -185,6 +173,12 @@
     }
   }
 
+  &__burger {
+    display: block;
+    width: 28px;
+    height: 28px;
+  }
+
   &__menu-btn {
     display: inline-flex;
     align-items: center;
@@ -192,8 +186,6 @@
     min-width: var(--touch);
     min-height: var(--touch);
     padding: 0 4px;
-    @include label;
-    font-size: 12px;
     color: var(--fg);
     transition: color var(--dur-color) var(--ease);
 

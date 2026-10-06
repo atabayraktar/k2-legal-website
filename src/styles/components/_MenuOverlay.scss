@@ -51,23 +51,16 @@
     min-height: var(--touch);
   }
 
-  &__logo {
+  &__logo.logo {
     height: 34px;
     width: auto;
-    display: none;
-
-    @include up(phablet) {
-      display: block;
-    }
+    display: block;
   }
 
-  &__mark {
+  &__x {
+    display: block;
+    width: 28px;
     height: 28px;
-    width: auto;
-
-    @include up(phablet) {
-      display: none;
-    }
   }
 
   &__close {
@@ -77,8 +70,6 @@
     min-width: var(--touch);
     min-height: var(--touch);
     padding: 0 4px;
-    @include label;
-    font-size: 12px;
     color: var(--bone);
     transition: color var(--dur-color) var(--ease);
 

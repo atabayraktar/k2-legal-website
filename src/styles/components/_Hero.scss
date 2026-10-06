@@ -113,6 +113,13 @@
 
   &__actions .lnk {
     white-space: nowrap;
+    align-self: center;
+  }
+
+  @media (max-width: 599.98px) {
+    &__row--2 {
+      padding-bottom: var(--sp-8);
+    }
   }
 
 
@@ -169,7 +176,8 @@
 
   // desktop/laptop: the whole hero fits the first screen. The photo is absolutely filled so it never drives row heights,
   // and the headline size is also capped by viewport height (short laptops). Very short windows scroll naturally.
-  @media (min-width: 900px) and (min-height: 600px) {
+  // landscape only: portrait tablets (iPad Pro 1024x1366) have height to spare and keep the natural composition
+  @media (min-width: 900px) and (min-height: 600px) and (orientation: landscape) {
     --hero-fs: min(190px, calc((100vw - 2 * var(--gutter)) / 7), calc((100svh - 500px) / 1.75));
 
     &__frame {
@@ -204,6 +212,13 @@
     &__photo .frame__img {
       height: 100%;
       aspect-ratio: auto;
+    }
+  }
+
+  // portrait wide tablets (iPad Pro 1024x1366): natural height, no forced full-screen frame (it left a blank band under the headline)
+  @media (min-width: 900px) and (orientation: portrait) {
+    &__frame {
+      min-height: 0;
     }
   }
 

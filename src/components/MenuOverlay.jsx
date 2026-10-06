@@ -1,24 +1,23 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Logo from './Logo';
-import Monogram from './Monogram';
+import Button from './Button';
 import { site } from '../content/site.js';
-import { addressLine } from '../lib/format.js';
 import { anchorNav, anchorHref } from '../content/nav.js';
 import { pagePath } from '../lib/routes-util.js';
 import { useSectionNav } from '../hooks/useSectionNav';
+import { useAppointment } from '../hooks/useAppointment';
 import { lockScroll, unlockScroll } from '../lib/scroll.js';
 import { useT } from '../hooks/useCommon';
-import { renderPending } from '../lib/text.js';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export default function MenuOverlay({ open, onClose, returnFocusRef }) {
   const t = useT();
   const { go } = useSectionNav(onClose);
+  const { openAppointment } = useAppointment();
   const ref = useRef(null);
   const closeRef = useRef(null);
-  const c = site.contact;
 
   // Open: stop Lenis + lock scroll, move focus in. Close/unmount: unlock, return focus to the trigger.
   useEffect(() => {
@@ -79,21 +78,19 @@ export default function MenuOverlay({ open, onClose, returnFocusRef }) {
         <div className="menu__top container">
           <Link className="menu__brand" href={pagePath('home')} aria-label={site.legalName} onClick={onClose}>
             <Logo tone="light" className="menu__logo" />
-            <Monogram className="menu__mark" />
           </Link>
-          <button ref={closeRef} type="button" className="menu__close" onClick={onClose}>
-            {t.menu.close}
+          <button ref={closeRef} type="button" className="menu__close" onClick={onClose} aria-label={t.menu.close}>
+            <svg className="menu__x" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" focusable="false">
+              <path d="M5 5l14 14M19 5L5 19" />
+            </svg>
           </button>
         </div>
 
         <nav className="menu__nav container" aria-label={t.menu.linksLabel}>
           <ol className="menu__list">
-            {anchorNav.map((item, i) => (
+            {anchorNav.map((item) => (
               <li className="menu__item" key={item.id}>
                 <Link className="menu__link" href={anchorHref(item.id)} onClick={go(item.id)}>
-                  <span className="menu__num" aria-hidden="true">
-                    {String.fromCharCode(65 + i)}
-                  </span>
                   <span>{item.label}</span>
                 </Link>
               </li>
@@ -103,11 +100,18 @@ export default function MenuOverlay({ open, onClose, returnFocusRef }) {
 
         <div className="menu__foot container">
           <address className="menu__contact">
-            <strong>{t.menu.contactTitle}</strong>
-            <span>{c.phone.display}</span>
-            <span>{c.mobile.display}</span>
-            <span>{renderPending(c.email)}</span>
-            <span>{renderPending(addressLine(c.address))}</span>
+            <Button
+              variant="ghost-dark"
+              href={anchorHref('iletisim')}
+              onClick={(e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+                e.preventDefault();
+                onClose();
+                openAppointment(returnFocusRef?.current);
+              }}
+            >
+              {t.cta.appointment}
+            </Button>
           </address>
           <div className="menu__side">
             <ul className="menu__legal">
