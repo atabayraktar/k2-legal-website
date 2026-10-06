@@ -6,6 +6,8 @@ import ImageFrame from './ImageFrame';
 import images, { ROLE } from '../content/images.js';
 import { pagePath } from '../lib/routes-util.js';
 import { useAppointment, appointmentClick } from '../hooks/useAppointment';
+import { useSectionNav } from '../hooks/useSectionNav';
+import { anchorHref } from '../content/nav.js';
 
 const PHOTO_SIZES = '(min-width: 900px) 40vw, calc(100vw - 40px)';
 
@@ -13,6 +15,7 @@ const PHOTO_SIZES = '(min-width: 900px) 40vw, calc(100vw - 40px)';
 // and one general-information line in the gap.
 export default function Hero({ t }) {
   const { openAppointment } = useAppointment();
+  const { go } = useSectionNav();
   const photo = images[ROLE.hero];
   return (
     <section id="hero" className="hero" data-theme="light" aria-labelledby="hero-title">
@@ -62,7 +65,9 @@ export default function Hero({ t }) {
               <Button variant="primary" href={pagePath('contact')} onClick={appointmentClick(openAppointment)}>
                 {t.ctaPrimary}
               </Button>
-              <TextLink href={pagePath('practice')}>{t.ctaSecondary}</TextLink>
+              <TextLink href={anchorHref('calisma-alanlari')} onClick={go('calisma-alanlari')}>
+                {t.ctaSecondary}
+              </TextLink>
             </Reveal>
           </div>
         </div>
