@@ -78,9 +78,8 @@ const contactRows = [
   ['Telefon (sabit)', ok(c.phone.display)],
   ['Telefon (cep)', ok(c.mobile && c.mobile.display)],
   ['E-posta', ok(c.email)],
-  ['KEP', ok(c.kep)],
   ['Çalışma saatleri', ok(c.hours.display)],
-  ['WhatsApp', ok(c.whatsapp.url)],
+  ['WhatsApp', ok(c.whatsapp.display)],
 ].filter(([, v]) => v);
 const where = [ok(site.city)].filter(Boolean);
 const areasText = FEATURES.practiceConfirmed ? ' İcra ve iflas, deniz hukuku, ceza, ticaret ile şirketler hukuku ve danışmanlık alanlarında faaliyet gösterir.' : '';

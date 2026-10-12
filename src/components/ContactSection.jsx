@@ -30,27 +30,21 @@ export default function ContactSection({ t, common, site, headingId = 'iletisim-
       ),
     },
     { k: L.phone, v: <a className="contact__a" href={`tel:${c.phone.tel}`}>{c.phone.display}</a> },
-    {
-      k: L.mobileWhatsapp,
-      v: (
-        <>
-          <a className="contact__a" href={`tel:${c.mobile.tel}`}>{c.mobile.display}</a>
-          {c.whatsapp.url && (
-            <>
-              {' · '}
-              <a className="contact__a" href={c.whatsapp.url} target="_blank" rel="noopener noreferrer">
-                {L.whatsapp}
-              </a>
-            </>
-          )}
-        </>
-      ),
-    },
+    { k: L.mobile, v: <a className="contact__a" href={`tel:${c.mobile.tel}`}>{c.mobile.display}</a> },
+    ...(c.whatsapp.url
+      ? [{
+          k: L.whatsapp,
+          v: (
+            <a className="contact__a" href={c.whatsapp.url} target="_blank" rel="noopener noreferrer">
+              {c.whatsapp.display}
+            </a>
+          ),
+        }]
+      : []),
     {
       k: L.email,
       v: isPending(c.email, { required: true }) ? renderPending(c.email) : <a className="contact__a" href={`mailto:${c.email}`}>{c.email}</a>,
     },
-    { k: L.kep, v: renderPending(c.kep) },
     { k: L.hours, v: renderPending(c.hours.display) },
   ];
 

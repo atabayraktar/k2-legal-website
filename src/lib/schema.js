@@ -109,7 +109,6 @@ export function siteVars() {
     phone: c.phone.display,
     mobile: c.mobile.display,
     email: c.email,
-    kep: c.kep,
     address: addressLine(c.address),
     hours: c.hours.display,
     year: new Date().getFullYear(),

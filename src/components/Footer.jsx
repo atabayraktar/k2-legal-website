@@ -35,11 +35,13 @@ export default function Footer() {
     },
     { k: t.labels.phone, v: <a href={`tel:${c.phone.tel}`}>{c.phone.display}</a> },
     { k: t.labels.mobile, v: <a href={`tel:${c.mobile.tel}`}>{c.mobile.display}</a> },
+    ...(c.whatsapp.url
+      ? [{ k: t.labels.whatsapp, v: <a href={c.whatsapp.url} target="_blank" rel="noopener noreferrer">{c.whatsapp.display}</a> }]
+      : []),
     {
       k: t.labels.email,
       v: isPending(c.email, { required: true }) ? renderPending(c.email) : <a href={`mailto:${c.email}`}>{c.email}</a>,
     },
-    { k: t.labels.kep, v: renderPending(c.kep) },
   ];
 
   return (

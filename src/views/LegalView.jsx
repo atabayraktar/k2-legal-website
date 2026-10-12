@@ -14,7 +14,6 @@ export default function LegalView({ routeKey, common, seo, legal }) {
     legalName: site.legalName,
     address: addressLine(c.address),
     email: c.email,
-    kep: c.kep,
     phone: c.phone.display,
     city: site.city,
   };

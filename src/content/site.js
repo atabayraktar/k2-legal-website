@@ -39,10 +39,9 @@ export const site = {
     phone: { display: '0212 469 36 00', tel: '+902124693600' }, // sabit hat
     mobile: { display: '0533 924 79 86', tel: '+905339247986' },
     email: '[E-posta adresi]', // TODO(client)
-    kep: '[KEP adresi]', // TODO(client)
     address: { street: 'Atatürk Bulvarı, Deposite İş Merkezi A1 Blok, Kat: 3, No: 424', district: 'Başakşehir', city: 'İstanbul', postalCode: '34490', country: 'TR' }, // TODO(client) verify postal code (sources conflict: 34490 vs 34306)
     hours: { display: '09:00 – 18:00', schema: null }, // TODO(client) confirm weekdays (schema e.g. 'Mo-Fr 09:00-18:00')
-    whatsapp: { display: '0533 924 79 86', url: 'https://wa.me/905339247986' }, // same number as mobile
+    whatsapp: { display: '0533 924 79 40', url: 'https://wa.me/905339247940' },
     geo: { lat: 41.0702133, lng: 28.809309 }, // from the client's Google Maps pin
     map: { image: null, href: 'https://maps.app.goo.gl/KFL58hSaip2Zc8SE8' }, // client's Google Maps link
   },
@@ -61,5 +60,5 @@ export const INDEXABLE = !/\.example(?:[/:]|$)/i.test(site.domain) && /^https:\/
 
 export const REQUIRED = [
   'domain', 'partners',
-  'contact.phone', 'contact.email', 'contact.kep', 'contact.address', 'contact.hours',
+  'contact.phone', 'contact.email','contact.address', 'contact.hours',
 ];

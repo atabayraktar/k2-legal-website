@@ -1,4 +1,4 @@
-// Long-form legal copy (TR). Tokens {legalName} {address} {email} {kep} {phone} {city} {baro} are resolved in LegalView from site.js.
+// Long-form legal copy (TR). Tokens {legalName} {address} {email} {phone} {city} {baro} are resolved in LegalView from site.js.
 // Every unknown is a blank token […] (source markers: TODO(client) in comments, never rendered); nothing here is an invented fact. Counsel (KVKK + bar) must approve before launch.
 const updated = '[…]'; // TODO(client) son güncelleme tarihi, yayın anında
 
@@ -20,7 +20,6 @@ export default {
         list: [
           'Unvan: {legalName}',
           'Adres: {address}',
-          'KEP adresi: {kep}',
           'E-posta: {email}',
           'Telefon: {phone}',
         ],
@@ -67,7 +66,7 @@ export default {
         id: 'yontem',
         h2: 'Toplama yöntemi',
         paragraphs: [
-          'Verileriniz; internet sitesindeki iletişim formu, e-posta, KEP, telefon ve WhatsApp yoluyla, elektronik ortamda ve sizin tarafınızdan iletilerek toplanır.',
+          'Verileriniz; internet sitesindeki iletişim formu, e-posta, telefon ve WhatsApp yoluyla, elektronik ortamda ve sizin tarafınızdan iletilerek toplanır.',
         ],
       },
       {
@@ -98,7 +97,7 @@ export default {
         id: 'basvuru',
         h2: 'Başvuru yöntemi',
         paragraphs: [
-          'Yukarıdaki haklarınıza ilişkin başvurularınızı, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ’de öngörülen yöntemlerle yazılı olarak {address} adresine, {kep} KEP adresine veya {email} e-posta adresine iletebilirsiniz.',
+          'Yukarıdaki haklarınıza ilişkin başvurularınızı, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ’de öngörülen yöntemlerle yazılı olarak {address} adresine veya {email} e-posta adresine iletebilirsiniz.',
           'Başvurunuzda kimliğinizi tespit edici bilgilerin ve talebinizin açık biçimde yer alması gerekir. Başvurular, talebin niteliğine göre en geç otuz gün içinde sonuçlandırılır. Başvurunuza verilen yanıttan memnun kalmamanız hâlinde Kişisel Verileri Koruma Kurulu’na şikâyette bulunma hakkınız saklıdır.',
         ],
       },
