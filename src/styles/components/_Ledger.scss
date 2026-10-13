@@ -34,3 +34,27 @@
     overflow-wrap: anywhere;
   }
 }
+
+// Partner card ledger values: stacked list, each item led by a small square dot (radius stays 0).
+.pcard__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-8);
+
+  li {
+    position: relative;
+    padding-left: 16px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 5px;
+      height: 5px;
+      background: var(--fg-2);
+    }
+  }
+}

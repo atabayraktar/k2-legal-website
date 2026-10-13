@@ -94,7 +94,7 @@ export function personSchema(p) {
     name: p.name,
     honorificPrefix: p.academicTitle,
     jobTitle: p.professionalTitle,
-    alumniOf: p.university,
+    alumniOf: p.universities?.length === 1 ? p.universities[0] : p.universities,
     worksFor: orgRef(),
   });
 }

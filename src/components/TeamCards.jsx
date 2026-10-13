@@ -6,6 +6,18 @@ import { fmt } from '../lib/format.js';
 import { isPending } from '../lib/pending.js';
 import { renderPending } from '../lib/text.js';
 
+// Ledger value as a dotted list: each entry is its own item with a small marker (universities, practice areas).
+function bulletList(items, render = (x) => x) {
+  if (!items?.length) return null;
+  return (
+    <ul className="pcard__list">
+      {items.map((x) => (
+        <li key={x}>{render(x)}</li>
+      ))}
+    </ul>
+  );
+}
+
 // One partner card. Fixed hierarchy, top to bottom:
 // 1 file line (Ortak 01)  2 photo frame  3 name  4 unvan  5 ledger (every allowed field, always open: no expander).
 // Only fields the advertising rules allow: no biography, cases or clients.
@@ -16,7 +28,11 @@ function PartnerCard({ p, i, total, t, common }) {
   const unvan = [p.academicTitle, p.professionalTitle].filter(Boolean).join(' ');
 
   const rows = [
-    { k: L.university, v: renderPending(p.university) },
+    { k: L.university, v: bulletList(p.universities, renderPending) },
+    {
+      k: L.areas,
+      v: bulletList(p.areas),
+    },
   ];
 
   return (
