@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import QuickInfo, { useQuickInitial } from './QuickInfo';
+import quick from '../content/tr/quick.js';
 import { site } from '../content/site.js';
 import { useT } from '../hooks/useCommon';
 import { scrollTop } from '../lib/scroll.js';
@@ -9,6 +11,8 @@ export default function FloatingActions() {
   const common = useT();
   const [shown, setShown] = useState(false);
   const wa = site.contact.whatsapp.url;
+  const [chatOpen, setChatOpen] = useQuickInitial();
+  const chatRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -30,6 +34,20 @@ export default function FloatingActions() {
         onClick={() => scrollTop(false)}
       >
         <span aria-hidden="true">&#8593;</span>
+      </button>
+      <QuickInfo open={chatOpen} onClose={() => setChatOpen(false)} fabRef={chatRef} />
+      <button
+        ref={chatRef}
+        type="button"
+        className={`fab fab--chat${chatOpen ? ' is-on' : ''}`}
+        aria-label={quick.open}
+        aria-expanded={chatOpen}
+        onClick={() => setChatOpen(!chatOpen)}
+      >
+        <svg className="fab__icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+          <path fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="miter" d="M3 4h18v12H10l-5 4v-4H3z" />
+          <path fill="currentColor" d="M7 8h10v1.4H7zM7 11.2h6.5v1.4H7z" />
+        </svg>
       </button>
       <a
         className="fab fab--wa"

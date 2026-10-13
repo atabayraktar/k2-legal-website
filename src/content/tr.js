@@ -6,6 +6,7 @@ import * as practice from './tr/practice.js';
 import * as team from './tr/team.js';
 import * as contact from './tr/contact.js';
 import * as legal from './tr/legal.js';
+import * as quick from './tr/quick.js';
 
 export default {
   common: common.default,
@@ -16,5 +17,6 @@ export default {
   team: team.default,
   contact: contact.default,
   legal: legal.default,
+  quick: quick.default,
   notFound: common.notFound,
 };

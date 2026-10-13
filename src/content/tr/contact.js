@@ -52,6 +52,7 @@ export default {
     text: 'Bu forma kimlik, sağlık, mali durum gibi gizli bilgiler yazmayın; dava belgesi veya başka bir belge eklemeyin. Form üzerinden yapılan yazışma avukat–müvekkil ilişkisi kurmaz; ilişki yazılı vekâlet veya hizmet sözleşmesi ile başlar.',
   },
   submit: 'WhatsApp ile Gönder',
+  submitShort: 'ile Gönder',
   result: {
     invalid: { title: 'Formda eksik alan var', text: '{n} alan tamamlanmalı:' },
     whatsapp: {

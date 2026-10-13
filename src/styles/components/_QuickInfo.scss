@@ -1,0 +1,441 @@
+@use 'tokens/mixins' as *;
+
+// "Hızlı bilgi": scripted Q&A card above the sticky buttons. Paper card, ink hairline frame, ink title strip with a
+// typewriter tag; bot lines are paper with an ink left rule, visitor lines are ink squares. No radius, no shadow.
+.fab--chat {
+  bottom: calc(var(--sp-16) + 52px + var(--sp-12));
+  right: var(--sp-16);
+
+  &.is-on {
+    background: var(--bone);
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  @include hover {
+    &.fab--chat:hover {
+      background: var(--wax);
+      border-color: var(--wax);
+      color: var(--bone);
+    }
+  }
+}
+
+.quick {
+  position: fixed;
+  z-index: calc(var(--z-header) + 1);
+  right: var(--sp-16);
+  bottom: calc(var(--sp-16) + 52px + var(--sp-12) + 52px + var(--sp-12));
+  display: flex;
+  flex-direction: column;
+  width: min(392px, calc(100vw - 32px));
+  max-height: min(640px, calc(100dvh - 190px));
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition:
+    opacity var(--dur-base) var(--ease),
+    transform var(--dur-base) var(--ease),
+    visibility 0s linear var(--dur-base);
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  // phones: bottom sheet that covers the sticky buttons while open
+  @include down(tab-mini) {
+    left: var(--sp-12);
+    right: var(--sp-12);
+    bottom: var(--sp-12);
+    width: auto;
+    max-height: calc(100dvh - var(--header-h) - var(--sp-24));
+  }
+
+  @include short-landscape {
+    top: var(--sp-8);
+    bottom: var(--sp-8);
+    max-height: none;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-12);
+    padding: var(--sp-4, 4px) var(--sp-4, 4px) var(--sp-4, 4px) var(--sp-16);
+    min-height: 60px;
+    background: var(--ink);
+    color: var(--bone);
+  }
+
+  &__logo {
+    flex: none;
+    width: 126px;
+    height: auto;
+  }
+
+  &__title {
+    @include display(20px, 800, var(--ls-h4), 1);
+    flex: 1 1 auto;
+    margin: 0;
+    text-align: right;
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  &__head-a {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4, 4px);
+    flex: none;
+  }
+
+  &__x {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    color: var(--bone);
+    cursor: pointer;
+    transition: color var(--dur-color) var(--ease);
+
+    @include hover {
+      color: var(--wax-lit);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax-lit);
+      outline-offset: -4px;
+    }
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--sp-16);
+    display: grid;
+    align-content: start;
+    gap: var(--sp-12);
+  }
+
+  &__intro {
+    margin: 0;
+    padding-bottom: var(--sp-12);
+    border-bottom: 1px dotted var(--line);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--stone);
+  }
+
+  &__log {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-8);
+  }
+
+  &__msg {
+    max-width: 88%;
+    padding: var(--sp-8) var(--sp-12);
+    font-size: 15px;
+    line-height: 1.45;
+    animation: quick-in var(--dur-base) var(--ease) backwards;
+
+    &--bot {
+      justify-self: start;
+      background: var(--bone);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--ink);
+    }
+
+    &--user {
+      justify-self: end;
+      background: var(--ink);
+      color: var(--bone);
+    }
+  }
+
+  &__ctrl {
+    display: grid;
+    gap: var(--sp-12);
+    padding-top: var(--sp-8);
+  }
+
+  &__hint,
+  &__warn {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--stone);
+  }
+
+  &__label {
+    @include mono-label;
+    margin: 0;
+    color: var(--stone);
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-8);
+  }
+
+  &__chip {
+    min-height: 44px;
+    padding: var(--sp-8) var(--sp-12);
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-color) var(--ease),
+      color var(--dur-color) var(--ease),
+      border-color var(--dur-color) var(--ease),
+      transform var(--dur-fast) var(--ease);
+
+    &--ghost {
+      border-style: dashed;
+      border-color: var(--line);
+      color: var(--stone);
+    }
+
+    &.is-on {
+      background: var(--ink);
+      color: var(--bone);
+    }
+
+    @include hover {
+      background: var(--wax);
+      border-color: var(--wax);
+      color: var(--bone);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax);
+      outline-offset: 3px;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding: var(--sp-12);
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 16px; // 16px stops iOS zoom on focus
+    line-height: 1.45;
+    resize: vertical;
+
+    &::placeholder {
+      color: var(--stone);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax);
+      outline-offset: 3px;
+    }
+  }
+
+  &__preview {
+    margin: 0;
+    padding: var(--sp-12);
+    border: 1px dotted var(--ink);
+    background: var(--bone);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  &__nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-4, 4px) var(--sp-12);
+
+    // phones: tighter tools so Geri / Geç / Baştan başla / Devam fit one row; Devam wraps right-aligned if not
+    @include down(tab-mini) {
+      column-gap: var(--sp-8);
+    }
+  }
+
+  &__tool {
+    min-height: 44px;
+    padding: 0 var(--sp-4, 4px);
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: var(--ls-mono);
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    cursor: pointer;
+    transition: color var(--dur-color) var(--ease);
+
+    @include hover {
+      color: var(--wax);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax);
+      outline-offset: 2px;
+    }
+  }
+
+  &__go,
+  &__send {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-12);
+    min-height: 44px;
+    margin-left: auto;
+    padding: 0 var(--sp-16);
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-color) var(--ease),
+      border-color var(--dur-color) var(--ease),
+      transform var(--dur-fast) var(--ease);
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    @include hover {
+      &:not(:disabled) {
+        background: var(--wax);
+        border-color: var(--wax);
+
+        .quick__go-arrow {
+          transform: translateX(5px);
+        }
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax);
+      outline-offset: 3px;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+  }
+
+  &__send {
+    background: var(--wax);
+    border-color: var(--wax);
+
+    @include hover {
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+  }
+
+  &__go-arrow {
+    width: 18px;
+    height: 10px;
+    transition: transform var(--dur-btn) var(--ease);
+  }
+
+  @include reduced-motion {
+    transition: none;
+    transform: none;
+
+    &__msg {
+      animation: none;
+    }
+
+    &__chip,
+    &__go,
+    &__send,
+    &__go-arrow {
+      transition: none;
+    }
+  }
+}
+
+@keyframes quick-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.quick__req {
+  margin-left: var(--sp-8);
+  color: var(--wax);
+  letter-spacing: var(--ls-mono);
+}
+
+.quick__input--line {
+  min-height: 44px;
+  padding-block: var(--sp-8);
+}
+
+// Phones only: dim the page behind the open panel (flat ink veil, no blur). Hidden from tablet up.
+.quick__scrim {
+  display: none;
+
+  @include down(tab-mini) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-header) + 1);
+    background: rgba(11, 11, 12, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--dur-base) var(--ease),
+      visibility 0s linear var(--dur-base);
+
+    &.is-open {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}

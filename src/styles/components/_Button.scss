@@ -253,3 +253,15 @@
     transform: translateY(1px);
   }
 }
+
+// Button label with a leading WhatsApp glyph ("<icon> ile Gönder").
+.btn__label:has(.wa-ico) {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.btn__label .wa-ico {
+  flex: none;
+}

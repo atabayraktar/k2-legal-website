@@ -1,6 +1,7 @@
 import { useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import Button from './Button';
+import WhatsAppIcon from './WhatsAppIcon';
 import { fmt } from '../lib/format.js';
 import { pagePath } from '../lib/routes-util.js';
 
@@ -243,8 +244,9 @@ export default function ContactForm({ t, site, headingId }) {
         </div>
 
         <div className="cf__actions">
-          <Button variant="wax" type="submit" className="cf__submit">
-            {t.submit}
+          <Button variant="wax" type="submit" className="cf__submit" aria-label={t.submit}>
+            <WhatsAppIcon />
+            {t.submitShort}
           </Button>
         </div>
       </div>
