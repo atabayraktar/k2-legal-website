@@ -118,7 +118,7 @@ for (const u of allUrls()) {
 }
 
 // ---------- removed pages / inline-only areas must not be exported ----------
-const removed = ['/hakkimizda/', '/ekibimiz/', '/iletisim/', '/calisma-alanlari/'];
+const removed = ['/ekibimiz/', '/iletisim/', '/calisma-alanlari/'];
 for (const p of removed) {
   if (fs.existsSync(fileFor(p))) err(p, 'removed page still exported (must be a 301 to a home anchor)');
   if (fs.existsSync(path.join(out, `${p.replace(/^\/|\/$/g, '')}.html`))) err(p, 'removed page still exported as .html');

@@ -10,23 +10,13 @@
     "trailingSlash": true,
     "redirects": [
       {
-        "source": "/hakkimizda",
-        "destination": "/#hakkimizda",
-        "type": 301
-      },
-      {
-        "source": "/hakkimizda/",
-        "destination": "/#hakkimizda",
-        "type": 301
-      },
-      {
         "source": "/ekibimiz",
-        "destination": "/#hakkimizda",
+        "destination": "/hakkimizda/",
         "type": 301
       },
       {
         "source": "/ekibimiz/",
-        "destination": "/#hakkimizda",
+        "destination": "/hakkimizda/",
         "type": 301
       },
       {

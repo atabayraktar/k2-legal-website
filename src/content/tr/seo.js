@@ -7,6 +7,11 @@ export default {
     description:
       'Karaman & Berat Avukatlık Ortaklığı, dava ve danışmanlık faaliyeti yürüten tescilli bir avukatlık ortaklığıdır. Bilgilendirme amaçlı internet sitesi.',
   },
+  about: {
+    title: 'Hakkımızda',
+    description:
+      'Karaman & Berat Avukatlık Ortaklığı: ortaklığın kuruluşu, faaliyeti, ortaklar ve bir dosyanın nasıl yürütüldüğü.',
+  },
   areas: {
     enforcement: {
       title: 'İcra ve İflas Hukuku',

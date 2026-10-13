@@ -3,10 +3,10 @@ import Reveal from './Reveal';
 import { ROLE } from '../content/images.js';
 
 // Calisma Bicimi: four ticket stubs on a descending staircase beside a sticky photograph (a hand signing a document).
-export default function Process({ t }) {
+export default function Process({ t, theme = 'light', id = 'calisma-bicimi' }) {
   const steps = t?.steps ?? [];
   return (
-    <section id="calisma-bicimi" className="process" data-theme="light" aria-labelledby="calisma-bicimi-title">
+    <section id={id} className="process" data-theme={theme} aria-labelledby="calisma-bicimi-title">
       <div className="container process__grid">
         <div className="process__main">
           <div className="process__head">

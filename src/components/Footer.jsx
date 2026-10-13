@@ -5,7 +5,7 @@ import { useSectionNav } from '../hooks/useSectionNav';
 import { useLogoHome } from '../hooks/useLogoHome';
 import Ledger from './Ledger';
 import { site } from '../content/site.js';
-import { anchorNav, anchorHref } from '../content/nav.js';
+import { anchorNav, anchorHref, navHref } from '../content/nav.js';
 import { addressLine, fmt } from '../lib/format.js';
 import { pagePath } from '../lib/routes-util.js';
 import { useT } from '../hooks/useCommon';
@@ -62,7 +62,7 @@ export default function Footer() {
                 <ul className="footer__list">
                   {anchorNav.map((item) => (
                     <li key={item.id}>
-                      <Link className="footer__link" href={anchorHref(item.id)} onClick={go(item.id)}>
+                      <Link className="footer__link" href={navHref(item)} onClick={item.page ? undefined : go(item.id)}>
                         {item.label}
                       </Link>
                     </li>

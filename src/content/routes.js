@@ -1,7 +1,8 @@
 // key -> path (always leading + trailing slash). The site is Turkish-only.
-// Standalone pages only: home + legal. Everything else lives on the home page as an anchor (see `sections`).
+// Standalone pages: home, Hakkimizda (about + team + areas summary + process), legal. Everything else is a home anchor (see `sections`).
 export const pages = {
   home: '/',
+  about: '/hakkimizda/',
   privacy: '/aydinlatma-metni/',
   cookies: '/cerez-politikasi/',
   disclaimer: '/yasal-uyari/',
@@ -9,11 +10,8 @@ export const pages = {
 
 // Home-page sections (anchors). "More content never means a new URL."
 export const sections = {
-  about: '/#hakkimizda',
   principles: '/#ilkeler',
   practice: '/#calisma-alanlari',
-  process: '/#calisma-bicimi',
-  team: '/#ekibimiz',
   faq: '/#sss',
   contact: '/#iletisim',
 };
@@ -32,8 +30,7 @@ export const practiceAreas = [
 
 // Removed v1 pages -> 301 to the matching home anchor (firebase.json "redirects"; verify-routes asserts them).
 export const redirects = [
-  ['/hakkimizda', '/#hakkimizda'],
-  ['/ekibimiz', '/#hakkimizda'],
+  ['/ekibimiz', '/hakkimizda/'],
   ['/iletisim', '/#iletisim'],
   ['/calisma-alanlari', '/#calisma-alanlari'],
 ].flatMap(([from, to]) => [

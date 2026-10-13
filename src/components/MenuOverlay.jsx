@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Logo from './Logo';
 import Button from './Button';
 import { site } from '../content/site.js';
-import { anchorNav, anchorHref } from '../content/nav.js';
+import { anchorNav, anchorHref, navHref } from '../content/nav.js';
 import { pagePath } from '../lib/routes-util.js';
 import { useSectionNav } from '../hooks/useSectionNav';
 import { useAppointment } from '../hooks/useAppointment';
@@ -90,7 +90,7 @@ export default function MenuOverlay({ open, onClose, returnFocusRef }) {
           <ol className="menu__list">
             {anchorNav.map((item) => (
               <li className="menu__item" key={item.id}>
-                <Link className="menu__link" href={anchorHref(item.id)} onClick={go(item.id)}>
+                <Link className="menu__link" href={navHref(item)} onClick={item.page ? onClose : go(item.id)}>
                   <span>{item.label}</span>
                 </Link>
               </li>

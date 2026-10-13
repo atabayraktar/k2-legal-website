@@ -86,8 +86,8 @@ const areasText = FEATURES.practiceConfirmed ? ' İcra ve iflas, deniz hukuku, c
 const entity = `${site.legalName}, ${[ok(site.city) && `${site.city} merkezli`].filter(Boolean).join(', ')}${where.length ? ' ' : ''}tescilli bir avukatlık ortaklığıdır.${areasText}`;
 // Single-page structure: home sections as anchors; inline-only areas by name with their /#slug anchors.
 const SECTION_TITLES = {
-  about: 'Hakkımızda', principles: 'Çalışma ilkeleri', practice: 'Faaliyet alanları', process: 'Çalışma biçimi',
-  team: 'Ortaklar (Ekibimiz)', faq: 'Sıkça sorulan sorular', contact: 'İletişim',
+  principles: 'Çalışma ilkeleri', practice: 'Faaliyet alanları',
+  faq: 'Sıkça sorulan sorular', contact: 'İletişim',
 };
 const sectionLines = () => Object.entries(sections).map(([k, p]) => `- [${SECTION_TITLES[k]}](${abs(p)})`).join(String.fromCharCode(10));
 const areaLines = () => {

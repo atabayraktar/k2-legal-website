@@ -138,7 +138,7 @@ for (const [loc, c] of Object.entries(locales)) {
     if (key === 'areas') for (const [id, am] of Object.entries(m)) seoEntries.push([`areas.${id}`, am]);
     else seoEntries.push([key, m]);
   }
-  for (const gone of ['about', 'practice', 'team', 'contact']) if (c.seo?.[gone]) err(`${loc}.seo.${gone}`, 'SEO entry for a removed page');
+  for (const gone of ['practice', 'team', 'contact']) if (c.seo?.[gone]) err(`${loc}.seo.${gone}`, 'SEO entry for a removed page');
   const flagship = practiceAreas.filter((a) => a.page).map((a) => a.id);
   for (const id of flagship) if (!c.seo?.areas?.[id]) err(`${loc}.seo.areas.${id}`, 'missing SEO entry for flagship page');
   for (const [key, m] of seoEntries) {

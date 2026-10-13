@@ -23,7 +23,7 @@ export default {
     foundedSentence: 'Ortaklık {foundedYear} yılında kurulmuştur.',
     activityTitle: 'Ne yapıyoruz',
     activity: [
-      'Ortaklığın faaliyeti; dosyanın incelenmesini, dilekçe ve sözleşme hazırlanmasını, dava ve takip işlemlerinin yürütülmesini ve müvekkilin bilgilendirilmesini kapsar. Faaliyet alanları bu sayfada ayrıca listelenmiştir.',
+      'Ortaklığın faaliyeti; dosyanın incelenmesini, dilekçe ve sözleşme hazırlanmasını, dava ve takip işlemlerinin yürütülmesini ve müvekkilin bilgilendirilmesini kapsar. Faaliyet alanları ana sayfada ayrıca listelenmiştir.',
       'Faaliyet, 1136 sayılı Avukatlık Kanunu ve Türkiye Barolar Birliği meslek kurallarına tabidir; müvekkile ait bilgi ve belgeler sır saklama yükümlülüğü kapsamındadır.',
     ],
     kunye: {

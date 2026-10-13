@@ -9,7 +9,7 @@ export default {
   htmlLang: 'tr',
   skip: 'İçeriğe geç',
   nav: [
-    { key: 'about', id: 'hakkimizda', label: 'Hakkımızda', href: '/#hakkimizda' },
+    { key: 'about', id: 'hakkimizda', label: 'Hakkımızda', href: '/hakkimizda/' },
     { key: 'practice', id: 'calisma-alanlari', label: 'Çalışma Alanları', href: '/#calisma-alanlari' },
     { key: 'faq', id: 'sss', label: 'SSS', href: '/#sss' },
     { key: 'contact', id: 'iletisim', label: 'İletişim', href: '/#iletisim' },

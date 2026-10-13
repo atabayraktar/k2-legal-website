@@ -4,25 +4,28 @@ import { useAppointment, appointmentClick } from '../hooks/useAppointment';
 import { useLogoHome } from '../hooks/useLogoHome';
 import Button from './Button';
 import { site } from '../content/site.js';
-import { anchorNav, anchorHref } from '../content/nav.js';
+import { useRouter } from 'next/router';
+import { anchorNav, anchorHref, navHref } from '../content/nav.js';
 import { pagePath } from '../lib/routes-util.js';
 import { useHeaderTheme } from '../hooks/useHeaderTheme';
 import { useActiveSection } from '../hooks/useActiveSection';
 import { useSectionNav } from '../hooks/useSectionNav';
 import { useT } from '../hooks/useCommon';
 
-const IDS = anchorNav.map((n) => n.id);
+const IDS = anchorNav.filter((n) => !n.page).map((n) => n.id);
 
 // Fixed header. Nav = anchors into the home page (scroll on "/", navigate elsewhere). aria-current="true" marks the
 // section crossing the viewport midline (IntersectionObserver).
 export default function Header({ theme: initialTheme = 'light', menuOpen, onMenuToggle, menuBtnRef }) {
   const t = useT();
+  const router = useRouter();
   const theme = useHeaderTheme(initialTheme);
   const dark = theme === 'dark';
   const onLogo = useLogoHome();
   const { openAppointment } = useAppointment();
   const { onHome, go } = useSectionNav();
   const active = useActiveSection(IDS, onHome);
+  const isCurrent = (item) => (item.page ? router.pathname === item.page.replace(/\/$/, '') : active === item.id);
 
   return (
     <header className="header" data-header-theme={theme}>
@@ -38,10 +41,10 @@ export default function Header({ theme: initialTheme = 'light', menuOpen, onMenu
             {anchorNav.map((item) => (
               <li key={item.id}>
                 <Link
-                  className={`header__link${active === item.id ? ' is-current' : ''}`}
-                  href={anchorHref(item.id)}
-                  aria-current={active === item.id ? 'true' : undefined}
-                  onClick={go(item.id)}
+                  className={`header__link${isCurrent(item) ? ' is-current' : ''}`}
+                  href={navHref(item)}
+                  aria-current={isCurrent(item) ? (item.page ? 'page' : 'true') : undefined}
+                  onClick={item.page ? undefined : go(item.id)}
                 >
                   {item.label}
                 </Link>
