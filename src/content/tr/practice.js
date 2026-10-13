@@ -1,10 +1,13 @@
 // Practice areas (all five have their own page). Wording rules: neutral description of what an area covers; no service verbs aimed at clients,
 // no assurances, no "uzman", no outcome claims. Whether these areas get their own URLs is a client / bar decision.
-// TODO(client): areas confirmed by the client 2026-10-05.
+// TODO(client): areas confirmed by the client 2026-10-05. Procedural statements (süreler, aşamalar) added 2026-10-13: lawyer to verify.
+// Fields: lede (section + page), body (page only), steps (page only), note (page pull-quote), topics, approach.
 export default {
   detail: {
     summaryLabel: 'Alan özeti',
     topicsTitle: 'Bu alanda ele aldığımız konular',
+    stepsTitle: 'Süreç genel hatlarıyla nasıl işler',
+    noteLabel: 'Not',
     approachTitle: 'Nasıl ilerleriz',
     ctaTitle: 'İletişim',
     ctaText: 'İletişim bilgileri ve form ana sayfadaki iletişim bölümünde yer alır.',
@@ -20,7 +23,11 @@ export default {
       id: 'enforcement',
       title: 'İcra ve İflas Hukuku',
       oneLine: 'Takip, itiraz, haciz ve iflas süreçlerine ilişkin konular.',
-      lede: 'İcra ve iflas hukuku alanı, para alacaklarının takibine ve bu takiplere karşı itiraz ve şikâyet yollarına ilişkin konuları kapsar. İlamlı ve ilamsız takipler, haciz işlemleri, konkordato ve iflas İcra ve İflas Kanunu’nun konusudur.',
+      lede: 'İcra ve iflas hukuku alanı, para alacaklarının takibine ve bu takiplere karşı itiraz ve şikâyet yollarına ilişkin konuları kapsar. İlamlı ve ilamsız takipler, haciz işlemleri, konkordato ve iflas İcra ve İflas Kanunu’nun konusudur. Bu alanda süreler kısadır ve çoğu zaman tebligat tarihinden işlemeye başlar; dosyadaki ilk iş, belgelerin ve tarihlerin doğru okunmasıdır.',
+      body: [
+        'İcra takibi, alacağın mahkeme kararına dayanıp dayanmadığına göre iki ana yola ayrılır. Ödeme emrinin tebliğinden sonra borçlunun önünde itiraz, ödeme veya şikâyet gibi seçenekler bulunur; alacaklı açısından ise takibin kesinleşmesi, haciz ve satış aşamalarına geçişi belirler.',
+        'Takip hukuku usule bağlı bir alandır. Aynı alacak, seçilen takip yoluna ve kullanılan ya da kaçırılan sürelere göre çok farklı bir seyir izleyebilir.',
+      ],
       topics: [
         'İlamsız icra takipleri ve ödeme emrine itiraz',
         'İlamlı icra takipleri',
@@ -29,13 +36,25 @@ export default {
         'Konkordato ve iflas süreçleri',
         'Kambiyo senetlerine özgü takip yolları',
       ],
-      approach: 'Takip dosyasındaki belgeler ve tebligat tarihleri incelenir; itiraz ve başvuru süreleri bu tarihlere göre belirlenir. İzlenecek yol müvekkille görüşülür.',
+      steps: [
+        { title: 'Takibin başlatılması', text: 'Alacağın dayanağı belirlenir; ilamlı, ilamsız veya kambiyo senetlerine özgü takip yollarından uygun olanla takip talebi icra dairesine verilir.' },
+        { title: 'Ödeme emrinin tebliği', text: 'Borçluya ödeme emri tebliğ edilir. İlamsız takipte ödeme emrine itiraz süresi tebliğden itibaren yedi gündür; tebliğ tarihi bu yüzden dosyanın ilk kontrol edilen bilgisidir.' },
+        { title: 'İtiraz veya kesinleşme', text: 'İtiraz edilirse takip durur; alacaklı itirazın kaldırılmasını ya da itirazın iptalini ayrı bir yargılamada isteyebilir. İtiraz edilmezse takip kesinleşir.' },
+        { title: 'Haciz', text: 'Kesinleşen takipte borçlunun malları üzerine haciz konulur. Haczedilemeyen mallar ve üçüncü kişilerin hakları bu aşamada ayrıca değerlendirilir.' },
+        { title: 'Satış ve paraya çevirme', text: 'Haczedilen mallar satılır; elde edilen bedel sıra cetveline göre paylaştırılır.' },
+      ],
+      note: 'Ödeme emrine itiraz süresi yedi gündür ve tebliğ tarihinden işler. Takip hukukunda sürenin ne zaman başladığı, çoğu zaman itirazın içeriğinden daha belirleyicidir.',
+      approach: 'Dosyaya ilk girişte takip dosyasındaki belgeler, tebligat evrakı ve tarihler birlikte incelenir; itiraz ve başvuru süreleri bu tarihlere göre hesaplanır. Ardından durum yazılı olarak özetlenir: hangi takip yolunun izlendiği, hangi sürelerin işlediği ve hangi başvuru yollarının açık olduğu. İzlenecek yol müvekkille görüşülerek belirlenir.',
     },
     {
       id: 'maritime',
       title: 'Deniz Hukuku',
       oneLine: 'Deniz ticareti, gemi alacakları, taşıma ve deniz sigortasına ilişkin konular.',
-      lede: 'Deniz hukuku alanı; gemilerin edinilmesi ve işletilmesi, deniz yoluyla eşya ve yolcu taşıması, deniz kazaları ve deniz sigortası gibi konuları kapsar. Çerçeveyi Türk Ticaret Kanunu’nun deniz ticaretine ilişkin hükümleri ile ilgili uluslararası sözleşmeler oluşturur.',
+      lede: 'Deniz hukuku alanı; gemilerin edinilmesi ve işletilmesi, deniz yoluyla eşya ve yolcu taşıması, deniz kazaları ve deniz sigortası gibi konuları kapsar. Çerçeveyi Türk Ticaret Kanunu’nun deniz ticaretine ilişkin hükümleri ile ilgili uluslararası sözleşmeler oluşturur. Deniz ticaretinde taraflar çoğu zaman farklı ülkelerdedir; bu nedenle uyuşmazlıklarda sözleşme ile uygulanacak hukukun birlikte okunması gerekir.',
+      body: [
+        'Deniz taşımacılığı belgeye dayanır. Konşimento, çarter sözleşmesi, yükleme ve boşaltma kayıtları ile gemi belgeleri, bir uyuşmazlığın hangi yönde değerlendirileceğini büyük ölçüde belirler. Bu belgelerin hangi tarihte ve hangi şartlarla düzenlendiği ilk bakılan noktadır.',
+        'Deniz hukukunda süreler genel hükümlere göre kısa olabilir; zararın bildirimi ve zamanaşımı gibi konular, dava açılmadan önce ayrıca takip edilmesi gereken başlıklardır.',
+      ],
       topics: [
         'Deniz yoluyla eşya taşıma sözleşmeleri ve konşimento',
         'Çarter sözleşmeleri',
@@ -44,13 +63,25 @@ export default {
         'Deniz kazaları, çatma ve kurtarma',
         'Deniz sigortası ve taşıma kaynaklı tazminat uyuşmazlıkları',
       ],
-      approach: 'Sözleşme, konşimento ve gemi belgeleri birlikte incelenir; zamanaşımı ve başvuru süreleri bakımından durum yazılı olarak ortaya konur. Dava veya başvuru yolu müvekkille görüşülür.',
+      steps: [
+        { title: 'Sözleşme ve belgeler', text: 'Taşıma sözleşmesi, çarter partisi veya konşimento temin edilir; navlun tutarı, ödeme şekli, yükleme ve boşaltma süreleri belgelerden okunur.' },
+        { title: 'Yükleme ve sefer', text: 'Yük gemiye alınır, konşimento düzenlenir. Yükün durumu ve miktarına ilişkin kayıtlar, sonradan çıkabilecek uyuşmazlıklarda delil niteliği taşır.' },
+        { title: 'Boşaltma ve teslim', text: 'Yük konşimento hamiline teslim edilir. Hasar veya eksiklik varsa teslim sırasında ya da kısa bir süre içinde ihbar edilmesi gerekir.' },
+        { title: 'Navlun ve diğer alacaklar', text: 'Navlun, bekleme (demeraj) ve benzeri alacaklar ödenir. Ödenmeyen alacaklar için yük üzerindeki hapis hakkı veya ihtiyati tedbir yolları gündeme gelir.' },
+        { title: 'Uyuşmazlık halinde başvuru yolu', text: 'Uyuşmazlık çıkarsa dava, tahkim veya gemi üzerine ihtiyati haciz gibi yollar, sözleşmedeki hükümlere göre değerlendirilir.' },
+      ],
+      note: 'Navlun süreci ödeme ve teslim ile kapanır; ancak teslim sırasında yapılmayan hasar ihbarı, sonradan ileri sürülecek talebin önünde engel olabilir.',
+      approach: 'Sözleşme, konşimento ve gemi belgeleri birlikte incelenir; zamanaşımı ve ihbar süreleri bakımından durum yazılı olarak ortaya konur. Yabancı unsurlu dosyalarda yetkili mahkeme ve uygulanacak hukuk ayrıca değerlendirilir. Dava veya başvuru yolu müvekkille görüşülerek belirlenir.',
     },
     {
       id: 'criminal',
       title: 'Ceza Hukuku',
       oneLine: 'Soruşturma ve kovuşturma aşamalarına ilişkin ceza hukuku konuları.',
-      lede: 'Ceza hukuku alanındaki faaliyetler, soruşturma ve kovuşturma süreçlerine ilişkin konuları kapsar. Ceza muhakemesi, Türk Ceza Kanunu ve ilgili mevzuat bu alanın temel çerçevesini oluşturur.',
+      lede: 'Ceza hukuku alanındaki faaliyetler, soruşturma ve kovuşturma süreçlerine ilişkin konuları kapsar. Ceza muhakemesi, Türk Ceza Kanunu ve ilgili mevzuat bu alanın temel çerçevesini oluşturur. Soruşturma aşaması çoğu zaman sanılandan daha belirleyicidir; ifadeler, toplanan deliller ve alınan kararlar sonraki aşamaların zeminini oluşturur.',
+      body: [
+        'Ceza muhakemesi, savcılığın soruşturması ile başlar; yeterli şüphe varsa iddianame düzenlenir ve dosya mahkemeye gider. Şüpheli veya sanık, bu sürecin her aşamasında müdafiden yararlanma hakkına sahiptir.',
+        'Soruşturma aşamasında verilen ifade, sonradan yapılacak savunmanın dayanağını etkiler. Bu nedenle ifadeden önce dosyanın içeriği, isnat edilen suç ve kullanılabilecek haklar bilinmelidir.',
+      ],
       topics: [
         'Soruşturma aşamasında şüpheli hakları',
         'Kovuşturma ve duruşma süreçleri',
@@ -59,13 +90,25 @@ export default {
         'Kanun yolları: istinaf ve temyiz',
         'Ekonomik nitelikli suçlara ilişkin dosyalar',
       ],
-      approach: 'Süreç, eldeki belgelerin incelenmesiyle başlar. Ardından usul ve süre bakımından durum yazılı olarak özetlenir; izlenecek yol müvekkille görüşülerek belirlenir.',
+      steps: [
+        { title: 'Soruşturma', text: 'Şikâyet veya ihbar üzerine savcılık delilleri toplar. Şüpheli, ifade vermeden önce müdafi talep edebilir; yakalama ve gözaltı işlemleri kanunda belirlenen sürelerle sınırlıdır.' },
+        { title: 'Karar veya iddianame', text: 'Savcılık kovuşturmaya yer olmadığına karar verebilir; bu karara karşı itiraz süresi kısadır. Aksi halde iddianame düzenlenir ve mahkeme tarafından kabul edilirse kovuşturma başlar.' },
+        { title: 'Kovuşturma', text: 'Duruşmalarda deliller tartışılır, tanıklar dinlenir, sanığın savunması alınır. Tutukluluk hali varsa belirli aralıklarla yeniden incelenir.' },
+        { title: 'Hüküm', text: 'Mahkeme hükmünü açıklar. Hükmün içeriği, gerekçeli karar ile birlikte değerlendirilir.' },
+        { title: 'Kanun yolları', text: 'Hükme karşı istinaf, ardından temyiz yoluna başvurulabilir. Bu başvuruların süreleri kısadır ve hükmün açıklanması ya da tebliği ile işlemeye başlar.' },
+      ],
+      note: 'Soruşturma aşaması, ceza yargılamasının sonraki yönünü çoğu zaman belirler. İfade verilmeden önce dosyanın incelenmesi bu yüzden önemlidir.',
+      approach: 'Süreç, eldeki belgelerin ve varsa soruşturma dosyasının incelenmesiyle başlar. Ardından usul ve süre bakımından durum yazılı olarak özetlenir: hangi aşamada olunduğu, hangi hakların kullanılabileceği ve hangi sürelerin işlediği. İzlenecek yol müvekkille görüşülerek belirlenir.',
     },
     {
       id: 'commercial',
       title: 'Ticaret Hukuku',
       oneLine: 'Ticari sözleşmeler, ticari alacaklar ve kıymetli evrak ilişkilerine dair konular.',
-      lede: 'Ticaret hukuku alanı, tacirler arasındaki ve ticari işletmeye ilişkin hukuki ilişkileri kapsar. Ticari sözleşmeler, ticari alacak ve tazminat uyuşmazlıkları ile kıymetli evrak ilişkileri Türk Ticaret Kanunu ve ilgili mevzuatın konusudur.',
+      lede: 'Ticaret hukuku alanı, tacirler arasındaki ve ticari işletmeye ilişkin hukuki ilişkileri kapsar. Ticari sözleşmeler, ticari alacak ve tazminat uyuşmazlıkları ile kıymetli evrak ilişkileri Türk Ticaret Kanunu ve ilgili mevzuatın konusudur. Ticari ilişkilerde yazılı belge ve ticari defterler delil olarak ağırlık taşır; uyuşmazlıkların birçoğu sözleşmenin hazırlanış biçimine kadar uzanır.',
+      body: [
+        'Ticari uyuşmazlıklar çoğunlukla sözleşmenin yorumu, ifa edilmeyen bir borç veya kıymetli evrak üzerindeki hak ile ilgilidir. Taraflar tacir olduğunda, basiretli davranma yükümlülüğü gibi özel kurallar devreye girer.',
+        'Bazı ticari davalarda, para alacağına ilişkin dava açılmadan önce arabulucuya başvurmak dava şartıdır. Bu nedenle dava yoluna gitmeden önce uyuşmazlığın türü ve izlenecek zorunlu aşamalar kontrol edilir.',
+      ],
       topics: [
         'Ticari sözleşmelerin hazırlanması ve incelenmesi',
         'Ticari alacak ve tazminat uyuşmazlıkları',
@@ -74,13 +117,25 @@ export default {
         'Ticari defterler ve ticari işletme devri',
         'Haksız rekabet uyuşmazlıkları',
       ],
-      approach: 'Talep, ilgili sözleşme ve ticari belgelerle birlikte incelenir. Hukuki çerçeve ve usul seçenekleri yazılı bir notla aktarılır; karar müvekkile aittir.',
+      steps: [
+        { title: 'Belgelerin toplanması', text: 'Sözleşme, fatura, irsaliye, yazışmalar ve ticari defter kayıtları bir araya getirilir.' },
+        { title: 'Hukuki değerlendirme', text: 'Talebin dayanağı, taraflar arasındaki ilişkinin niteliği ve uygulanacak hükümler belirlenir.' },
+        { title: 'İhtar ve görüşme', text: 'Gerekli hallerde karşı tarafa yazılı ihtar gönderilir; taraflar arasında müzakere yolu denenebilir.' },
+        { title: 'Arabuluculuk veya dava', text: 'Dava şartı olan uyuşmazlıklarda önce arabulucuya başvurulur. Anlaşma sağlanamazsa ticaret mahkemesinde dava açılır.' },
+        { title: 'Takip ve icra', text: 'Verilen karar veya sağlanan anlaşma, gerekirse icra yoluyla yerine getirilir.' },
+      ],
+      note: 'Ticari uyuşmazlıkların önemli bir kısmı, sözleşme yazılırken öngörülmeyen bir durumdan doğar. Sözleşmenin dili, uyuşmazlık çıktığında belirleyici olur.',
+      approach: 'Talep, ilgili sözleşme ve ticari belgelerle birlikte incelenir. Hukuki çerçeve ve usul seçenekleri yazılı bir notla aktarılır; dava şartı olan aşamalar ve süreler ayrıca belirtilir. Karar müvekkile aittir.',
     },
     {
       id: 'corporate',
       title: 'Şirketler Hukuku ve Danışmanlık',
       oneLine: 'Şirketlerin kuruluş, işleyiş ve ortaklık ilişkilerine dair danışmanlık konuları.',
-      lede: 'Bu alan, şirketlerin kuruluşundan sona ermesine kadar kurumsal işleyişin hukuki çerçevesini kapsar. Ortaklar arası sözleşmeler, şirket organlarının kararları ve şirketlere sunulan hukuki danışmanlık Türk Ticaret Kanunu ve ilgili mevzuatın konusudur.',
+      lede: 'Bu alan, şirketlerin kuruluşundan sona ermesine kadar kurumsal işleyişin hukuki çerçevesini kapsar. Ortaklar arası sözleşmeler, şirket organlarının kararları ve şirketlere sunulan hukuki danışmanlık Türk Ticaret Kanunu ve ilgili mevzuatın konusudur. Şirket işlemlerinin birçoğu yazılı biçim, noter işlemi veya ticaret siciline tescil gibi şekil şartlarına bağlıdır; bu şartlar yerine getirilmezse işlem geçerli olmayabilir.',
+      body: [
+        'Şirketlerde ortaklar arası ilişki, ana sözleşme ve kanun hükümleriyle birlikte yürür. Pay devri, sermaye artırımı veya yönetim değişikliği gibi işlemlerde hangi organın hangi çoğunlukla karar vereceği, şirketin türüne göre farklılık gösterir.',
+        'Karar alma süreçleri ve toplantı usulleri, sonradan ortaya çıkabilecek iptal ve sorumluluk davalarının da dayanağıdır. Bu yüzden işlemler yapılırken belge düzeninin korunması önemlidir.',
+      ],
       topics: [
         'Şirket kuruluşu ve ana sözleşme düzenlemeleri',
         'Ortaklık ve pay devri sözleşmeleri',
@@ -89,7 +144,15 @@ export default {
         'Şirketlere yönelik sürekli hukuki danışmanlık',
         'Şirket içi uyum ve sözleşme süreçlerinin düzenlenmesi',
       ],
-      approach: 'Talep, şirketin esas sözleşmesi ve ilgili belgeleriyle birlikte incelenir. Hukuki çerçeve ve seçenekler yazılı bir notla aktarılır; karar müvekkile aittir.',
+      steps: [
+        { title: 'Mevcut yapının incelenmesi', text: 'Ana sözleşme, ortaklar listesi, pay defteri ve önceki genel kurul kararları incelenir.' },
+        { title: 'İşlemin kurgulanması', text: 'Planlanan işlem (kuruluş, pay devri, birleşme vb.) için gerekli kararlar, çoğunluklar ve şekil şartları belirlenir.' },
+        { title: 'Belgelerin hazırlanması', text: 'Sözleşmeler, genel kurul ve yönetim kurulu kararları ile gerekli başvuru evrakı hazırlanır.' },
+        { title: 'Noter ve tescil', text: 'Gerekli işlemler noterde yapılır; kararlar ve değişiklikler ticaret siciline tescil ve ilan ettirilir.' },
+        { title: 'Sonraki süreç', text: 'İşlem sonrasında defter ve kayıtların güncellenmesi ile süreklilik arz eden danışmanlık ihtiyaçları değerlendirilir.' },
+      ],
+      note: 'Genel kurul kararlarına karşı iptal davası açma süresi kısadır. Kararın alınış biçimi ve toplantı belgeleri bu yüzden en baştan düzenli tutulmalıdır.',
+      approach: 'Talep, şirketin esas sözleşmesi ve ilgili belgeleriyle birlikte incelenir. Hukuki çerçeve ve seçenekler yazılı bir notla aktarılır; gerekli şekil şartları ve süreler ayrıca belirtilir. Karar müvekkile aittir.',
     },
   ],
 };

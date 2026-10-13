@@ -63,6 +63,14 @@ export default function PracticeView({ common, seo, detail, area, slug, prev, ne
                 {area.lede}
               </Reveal>
 
+              {area.body?.length > 0 && (
+                <div className="case__body">
+                  {area.body.map((para) => (
+                    <p key={para}>{para}</p>
+                  ))}
+                </div>
+              )}
+
               <section className="case__block" aria-labelledby="case-topics">
                 <h2 id="case-topics" className="case__h2">
                   {detail.topicsTitle}
@@ -78,6 +86,34 @@ export default function PracticeView({ common, seo, detail, area, slug, prev, ne
                   ))}
                 </ol>
               </section>
+
+              {area.steps?.length > 0 && (
+                <section className="case__block" aria-labelledby="case-steps">
+                  <h2 id="case-steps" className="case__h2">
+                    {detail.stepsTitle}
+                  </h2>
+                  <ol className="case__steps">
+                    {area.steps.map((st, i) => (
+                      <Reveal as="li" now={i < 2} delay={Math.min(i, 4)} className="case__step" key={st.title}>
+                        <span className="case__step-n" aria-hidden="true">
+                          {pad(i + 1)}
+                        </span>
+                        <div>
+                          <h3 className="case__step-title">{st.title}</h3>
+                          <p className="case__step-text">{st.text}</p>
+                        </div>
+                      </Reveal>
+                    ))}
+                  </ol>
+                </section>
+              )}
+
+              {area.note && (
+                <aside className="case__note" aria-label={detail.noteLabel}>
+                  <p className="case__note-label">{detail.noteLabel}</p>
+                  <p className="case__note-text">{area.note}</p>
+                </aside>
+              )}
 
               <section className="case__block" aria-labelledby="case-approach">
                 <h2 id="case-approach" className="case__h2">
