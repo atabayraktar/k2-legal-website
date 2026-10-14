@@ -42,6 +42,13 @@ export const images = {
     "height": 1100,
     "aspect": "880 / 1100"
   },
+  "hero-corridor": {
+    "src": "/images/hero-corridor-2000.webp",
+    "srcSet": "/images/hero-corridor-800.webp 800w, /images/hero-corridor-1400.webp 1400w, /images/hero-corridor-2000.webp 2000w",
+    "width": 2000,
+    "height": 1046,
+    "aspect": "2000 / 1046"
+  },
   "hero-justice": {
     "src": "/images/hero-justice-1440.webp",
     "srcSet": "/images/hero-justice-720.webp 720w, /images/hero-justice-1008.webp 1008w, /images/hero-justice-1440.webp 1440w",

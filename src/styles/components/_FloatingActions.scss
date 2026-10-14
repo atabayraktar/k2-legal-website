@@ -1,14 +1,22 @@
 @use 'tokens/mixins' as *;
 
 // Sticky corner buttons: square, hairline-bordered so they read on both bone and ink sections.
+:root {
+  --fab-size: 52px;
+
+  @media (max-width: 599.98px) {
+    --fab-size: 44px;
+  }
+}
+
 .fab {
   position: fixed;
   bottom: var(--sp-16);
   z-index: var(--z-header);
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: var(--fab-size);
+  height: var(--fab-size);
   border: 1px solid var(--bone);
   background: var(--ink);
   color: var(--bone);

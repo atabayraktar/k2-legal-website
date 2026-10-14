@@ -354,6 +354,7 @@
 
   &__actions {
     display: flex;
+    justify-content: flex-end;
 
     @include down(tab-mini) {
       .btn {

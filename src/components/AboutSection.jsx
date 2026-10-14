@@ -5,6 +5,8 @@ import { siteVars } from '../lib/schema.js';
 // Hakkimizda (ink). A full-width headline and two plain text blocks side by side (how the partnership came about,
 // what it does). No photograph, no eyebrow, no rotated label, no cards.
 export default function AboutSection({ t, site, children, headingAs: Heading = 'h2' }) {
+  const first = Heading === 'h1'; // standalone page: this block is the first viewport, so it must be in the first paint (LCP)
+  const Sub = Heading === 'h1' ? 'h2' : 'h3';
   const vars = siteVars();
   const founding = [...t.founding];
   if (site.foundedYear != null) founding.push(fmt(t.foundedSentence, vars));
@@ -15,22 +17,22 @@ export default function AboutSection({ t, site, children, headingAs: Heading = '
       <div className="container">
         <div className="about-section__grid">
           <Heading id="hakkimizda-title" className="about-section__title">
-            <Reveal as="span" variant="line">
+            <Reveal as="span" variant="line" now={first}>
               {t.h2}
             </Reveal>
           </Heading>
 
           <div className="about-section__text">
-            <Reveal delay={1} className="about-section__block">
-              <h3 className="about-section__h3">{t.foundingTitle}</h3>
+            <Reveal delay={1} now={first} className="about-section__block">
+              <Sub className="about-section__h3">{t.foundingTitle}</Sub>
               {founding.map((p) => (
                 <p className="about-section__p" key={p}>
                   {p}
                 </p>
               ))}
             </Reveal>
-            <Reveal delay={2} className="about-section__block">
-              <h3 className="about-section__h3">{t.activityTitle}</h3>
+            <Reveal delay={2} now={first} className="about-section__block">
+              <Sub className="about-section__h3">{t.activityTitle}</Sub>
               {t.activity.map((p) => (
                 <p className="about-section__p" key={p}>
                   {p}

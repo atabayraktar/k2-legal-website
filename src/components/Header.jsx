@@ -32,8 +32,8 @@ export default function Header({ theme: initialTheme = 'light', menuOpen, onMenu
       <div className="header__bg" aria-hidden="true" />
       <div className="header__bar container">
         <Link className="header__brand" href={pagePath('home')} aria-label={site.legalName} onClick={onLogo}>
-          <Logo tone="dark" className="header__logo header__logo--dark" />
-          <Logo tone="light" className="header__logo header__logo--light" />
+          <Logo tone="dark" priority className="header__logo header__logo--dark" />
+          <Logo tone="light" priority className="header__logo header__logo--light" />
         </Link>
 
         <nav className="header__nav" aria-label={t.menu.label}>

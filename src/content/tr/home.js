@@ -9,6 +9,16 @@ export default {
     slogan: 'Hukukta söz uçar, yazı kalır.',
     entity:
       'Dava ve danışmanlık dosyaları; mevzuat, süre ve yazılı kayıt esasıyla yürütülür. Her dosya kendi gerekçesiyle, kendi takvimiyle ve düzenli bir dosya diliyle ele alınır. Beş faaliyet alanında, bir ortaklık olarak çalışırız.',
+    // Rotating mottos over the corridor photograph (CSS-only loop). Neutral, no promises or solicitation.
+    mottos: ['Hukukta söz uçar, yazı kalır.', 'Her dosyanın bir takvimi vardır.', 'Mevzuat. Süre. Yazılı kayıt.', 'Düzenli dosya, açık dil.'],
+    areasLabel: 'Dava ve danışmanlık alanları',
+    areas: [
+      { label: 'İcra ve İflas', id: 'enforcement' },
+      { label: 'Ceza', id: 'criminal' },
+      { label: 'Şirketler ve Danışmanlık', id: 'corporate' },
+      { label: 'Deniz', id: 'maritime' },
+      { label: 'Ticaret', id: 'commercial' },
+    ],
     ctaPrimary: 'Randevu Talep Et',
     ctaSecondary: 'Çalışma Alanları',
   },

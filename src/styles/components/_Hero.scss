@@ -1,257 +1,308 @@
 @use 'tokens/mixins' as *;
 
-// "Dosya Kapagi". Bone cover sheet: headline in two rows with the scales-of-justice photo beside the first row,
-// entity statement in the gap, one typed kunye line.
-// The two hero rows must never wrap: --hero-fs is the measured fit (DANISMANLIK across the container at 320-1920).
+// "Koridor". One full-screen frame: B&W corridor photograph covers the hero with a slow dolly-in (transform only), a CSS
+// loop of four mottos, the areas list + actions bottom left, the logo bottom right. Flat ink scrim (no gradient).
 
-@mixin hero-wide {
-  .hero__grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-template-rows: auto 1fr auto;
-    row-gap: var(--sp-16);
-    padding-top: var(--sp-24);
-  }
+$motto-count: 4;
+$motto-step: 5s;
 
-  .hero__row--1 {
-    grid-column: 1 / span 7;
-  }
+@keyframes hero-dolly {
+  from { transform: scale(1.02) translate3d(0, 0, 0); }
+  to { transform: scale(1.25) translate3d(0, -1.5%, 0); }
+}
 
-  .hero__photo {
-    grid-area: 1 / 8 / 3 / -1;
-  }
-
-  .hero__copy {
-    grid-area: 2 / 1 / 3 / 7;
-    align-self: end;
-    padding-block: var(--sp-24);
-  }
-
-  .hero__actions {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--sp-32);
-  }
-
-  .hero__actions {
-    flex-wrap: wrap;
-    gap: var(--sp-16) var(--sp-32);
-  }
-
-  .hero__actions .btn {
-    flex: none;
-    width: auto;
-  }
+@keyframes hero-motto {
+  0% { opacity: 0; transform: translateY(28px); }
+  3% { opacity: 1; transform: translateY(0); }
+  21% { opacity: 1; transform: translateY(0); }
+  25%, 100% { opacity: 0; transform: translateY(-28px); }
 }
 
 .hero {
-  // fit: DANIŞMANLIK measures ~6.75em in Bricolage 800 (-0.03em); 7.0 keeps a safety margin incl. scrollbar width
-  --hero-fs: min(190px, calc((100vw - 2 * var(--gutter)) / 7));
+  position: relative;
+  overflow: hidden;
+  height: 100svh;
+  min-height: 560px;
   padding-top: var(--header-h);
-  padding-bottom: var(--sp-48);
+  background: var(--ink);
+  color: var(--bone);
 
-  &__frame {
+  &__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  &__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    transform-origin: 50% 52%;
+    animation: hero-dolly 16s ease-in-out infinite alternate;
+  }
+
+  &__scrim {
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+    opacity: 0.4;
+  }
+
+  &__content {
+    position: relative;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    min-height: calc(100svh - var(--header-h));
+    justify-content: flex-end;
+    gap: var(--sp-32);
+    padding-bottom: clamp(24px, 4.5vh, 56px);
   }
 
-  // The grid is 1 column on phones and tablets: row1 / photo / row2 / copy.
-  // The h1 is a subgrid spanning rows 1-3 so its two spans land in rows 1 and 3, with the photo between them.
-  &__grid {
+  &__mottos {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto auto auto auto;
-    row-gap: var(--sp-24);
-    padding-top: var(--sp-24);
+    flex: 1 1 auto;
+    align-items: end;
+    min-height: 0;
   }
 
-  &__title {
-    grid-area: 1 / 1 / 4 / -1;
-    display: grid;
-    grid-template-columns: subgrid;
-    grid-template-rows: subgrid;
+  &__motto {
+    grid-area: 1 / 1;
     margin: 0;
-    font-size: var(--hero-fs);
-    line-height: 0.86;
+    max-width: 14ch;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(38px, min(8vw, 15svh), 148px);
+    line-height: 0.9;
     letter-spacing: var(--ls-hero);
-    white-space: nowrap;
-    text-wrap: nowrap;
-  }
+    text-transform: uppercase;
+    color: var(--bone);
+    text-wrap: balance;
+    opacity: 0;
+    animation: hero-motto ($motto-count * $motto-step) var(--ease) infinite both;
 
-  &__row {
-    display: block;
-    min-width: 0;
-  }
-
-  &__row--1 {
-    grid-row: 1;
-    grid-column: 1 / -1;
-  }
-
-  // air under the big word (cedilla of Ş, then the kunye strip)
-  &__row--2 {
-    grid-row: 3;
-    grid-column: 1 / -1;
-    padding-bottom: clamp(24px, 4.5vw, 64px);
-  }
-
-  &__photo {
-    position: relative;
-    z-index: 1;
-    grid-area: 2 / 1 / 3 / -1;
-    // corner ticks sit 8px outside the photo; keep them off the viewport edge
-    margin-inline: 0;
-  }
-
-  // dark still life on black: the photo keeps its own tone, only the crop changes with the layout
-  &__photo .frame__img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    object-position: 50% 40%;
-  }
-
-  &__actions .lnk {
-    white-space: nowrap;
-    align-self: center;
-  }
-
-  @media (max-width: 599.98px) {
-    &__row--2 {
-      padding-bottom: var(--sp-8);
+    @for $n from 1 through 12 {
+      &:nth-child(#{$n}) {
+        animation-delay: ($n - 1) * $motto-step;
+      }
     }
   }
 
-
-  &__copy {
-    grid-area: 4 / 1 / 5 / -1;
-    position: relative;
-    z-index: 1;
+  &__foot {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-24);
   }
 
-  &__slogan {
-    margin: 0 0 var(--sp-16);
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: clamp(16px, 1.3vw, 19px);
-    line-height: 1.3;
-    letter-spacing: 0.02em;
-    color: var(--accent);
+  &__label {
+    @include mono-label;
+    margin: 0 0 var(--sp-12);
+    color: var(--bone);
+    opacity: 0.8;
   }
 
-  &__entity {
-    max-width: 46ch;
+  // typewriter index: five areas as a hairline-divided run, not a sentence
+  &__areas {
+    display: flex;
+    flex-wrap: wrap;
     margin: 0 0 var(--sp-24);
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: clamp(16px, 1.3vw, 19px);
-    line-height: 1.5;
-    color: var(--fg);
-    text-wrap: pretty;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(15px, 1.3vw, 20px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+
+    li {
+      padding: 4px var(--sp-12) 4px 0;
+      margin-right: var(--sp-12);
+      border-right: 1px solid var(--rule);
+    }
+
+    li:last-child {
+      border-right: 0;
+      margin-right: 0;
+    }
+  }
+
+  &__area {
+    display: inline-block;
+    min-height: 24px;
+    color: var(--bone);
+    text-decoration: none;
+    transition: color 0.3s var(--ease);
+
+    &:hover {
+      color: var(--wax-lit);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--wax-lit);
+      outline-offset: 4px;
+    }
   }
 
   &__actions {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--sp-8);
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-16) var(--sp-32);
   }
 
-  &__actions .btn {
-    width: 100%;
-  }
-
-  @include up(tab-mini) {
-    &__photo .frame__img {
-      aspect-ratio: 3 / 2;
-      object-position: 50% 45%;
-    }
-
-  }
-
-  // wide two-zone composition
-  @media (min-width: 900px) {
-    @include hero-wide;
-  }
-
-  // desktop/laptop: the whole hero fits the first screen. The photo is absolutely filled so it never drives row heights,
-  // and the headline size is also capped by viewport height (short laptops). Very short windows scroll naturally.
-  // landscape only: portrait tablets (iPad Pro 1024x1366) have height to spare and keep the natural composition
-  @media (min-width: 900px) and (min-height: 600px) and (orientation: landscape) {
-    --hero-fs: min(190px, calc((100vw - 2 * var(--gutter)) / 7), calc((100svh - 500px) / 1.75));
-
-    &__frame {
-      height: calc(100svh - var(--header-h) - var(--sp-48));
-      min-height: 0;
-    }
-
-    &__grid {
-      flex: 1 1 auto;
-      min-height: 0;
-    }
-
-    // less air under DANIŞMANLIK (room for the Ş cedilla stays): the word and the copy above it sit lower
-    &__row--2 {
-      padding-bottom: var(--sp-16);
-    }
-
-    &__photo {
-      min-height: 0;
-
-      .frame {
-        position: absolute;
-        inset: 0;
-      }
-
-      .frame__wrap,
-      .frame__box {
-        height: 100%;
-      }
-    }
-
-    &__photo .frame__img {
-      height: 100%;
-      aspect-ratio: auto;
-    }
-  }
-
-  // portrait wide tablets (iPad Pro 1024x1366): natural height, no forced full-screen frame (it left a blank band under the headline)
-  @media (min-width: 900px) and (orientation: portrait) {
-    &__frame {
-      min-height: 0;
-    }
+  &__logo {
+    flex: none;
+    width: clamp(140px, 14vw, 200px);
   }
 
   @media (min-width: 900px) {
-
-    &__photo .frame__img {
-      aspect-ratio: 4 / 5;
-      object-position: 50% 40%;
+    &__foot {
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: space-between;
+      // clear the floating contact buttons on the right edge
+      padding-right: 72px;
     }
 
+    // smaller than the info block, centred vertically against it
+    &__logo {
+      width: auto;
+      height: 72px;
+      align-self: center;
+    }
   }
 
-  // landscape phones: keep the two-zone composition, drop the forced viewport height
-  @media (max-height: 520px) and (orientation: landscape) and (min-width: 560px) and (max-width: 899px) {
-    @include hero-wide;
-
-    &__frame {
-      min-height: 0;
+  // phones and portrait tablets: crop on the vanishing point of the corridor, buttons side by side,
+  // small logo on top of the info block instead of squeezed at the bottom
+  @media (max-width: 899.98px) {
+    &__img {
+      object-position: 52% 40%;
+      transform-origin: 52% 42%;
     }
 
-    &__photo {
-      grid-column: 9 / -1;
+    &__scrim {
+      opacity: 0.5;
     }
 
-    &__row--1 {
-      grid-column: 1 / span 8;
+    &__foot {
+      gap: var(--sp-16);
     }
 
-    &__photo .frame__img {
-      aspect-ratio: 4 / 5;
+    // the header already carries the lockup; a second one here only crowds the bottom
+    &__logo {
+      display: none;
     }
 
+    &__content {
+      padding-bottom: var(--sp-32);
+    }
+
+    // bulleted areas list first, buttons last. On phones the buttons row would run under the floating contact
+    // buttons (lower right), so the whole block is lifted clear of them below 600px
+    &__label {
+      margin-bottom: var(--sp-8);
+    }
+
+    &__actions {
+      margin-top: var(--sp-24);
+    }
+
+    &__areas {
+      flex-direction: column;
+      margin: 0;
+
+      li,
+      li:last-child {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-12);
+        margin: 0;
+        padding: 3px 0;
+        border-right: 0;
+      }
+
+      li::before {
+        content: '';
+        flex: none;
+        width: 6px;
+        height: 6px;
+        background: var(--bone);
+      }
+    }
+
+    &__actions {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: var(--sp-16);
+    }
+
+    &__actions .btn {
+      flex: none;
+      width: auto;
+      padding-inline: var(--sp-16);
+      letter-spacing: 0.12em;
+    }
+
+    &__actions .lnk {
+      flex: 0 1 auto;
+      min-width: 0;
+      white-space: nowrap;
+      letter-spacing: 0.12em;
+    }
+  }
+
+  @media (max-width: 599.98px) {
+    // content sits near the bottom edge; the buttons row stops short of the floating contact buttons instead
+    &__actions {
+      flex-wrap: wrap;
+      padding-right: 64px;
+      gap: var(--sp-12) var(--sp-16);
+    }
+
+    &__actions .btn__arrow,
+    &__actions .lnk__arrow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 419.98px) {
+    &__actions {
+      gap: var(--sp-12);
+      padding-right: 52px;
+    }
+
+    &__actions .btn {
+      padding-inline: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    &__actions .lnk {
+      letter-spacing: 0.02em;
+    }
+  }
+
+  @media (max-width: 349.98px) {
+    &__actions .btn {
+      padding-inline: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    &__actions .lnk {
+      letter-spacing: 0.02em;
+    }
+  }
+
+  // the slow zoom on the photo keeps running (client request); only the text loop stops
+  @include reduced-motion {
+    &__motto {
+      animation: none;
+      transform: none;
+
+      &:first-child {
+        opacity: 1;
+      }
+    }
   }
 }
-
-

@@ -3,7 +3,7 @@
 // "Hızlı bilgi": scripted Q&A card above the sticky buttons. Paper card, ink hairline frame, ink title strip with a
 // typewriter tag; bot lines are paper with an ink left rule, visitor lines are ink squares. No radius, no shadow.
 .fab--chat {
-  bottom: calc(var(--sp-16) + 52px + var(--sp-12));
+  bottom: calc(var(--sp-16) + var(--fab-size) + var(--sp-12));
   right: var(--sp-16);
 
   &.is-on {
@@ -25,7 +25,7 @@
   position: fixed;
   z-index: calc(var(--z-header) + 1);
   right: var(--sp-16);
-  bottom: calc(var(--sp-16) + 52px + var(--sp-12) + 52px + var(--sp-12));
+  bottom: calc(var(--sp-16) + var(--fab-size) + var(--sp-12) + var(--fab-size) + var(--sp-12));
   display: flex;
   flex-direction: column;
   width: min(392px, calc(100vw - 32px));
