@@ -11,6 +11,14 @@
   padding-inline: var(--gutter);
 }
 
+// Header and footer span the full viewport; side padding grows with the screen
+// (56px cap of the page gutter would leave a wide empty band on 27" monitors).
+.header__bar.container,
+.footer > .container {
+  max-width: none;
+  padding-inline: clamp(20px, 4vw, 120px);
+}
+
 .grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
