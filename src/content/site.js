@@ -9,7 +9,7 @@ export const FEATURES = { publications: false, practiceConfirmed: true };
 
 export const site = {
   legalName: 'Karaman & Berat Avukatlık Ortaklığı', // TODO(client) confirm exact spelling against the baro record
-  domain: 'https://alan-adi.example', // TODO(client) final production origin, no trailing slash
+  domain: 'https://k2hukuk.com', // production origin, no trailing slash
   foundedYear: null, // TODO(client) only if verified; UI hides the row when null
   // TODO(client) how the partnership was founded (year, who came together, when the baro registered it). The Hakkımızda
   // text is generic until then; a verified sentence set here is appended to the "Nasıl kuruldu" block. Never invent.

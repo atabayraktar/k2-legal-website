@@ -1,6 +1,6 @@
 // Long-form legal copy (TR). Tokens {legalName} {address} {email} {phone} {city} {baro} are resolved in LegalView from site.js.
-// Every unknown is a blank token […] (source markers: TODO(client) in comments, never rendered); nothing here is an invented fact. Counsel (KVKK + bar) must approve before launch.
-const updated = '[…]'; // TODO(client) son güncelleme tarihi, yayın anında
+// Every unknown is a blank token (source markers: notes in comments, never rendered); nothing here is an invented fact. Counsel (KVKK + bar) must approve before launch.
+const updated = '15 Ekim 2026'; // son güncelleme tarihi
 
 export default {
   tocLabel: 'İçerik',
