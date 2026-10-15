@@ -13,7 +13,6 @@ export default function LegalView({ routeKey, common, seo, legal }) {
   const vars = {
     legalName: site.legalName,
     address: addressLine(c.address),
-    email: c.email,
     phone: c.phone.display,
     city: site.city,
   };

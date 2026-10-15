@@ -38,10 +38,6 @@ export default function Footer() {
     ...(c.whatsapp.url
       ? [{ k: t.labels.whatsapp, v: <a href={c.whatsapp.url} target="_blank" rel="noopener noreferrer">{c.whatsapp.display}</a> }]
       : []),
-    {
-      k: t.labels.email,
-      v: isPending(c.email, { required: true }) ? renderPending(c.email) : <a href={`mailto:${c.email}`}>{c.email}</a>,
-    },
   ];
 
   return (

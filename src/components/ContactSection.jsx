@@ -41,10 +41,6 @@ export default function ContactSection({ t, common, site, headingId = 'iletisim-
           ),
         }]
       : []),
-    {
-      k: L.email,
-      v: isPending(c.email, { required: true }) ? renderPending(c.email) : <a className="contact__a" href={`mailto:${c.email}`}>{c.email}</a>,
-    },
     { k: L.hours, v: renderPending(c.hours.display) },
   ];
 

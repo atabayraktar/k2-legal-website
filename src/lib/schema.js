@@ -36,7 +36,6 @@ export function orgSchema() {
     logo: abs('/og/og-default.png'),
     image: abs(site.seo.ogImage),
     telephone: [c.phone.tel, c.mobile.tel],
-    email: c.email,
     address: {
       '@type': 'PostalAddress',
       streetAddress: a.street,
@@ -50,7 +49,7 @@ export function orgSchema() {
     // only when the client has confirmed the weekdays (hours.schema), never guessed
     openingHours: c.hours.schema,
     contactPoint: [
-      { '@type': 'ContactPoint', contactType: 'customer service', telephone: c.phone.tel, email: c.email, availableLanguage: 'tr' },
+      { '@type': 'ContactPoint', contactType: 'customer service', telephone: c.phone.tel, availableLanguage: 'tr' },
       { '@type': 'ContactPoint', contactType: 'customer service', telephone: c.mobile.tel, availableLanguage: 'tr' },
     ],
     areaServed: { '@type': 'AdministrativeArea', name: a.city },
@@ -108,7 +107,6 @@ export function siteVars() {
     foundedYear: site.foundedYear,
     phone: c.phone.display,
     mobile: c.mobile.display,
-    email: c.email,
     address: addressLine(c.address),
     hours: c.hours.display,
     year: new Date().getFullYear(),

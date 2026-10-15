@@ -20,7 +20,6 @@ export default {
         list: [
           'Unvan: {legalName}',
           'Adres: {address}',
-          'E-posta: {email}',
           'Telefon: {phone}',
         ],
       },
@@ -29,7 +28,7 @@ export default {
         h2: 'İşlenen kişisel veriler',
         paragraphs: ['İletişim formunu veya diğer iletişim kanallarını kullandığınızda aşağıdaki veriler işlenebilir:'],
         list: [
-          'Kimlik ve iletişim verisi: ad, soyad, e-posta adresi, telefon numarası.',
+          'Kimlik ve iletişim verisi: ad, soyad, telefon numarası.',
           'Talep verisi: konu başlığı ve mesaj içeriğinde kendiliğinden yazdığınız bilgiler.',
           'İşlem güvenliği verisi: internet sitesinin barındırıldığı hizmet sağlayıcının tuttuğu teknik erişim kayıtları (IP adresi, tarih ve saat, istenen sayfa).',
         ],
@@ -66,7 +65,7 @@ export default {
         id: 'yontem',
         h2: 'Toplama yöntemi',
         paragraphs: [
-          'Verileriniz; internet sitesindeki iletişim formu, e-posta, telefon ve WhatsApp yoluyla, elektronik ortamda ve sizin tarafınızdan iletilerek toplanır.',
+          'Verileriniz; internet sitesindeki iletişim formu, telefon ve WhatsApp yoluyla, elektronik ortamda ve sizin tarafınızdan iletilerek toplanır.',
         ],
       },
       {
@@ -97,7 +96,7 @@ export default {
         id: 'basvuru',
         h2: 'Başvuru yöntemi',
         paragraphs: [
-          'Yukarıdaki haklarınıza ilişkin başvurularınızı, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ’de öngörülen yöntemlerle yazılı olarak {address} adresine veya {email} e-posta adresine iletebilirsiniz.',
+          'Yukarıdaki haklarınıza ilişkin başvurularınızı, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ’de öngörülen yöntemlerle yazılı olarak {address} adresine iletebilirsiniz.',
           'Başvurunuzda kimliğinizi tespit edici bilgilerin ve talebinizin açık biçimde yer alması gerekir. Başvurular, talebin niteliğine göre en geç otuz gün içinde sonuçlandırılır. Başvurunuza verilen yanıttan memnun kalmamanız hâlinde Kişisel Verileri Koruma Kurulu’na şikâyette bulunma hakkınız saklıdır.',
         ],
       },
@@ -166,7 +165,7 @@ export default {
         id: 'degisiklik',
         h2: 'Değişiklikler ve iletişim',
         paragraphs: [
-          'Sitede çerez veya izleme teknolojisi kullanımına başlanması hâlinde bu politika güncellenir ve gerekli onay mekanizması kurulur. Sorularınız için {email} adresine yazabilirsiniz.',
+          'Sitede çerez veya izleme teknolojisi kullanımına başlanması hâlinde bu politika güncellenir ve gerekli onay mekanizması kurulur. Sorularınız için {phone} numarasını arayabilir veya WhatsApp’tan yazabilirsiniz.',
         ],
       },
     ],
@@ -188,7 +187,7 @@ export default {
         id: 'iliski',
         h2: 'Avukat–müvekkil ilişkisi',
         paragraphs: [
-          'İnternet sitesini ziyaret etmek, iletişim formunu göndermek, e-posta yazmak veya telefonla arayıp mesaj bırakmak, {legalName} ile arasında avukat–müvekkil ilişkisi kurmaz. Bu ilişki yalnızca yazılı vekâlet veya hizmet sözleşmesinin imzalanmasıyla doğar.',
+          'İnternet sitesini ziyaret etmek, iletişim formunu göndermek, WhatsApp’tan yazmak veya telefonla arayıp mesaj bırakmak, {legalName} ile arasında avukat–müvekkil ilişkisi kurmaz. Bu ilişki yalnızca yazılı vekâlet veya hizmet sözleşmesinin imzalanmasıyla doğar.',
         ],
       },
       {

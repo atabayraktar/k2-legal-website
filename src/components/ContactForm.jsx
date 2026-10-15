@@ -5,15 +5,13 @@ import WhatsAppIcon from './WhatsAppIcon';
 import { fmt } from '../lib/format.js';
 import { pagePath } from '../lib/routes-util.js';
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const EMPTY = { name: '', email: '', phone: '', subject: '', message: '', consent: false, _gotcha: '' };
+const EMPTY = { name: '', phone: '', subject: '', message: '', consent: false, _gotcha: '' };
 const REQUIRED = { name: true, message: true };
-const ORDER = ['name', 'email', 'message', 'consent'];
+const ORDER = ['name', 'message', 'consent'];
 
 function validate(v) {
   const e = {};
   if (v.name.trim().length < 2) e.name = true;
-  if (v.email.trim() && !EMAIL_RE.test(v.email.trim())) e.email = true;
   if (v.message.trim().length < 5) e.message = true;
   if (!v.consent) e.consent = true;
   return e;
@@ -32,7 +30,7 @@ export default function ContactForm({ t, site, headingId }) {
   const [touched, setTouched] = useState({});
   const [state, setState] = useState('idle');
   const [invalid, setInvalid] = useState([]);
-  const refs = { name: useRef(null), email: useRef(null), phone: useRef(null), subject: useRef(null), message: useRef(null), consent: useRef(null) };
+  const refs = { name: useRef(null), phone: useRef(null), subject: useRef(null), message: useRef(null), consent: useRef(null) };
   const now = validate(values);
 
   const setField = (k, val) => {
@@ -55,7 +53,7 @@ export default function ContactForm({ t, site, headingId }) {
     ev.preventDefault();
     const errs = validate(values);
     setErrors(errs);
-    setTouched({ name: true, email: true, message: true, consent: true });
+    setTouched({ name: true, message: true, consent: true });
     const bad = ORDER.filter((k) => errs[k]);
     if (bad.length) {
       // The result block (polite live region) lists what is missing; focus moves to the first invalid field.
@@ -70,7 +68,6 @@ export default function ContactForm({ t, site, headingId }) {
     }
     const text = [
       `Ad Soyad: ${values.name.trim()}`,
-      values.email.trim() && `E-posta: ${values.email.trim()}`,
       values.phone.trim() && `Telefon: ${values.phone.trim()}`,
       values.subject.trim() && `Konu: ${values.subject.trim()}`,
       '',
@@ -139,7 +136,6 @@ export default function ContactForm({ t, site, headingId }) {
 
   const fieldProps = {
     name: { autoComplete: 'name' },
-    email: { type: 'email', autoComplete: 'email' },
     phone: { type: 'tel', autoComplete: 'tel' },
     subject: {},
     message: { area: true },
@@ -153,7 +149,7 @@ export default function ContactForm({ t, site, headingId }) {
   const res = t.result[state];
   const showResult = Boolean(res) && state !== 'idle';
   const hideForm = state === 'whatsapp';
-  const resultText = res ? fmt(res.text, { email: site.contact.email, n: invalid.length }) : '';
+  const resultText = res ? fmt(res.text, { n: invalid.length }) : '';
 
   return (
     <form className="cf" onSubmit={onSubmit} noValidate aria-labelledby={headingId}>

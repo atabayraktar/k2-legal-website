@@ -33,7 +33,6 @@ export default {
     mobile: 'Mobil',
     whatsappFloat: 'WhatsApp ile yaz',
     toTop: 'Sayfa başına dön',
-    email: 'E-posta',
     hours: 'Çalışma saatleri',
     whatsapp: 'WhatsApp',
     registeredName: 'Tescilli unvan',

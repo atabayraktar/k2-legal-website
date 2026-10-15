@@ -56,7 +56,7 @@ export default {
         name: 'Gizlilik',
         statement: 'Sır saklama yükümlülüğü Avukatlık Kanunu’ndan doğar.',
         detail:
-          'Avukat, mesleği sırasında öğrendiği bilgileri saklamakla yükümlüdür. Bu nedenle iletişim formu veya e-posta yoluyla gizli bilgi ve belge göndermemeniz rica olunur; bunlar yazılı vekâlet veya hizmet sözleşmesinden sonra paylaşılır.',
+          'Avukat, mesleği sırasında öğrendiği bilgileri saklamakla yükümlüdür. Bu nedenle iletişim formu veya WhatsApp yoluyla gizli bilgi ve belge göndermemeniz rica olunur; bunlar yazılı vekâlet veya hizmet sözleşmesinden sonra paylaşılır.',
       },
       {
         id: 'mevzuat',

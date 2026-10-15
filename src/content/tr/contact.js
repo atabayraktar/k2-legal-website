@@ -9,7 +9,7 @@ export default {
     'Formu üç bölümde doldurun. Talep göndermek için WhatsApp açılır; mesajı orada kendiniz gönderirsiniz. Gönderdiğiniz bilgiler yalnızca talebinizi değerlendirmek için kullanılır.',
   groups: [
     { id: 'who', title: 'Kimliğiniz', fields: ['name'] },
-    { id: 'reach', title: 'Size nasıl ulaşılır', fields: ['email', 'phone'] },
+    { id: 'reach', title: 'Size nasıl ulaşılır', fields: ['phone'] },
     { id: 'ask', title: 'Talebiniz', fields: ['subject', 'message'] },
   ],
   groupDone: 'tamamlandı',
@@ -21,11 +21,6 @@ export default {
       label: 'Ad Soyad',
       hint: 'Adınızı ve soyadınızı yazın.',
       error: 'Lütfen adınızı ve soyadınızı yazın.',
-    },
-    email: {
-      label: 'E-posta',
-      hint: 'İsteğe bağlı; yazışma için kullanılacak adres.',
-      error: 'Geçerli bir e-posta adresi yazın (örnek: ad@alanadi.com).',
     },
     phone: {
       label: 'Telefon',

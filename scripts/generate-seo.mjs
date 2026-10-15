@@ -77,7 +77,6 @@ const contactRows = [
   ['Adres', addressText],
   ['Telefon (sabit)', ok(c.phone.display)],
   ['Telefon (cep)', ok(c.mobile && c.mobile.display)],
-  ['E-posta', ok(c.email)],
   ['Çalışma saatleri', ok(c.hours.display)],
   ['WhatsApp', ok(c.whatsapp.display)],
 ].filter(([, v]) => v);

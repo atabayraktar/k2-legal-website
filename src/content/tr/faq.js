@@ -9,12 +9,12 @@ export default {
     {
       id: 's-01',
       q: 'Randevu nasıl talep edilir?',
-      a: 'Randevu talebi bu sayfadaki iletişim formu, telefon ({phone}) veya e-posta ({email}) yoluyla iletilebilir. Talebinizde adınız, ulaşabileceğimiz bir iletişim bilgisi ve konunun kısa bir başlığı yeterlidir. Randevu tarihi ve saati, ortaklığın takvimine göre karşılıklı belirlenir.',
+      a: 'Randevu talebi bu sayfadaki iletişim formu, telefon ({phone}) veya WhatsApp yoluyla iletilebilir. Talebinizde adınız, ulaşabileceğimiz bir iletişim bilgisi ve konunun kısa bir başlığı yeterlidir. Randevu tarihi ve saati, ortaklığın takvimine göre karşılıklı belirlenir.',
     },
     {
       id: 's-02',
       q: 'İletişim formuna gizli bilgi veya belge yazılabilir mi?',
-      a: 'Hayır. Form, e-posta veya mesaj yoluyla gizli bilgi, belge, kimlik ya da sağlık verisi göndermemenizi rica ederiz. Bu internet sitesi üzerinden yapılan yazışma avukat–müvekkil ilişkisi kurmaz; ilişki, yazılı vekâlet veya hizmet sözleşmesi ile başlar.',
+      a: 'Hayır. Form veya mesaj yoluyla gizli bilgi, belge, kimlik ya da sağlık verisi göndermemenizi rica ederiz. Bu internet sitesi üzerinden yapılan yazışma avukat–müvekkil ilişkisi kurmaz; ilişki, yazılı vekâlet veya hizmet sözleşmesi ile başlar.',
     },
     {
       id: 's-03',
@@ -35,7 +35,7 @@ export default {
     {
       id: 's-06',
       q: 'Ortaklığın adresi ve çalışma saatleri nedir?',
-      a: 'Ortaklığın adresi {address}; çalışma saatleri {hours}. Telefon: {phone}, e-posta: {email}. Randevu talebi için iletişim formu da kullanılabilir.',
+      a: 'Ortaklığın adresi {address}; çalışma saatleri {hours}. Telefon: {phone}. Randevu talebi için iletişim formu da kullanılabilir.',
     },
   ],
 };
