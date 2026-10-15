@@ -48,8 +48,17 @@ function two(x0, x1, h, w) {
 }
 const TWO = { x0: 97, x1: 124, h: 38, w: 8 };
 
-function mark({ k = INK, two: c2 = k, solid = false }) {
-  const kd = solid ? `<path fill="${k}" d="${K_SOLID}"/>` : `<path fill="${k}" d="${K_STEM}"/><path fill="${k}" d="${K_BLADE}"/>`;
+// K in two tones: upper part k, lower part (from the notch vertex y=47 down) low. Unique clip ids per call.
+const K_SPLIT = 47;
+let clipN = 0;
+function kTwoTone(k, low) {
+  const id = `kl${clipN++}`;
+  const paths = `<path d="${K_STEM}"/><path d="${K_BLADE}"/>`;
+  return `<g fill="${k}">${paths}</g><clipPath id="${id}"><rect x="-1" y="${K_SPLIT}" width="${K_W + 2}" height="${100 - K_SPLIT + 1}"/></clipPath><g fill="${low}" clip-path="url(#${id})">${paths}</g>`;
+}
+
+function mark({ k = INK, two: c2 = k, low = c2, solid = false }) {
+  const kd = solid ? `<path fill="${k}" d="${K_SOLID}"/>` : kTwoTone(k, low);
   return kd + `<path fill="none" stroke="${c2}" stroke-width="${TWO.w}" stroke-linejoin="miter" stroke-miterlimit="4" d="${two(TWO.x0, TWO.x1, TWO.h, TWO.w)}"/>`;
 }
 const MARK_W = TWO.x1; // 126
@@ -61,22 +70,22 @@ const svg = (w, h, body, title0) => {
 };
 
 const themes = {
-  dark: { fg: INK, muted: 'rgba(11,11,12,.62)', accent: WAX, bg: PAPER },   // on light surfaces
-  light: { fg: PAPER, muted: 'rgba(242,239,233,.66)', accent: WAX_ON_DARK, bg: INK }, // on dark surfaces
+  dark: { fg: INK, muted: 'rgba(11,11,12,.62)', accent: WAX, sealLow: WAX_ON_DARK, bg: PAPER },   // on light surfaces
+  light: { fg: PAPER, muted: 'rgba(242,239,233,.66)', accent: WAX_ON_DARK, sealLow: WAX, bg: INK }, // on dark surfaces
 };
 
 const out = {};
 for (const [name, t] of Object.entries(themes)) {
   const T = 'Karaman & Berat Avukatlık Ortaklığı';
   // 1 mark
-  out[`k2-mark-${name}`] = svg(MARK_W, 100, mark({ k: t.fg }), 'Karaman & Berat Avukatlık Ortaklığı');
+  out[`k2-mark-${name}`] = svg(MARK_W, 100, mark({ k: t.fg, low: t.accent }), 'Karaman & Berat Avukatlık Ortaklığı');
   // 2 mark, accent 2
   out[`k2-mark-accent-${name}`] = svg(MARK_W, 100, mark({ k: t.fg, two: t.accent }), 'Karaman & Berat Avukatlık Ortaklığı');
   // 3 seal: square block, K knocked out, ² knocked out
   {
     const S = 120, kh = 70, s = kh / 100;
     const kx = 15, ky = S - 15 - kh;
-    const inner = `<g transform="translate(${kx} ${ky}) scale(${s})" fill="${t.bg}"><path d="${K_STEM}"/><path d="${K_BLADE}"/></g>
+    const inner = `<g transform="translate(${kx} ${ky}) scale(${s})">${kTwoTone(t.bg, t.sealLow)}</g>
 <path fill="none" stroke="${t.bg}" stroke-width="6" stroke-miterlimit="4" transform="translate(${S - 15 - 19} 15)" d="${two(0, 19, 26, 6)}"/>`;
     out[`k2-seal-${name}`] = svg(S, S, `<rect width="${S}" height="${S}" fill="${t.fg}"/>${inner}`, 'Karaman & Berat Avukatlık Ortaklığı');
   }
@@ -87,13 +96,14 @@ for (const [name, t] of Object.entries(themes)) {
     const tx = MARK_W + 34, w = tx + Math.max(l1.width, l2.width);
     const y1 = 47, y2 = 72;
     const p2 = text('AVUKATLIK ORTAKLIĞI', 500, 13.2, tx, y2, 0.34).d;
-    const body = mark({ k: t.fg, two: t.accent }) +
+    const m = mark({ k: t.fg, two: t.accent });
+    const body = m +
       `<path d="M${MARK_W + 17} 6V94" stroke="${t.muted}" stroke-width="1.2" fill="none"/>` +
       nameLine(tx, y1, t.fg, t.accent) + `<path fill="${t.muted}" d="${p2}"/>`;
     out[`k2-horizontal-${name}`] = svg(Math.ceil(w), 100, body, T);
     // same lockup without the superscript 2: the site overlays an inline 2 so it can animate on hover (components/Logo.jsx)
-    const rest = body.slice(mark({ k: t.fg, two: t.accent }).length);
-    const kOnly = mark({ k: t.fg, two: t.accent }).replace(/<path fill="none"[^>]*>$/, "");
+    const rest = body.slice(m.length);
+    const kOnly = m.replace(/<path fill="none"[^>]*>$/, "");
     out[`k2-horizontal-${name}-no2`] = svg(Math.ceil(w), 100, kOnly + rest, T);
   }
   // 5 stacked lockup
@@ -112,7 +122,7 @@ for (const [name, t] of Object.entries(themes)) {
 // logo so it survives 16px; padded to a square so browsers don't crop it.
 {
   const T2 = { x0: 97, x1: 126, h: 46, w: 12 };
-  const body = `<g transform="translate(0 13)"><path fill="${INK}" d="${K_STEM}"/><path fill="${INK}" d="${K_BLADE}"/><path fill="none" stroke="${WAX}" stroke-width="${T2.w}" stroke-miterlimit="4" d="${two(T2.x0, T2.x1, T2.h, T2.w)}"/></g>`;
+  const body = `<g transform="translate(0 13)">${kTwoTone(INK, WAX)}<path fill="none" stroke="${WAX}" stroke-width="${T2.w}" stroke-miterlimit="4" d="${two(T2.x0, T2.x1, T2.h, T2.w)}"/></g>`;
   out['k2-favicon'] = svg(126, 126, body, 'K2 Legal');
 }
 

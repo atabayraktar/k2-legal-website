@@ -17,3 +17,15 @@
 [data-header-theme='dark'] .monogram__two--accent {
   stroke: var(--wax-lit);
 }
+
+// lower half of the K is always accent
+.monogram__low {
+  fill: var(--wax);
+}
+
+[data-theme='dark'] .monogram__low,
+.menu .monogram__low,
+[data-header-theme='dark'] .monogram__low,
+.pcard .monogram__low {
+  fill: var(--wax-lit);
+}

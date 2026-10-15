@@ -9,6 +9,8 @@ const PUB = 'public';
 const LOGOS = [
   'k2-horizontal-dark.svg',
   'k2-horizontal-light.svg',
+  'k2-horizontal-dark-no2.svg',
+  'k2-horizontal-light-no2.svg',
   'k2-seal-dark.svg',
   'k2-favicon.svg',
   'k2-mark-dark.svg',
