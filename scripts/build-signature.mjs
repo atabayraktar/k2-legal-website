@@ -16,12 +16,22 @@ const faces = (css.match(/@font-face\{[^}]*\}/g) || [])
 const logo = pathToFileURL(path.join(root, 'public/logos/k2-horizontal-light.svg')).href;
 
 const W = 640, H = 214;
+const variants = [
+  { file: 'k2-signature.png', name: null },
+  { file: 'k2-signature-enes.png', name: 'Enes Talha Karaman' },
+  { file: 'k2-signature-berat.png', name: 'Berat Kama' },
+];
+const tmp = path.join(root, '.claude/_sig.html');
+const b = await puppeteer.launch({ executablePath: CHROME, args: ['--allow-file-access-from-files'] });
+for (const { file, name } of variants) {
 const html = `<!doctype html><meta charset="utf-8"><style>
 ${faces}
 *{margin:0;padding:0;box-sizing:border-box}
 body{width:${W}px;height:${H}px;background:#0B0B0C;color:#F2EFE9;font-family:'Instrument Sans',Arial,sans-serif;position:relative;overflow:hidden}
 .frame{position:absolute;inset:10px;border:1px solid rgba(242,239,233,.18)}
-.logo{position:absolute;left:34px;top:50%;transform:translateY(-50%);width:236px;height:auto}
+.logo{position:absolute;left:34px;top:${name ? 'calc(50% - 20px)' : '50%'};transform:translateY(-50%);width:236px;height:auto}
+.who{position:absolute;left:34px;width:240px;top:calc(50% + 22px);font:700 10px/1.5 'Courier Prime',monospace;letter-spacing:.14em;text-transform:uppercase;color:#E0525B}
+.who b{display:block;font:800 15px/1.2 'Bricolage Grotesque',sans-serif;letter-spacing:0;margin-top:3px}
 .rule{position:absolute;left:304px;top:30px;bottom:30px;width:1px;background:rgba(242,239,233,.18)}
 .rows{position:absolute;left:330px;top:34px;right:30px;display:grid;grid-template-columns:48px 1fr;row-gap:9px;align-items:baseline}
 .k{font:700 10px 'Courier Prime',monospace;letter-spacing:.2em;text-transform:uppercase;color:#A9A59D}
@@ -31,6 +41,7 @@ body{width:${W}px;height:${H}px;background:#0B0B0C;color:#F2EFE9;font-family:'In
 </style>
 <div class="frame"></div>
 <img class="logo" src="${logo}">
+${name ? `<div class="who">Kurucu Ortak Avukat<b>${name}</b></div>` : ''}
 <div class="rule"></div>
 <div class="rows">
   <span class="k">Tel</span><span class="v">0212 469 36 00</span>
@@ -39,14 +50,14 @@ body{width:${W}px;height:${H}px;background:#0B0B0C;color:#F2EFE9;font-family:'In
 </div>
 <div class="web"><i></i>k2hukuk.com</div>`;
 
-const tmp = path.join(root, '.claude/_sig.html');
 fs.writeFileSync(tmp, html);
-const b = await puppeteer.launch({ executablePath: CHROME, args: ['--allow-file-access-from-files'] });
 const p = await b.newPage();
 await p.setViewport({ width: W, height: H, deviceScaleFactor: 2 });
 await p.goto(pathToFileURL(tmp).href);
 await p.evaluate(() => document.fonts.ready);
-await p.screenshot({ path: path.join(root, 'public/logos/k2-signature.png') });
+await p.screenshot({ path: path.join(root, 'public/logos', file) });
+await p.close();
+console.log(`${file} ${W * 2}x${H * 2} written`);
+}
 await b.close();
 fs.unlinkSync(tmp);
-console.log(`k2-signature.png ${W * 2}x${H * 2} written`);
