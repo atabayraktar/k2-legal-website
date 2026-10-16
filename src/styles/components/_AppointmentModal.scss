@@ -69,6 +69,13 @@
       color var(--dur-color) var(--ease),
       border-color var(--dur-color) var(--ease);
 
+    @media (max-width: 599.98px) {
+      top: var(--sp-4, 4px);
+      right: var(--sp-4, 4px);
+      width: 32px;
+      height: 32px;
+    }
+
     @include hover {
       background: var(--ink);
       color: var(--bone);
@@ -90,6 +97,11 @@
     position: relative;
     width: 18px;
     height: 18px;
+
+    @media (max-width: 599.98px) {
+      width: 12px;
+      height: 12px;
+    }
 
     &::before,
     &::after {

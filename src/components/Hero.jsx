@@ -70,6 +70,9 @@ export default function Hero({ t }) {
               <TextLink href={anchorHref('calisma-alanlari')} onClick={go('calisma-alanlari')}>
                 {t.ctaSecondary}
               </TextLink>
+              <TextLink className="hero__about" href={pagePath('about')}>
+                {t.ctaAbout}
+              </TextLink>
             </div>
           </div>
           <Logo tone="light" className="hero__logo" />

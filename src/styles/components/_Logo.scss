@@ -43,6 +43,23 @@
   }
 }
 
+// touch screens have no hover: the 2 redraws itself on its own every few seconds
+@media (hover: none) {
+  .logo__two path {
+    animation: logo-two-idle 6s var(--ease) 2s infinite both;
+  }
+}
+
+@keyframes logo-two-idle {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  12%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
 @keyframes logo-two-draw {
   from {
     stroke-dashoffset: 100;

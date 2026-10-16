@@ -21,6 +21,7 @@ export default {
     ],
     ctaPrimary: 'Randevu Talep Et',
     ctaSecondary: 'Çalışma Alanları',
+    ctaAbout: 'Hakkımızda',
   },
   about: {
     h2: 'Hakkımızda',

@@ -23,7 +23,7 @@ export const site = {
       name: 'Enes Talha Karaman',
       academicTitle: null,
       professionalTitle: 'Kurucu Ortak Avukat',
-      universities: ['İstanbul Bilgi Üniversitesi Hukuk Fakültesi', 'International University of Sarajevo (English Language)'],
+      universities: ['İstanbul Bilgi Üniversitesi Hukuk Fakültesi', 'International University of Sarajevo (English)'],
       areas: ['İcra ve İflas Hukuku', 'Ceza Hukuku', 'Şirketler Hukuku ve Danışmanlık', 'Deniz Hukuku'],
       photo: { src: '/images/partner-enes-720.webp', width: 720, height: 960 },
     },

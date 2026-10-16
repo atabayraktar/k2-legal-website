@@ -20,7 +20,9 @@ export default function MapCard({ href, address, openLabel, className = '' }) {
       {href ? <span className="visually-hidden">. {openLabel}</span> : null}
       {href ? (
         <span className="map__go" aria-hidden="true">
-          &#8599;
+          <svg viewBox="0 0 20 20" width="20" height="20" focusable="false">
+            <path d="M5 15L15 5M7 5H15V13" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="square" />
+          </svg>
         </span>
       ) : null}
     </>

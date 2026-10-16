@@ -75,7 +75,7 @@ $motto-step: 5s;
     font-family: var(--font-display);
     font-weight: 800;
     font-size: clamp(38px, min(8vw, 15svh), 148px);
-    line-height: 0.9;
+    line-height: 1.08;
     letter-spacing: var(--ls-hero);
     text-transform: uppercase;
     color: var(--bone);
@@ -155,6 +155,11 @@ $motto-step: 5s;
   &__logo {
     flex: none;
     width: clamp(140px, 14vw, 200px);
+  }
+
+  // the About link is a phone/tablet shortcut; the desktop header already carries it
+  &__about {
+    display: none;
   }
 
   @media (min-width: 900px) {
@@ -238,11 +243,26 @@ $motto-step: 5s;
       gap: var(--sp-16);
     }
 
+    // primary button on its own full-width line, the two text links side by side below it
+    &__actions {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--sp-16) var(--sp-24);
+    }
+
     &__actions .btn {
-      flex: none;
-      width: auto;
+      flex: 1 1 100%;
+      width: 100%;
       padding-inline: var(--sp-16);
       letter-spacing: 0.12em;
+    }
+
+    &__actions &__about {
+      order: 1;
+    }
+
+    &__actions .lnk:not(.hero__about) {
+      order: 2;
     }
 
     &__actions .lnk {
@@ -251,13 +271,16 @@ $motto-step: 5s;
       white-space: nowrap;
       letter-spacing: 0.12em;
     }
+
+    &__actions &__about {
+      display: inline-flex;
+    }
   }
 
   @media (max-width: 599.98px) {
     // content sits near the bottom edge; the buttons row stops short of the floating contact buttons instead
     &__actions {
       flex-wrap: wrap;
-      padding-right: 64px;
       gap: var(--sp-12) var(--sp-16);
     }
 
@@ -270,7 +293,6 @@ $motto-step: 5s;
   @media (max-width: 419.98px) {
     &__actions {
       gap: var(--sp-12);
-      padding-right: 52px;
     }
 
     &__actions .btn {
