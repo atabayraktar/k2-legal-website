@@ -10,7 +10,7 @@ const fonts = {
   500: [load('instrument-sans-latin-500-normal.woff'), load('instrument-sans-latin-ext-500-normal.woff')],
 };
 
-const INK = '#0B0B0C', PAPER = '#F2EFE9', WAX = '#B3222C', WAX_ON_DARK = '#E0525B';
+const INK = '#0B0B0C', PAPER = '#F2EFE9', WAX = '#B3222C', WAX_ON_DARK = '#B3222C';
 
 // text -> outline path, tracked caps
 function text(str, weight, size, x, y, tracking = 0) {

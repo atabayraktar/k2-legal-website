@@ -30,14 +30,14 @@ ${faces}
 body{width:${W}px;height:${H}px;background:#0B0B0C;color:#F2EFE9;font-family:'Instrument Sans',Arial,sans-serif;position:relative;overflow:hidden}
 .frame{position:absolute;inset:10px;border:1px solid rgba(242,239,233,.18)}
 .logo{position:absolute;left:34px;top:${name ? 'calc(50% - 20px)' : '50%'};transform:translateY(-50%);width:236px;height:auto}
-.who{position:absolute;left:34px;width:240px;top:calc(50% + 22px);font:700 10px/1.5 'Courier Prime',monospace;letter-spacing:.14em;text-transform:uppercase;color:#E0525B}
+.who{position:absolute;left:34px;width:240px;top:calc(50% + 22px);font:700 10px/1.5 'Courier Prime',monospace;letter-spacing:.14em;text-transform:uppercase;color:#B3222C}
 .who b{display:block;font:800 15px/1.2 'Bricolage Grotesque',sans-serif;letter-spacing:0;margin-top:3px}
 .rule{position:absolute;left:304px;top:30px;bottom:30px;width:1px;background:rgba(242,239,233,.18)}
 .rows{position:absolute;left:330px;top:34px;right:30px;display:grid;grid-template-columns:48px 1fr;row-gap:9px;align-items:baseline}
 .k{font:700 10px 'Courier Prime',monospace;letter-spacing:.2em;text-transform:uppercase;color:#A9A59D}
 .v{font:500 14px/1.35 'Instrument Sans',sans-serif;color:#F2EFE9}
 .web{position:absolute;left:330px;bottom:30px;font:800 17px 'Bricolage Grotesque',sans-serif;letter-spacing:-.01em;text-transform:uppercase;color:#F2EFE9;display:flex;align-items:center;gap:10px}
-.web i{display:block;width:8px;height:8px;background:#E0525B}
+.web i{display:block;width:8px;height:8px;background:#B3222C}
 </style>
 <div class="frame"></div>
 <img class="logo" src="${logo}">
